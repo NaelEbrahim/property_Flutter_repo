@@ -11,24 +11,3 @@ class Test extends StatelessWidget {
     );
   }
 }
-  
-  //change from github
-
-  //change by me
-
-
-  //1. checkout master
-  //2. update master
-  //3. create branch from master
-  //4. start coding ( your task )
-  //5. commit
-  //6. re checkout master
-  //7. update master
-  //8. checkout your local branch
-  //9. merge master with my current branch
-  //10. push
-  //11. create pull request
-
-
-
-
