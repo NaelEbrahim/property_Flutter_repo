@@ -14,7 +14,7 @@ class ErrorLoginState extends Bloc_States {
   ErrorLoginState(this.error);
 }
 
-//******************* SIGNUP STATES REPSS*****************//
+//******************* SIGNUP STATES BLOC*****************//
 class LoadingSignupState extends Bloc_States {}
 
 class SuccessSignupState extends Bloc_States {}
