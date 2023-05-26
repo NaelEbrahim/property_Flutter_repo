@@ -40,6 +40,12 @@ dependencies:
   flutter_bloc: ^8.1.2
   dio: ^5.1.2
   conditional_builder_null_safety: ^0.0.6
+  chat_ui_kit: ^1.4.0
+
+  #FireBase
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.0
+  cloud_firestore: ^4.5.1
 
 
 dev_dependencies:
