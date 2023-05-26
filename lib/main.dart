@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
+import 'package:university_project_property_app/Modules/Home_Screen.dart';
 import 'package:university_project_property_app/Modules/Login_Screen.dart';
+import 'package:university_project_property_app/Modules/Welcome_Screen.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
 
 void main() {
@@ -13,7 +15,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +25,9 @@ class MyApp extends StatelessWidget {
         listener: (context, state) => () {},
         builder: (context, state) {
           return MaterialApp(
-            theme: ThemeData(
-              primarySwatch: Colors.indigo
-            ),
+            theme: ThemeData(primarySwatch: Colors.indigo),
             debugShowCheckedModeBanner: false,
-            home: Login_Screen(),
+            home: Home_Screen(),
           );
         },
       ),
