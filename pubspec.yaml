@@ -40,7 +40,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   dio: ^5.1.2
   conditional_builder_null_safety: ^0.0.6
-  chat_ui_kit: ^1.4.0
+  carousel_slider: ^4.2.1
 
   #FireBase
   firebase_core: ^2.9.0
