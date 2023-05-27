@@ -7,6 +7,7 @@ import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
+import 'package:university_project_property_app/Shared/Constant.dart';
 
 class Login_Screen extends StatelessWidget {
   Login_Screen({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class Login_Screen extends StatelessWidget {
           builder: (context, state) {
             var bloc = MyBloc.get(context);
             return Scaffold(
+              backgroundColor: ScaffoldColor,
               body: SafeArea(
                 child: SingleChildScrollView(
                   child: Container(
@@ -57,6 +59,7 @@ class Login_Screen extends StatelessWidget {
                               prefixIcon: const Icon(Icons.email_outlined),
                               controller: emailController,
                               textInputType: TextInputType.emailAddress,
+                              raduis: 25.0
                           ),
                           const SizedBox(height: 30.0),
                           reusableTextField(
@@ -66,7 +69,8 @@ class Login_Screen extends StatelessWidget {
                               suffixfunction: (){bloc.ChangeEye();},
                               obscureText: bloc.eyeVisible,
                               controller: passwordController,
-                              textInputType: TextInputType.visiblePassword
+                              textInputType: TextInputType.visiblePassword,
+                              raduis: 25.0
                           ),
                           const SizedBox(height: 50.0),
                           ConditionalBuilder(

@@ -36,4 +36,4 @@ class SuccessReceiveMessagesState extends Bloc_States {}
 //******************* OTHER STATES *****************//
 class ChangeEyeIcon extends Bloc_States {}
 
-class ChangeDropdown extends Bloc_States {}
+class ChangeAnyState extends Bloc_States {}

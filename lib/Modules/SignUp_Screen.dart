@@ -64,23 +64,29 @@ class SignUp_Screen extends StatelessWidget {
                                 fontsize: 16,
                                 fontColor: Colors.grey,
                                 fontWeight: FontWeight.w500),
-                            const SizedBox(height: 60.0),
+                            const SizedBox(height: 40.0),
                             reusableTextField(
                                 hintText: 'Name',
                                 prefixIcon: const Icon(Icons.person_outline),
-                                controller: nameController),
+                                controller: nameController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Email',
                                 prefixIcon: const Icon(Icons.email_outlined),
                                 textInputType: TextInputType.emailAddress,
-                                controller: emailController),
+                                controller: emailController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Phone',
                                 prefixIcon: const Icon(Icons.phone_android_outlined),
                                 textInputType: TextInputType.phone,
-                                controller: phoneController),
+                                controller: phoneController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Password',
@@ -91,12 +97,15 @@ class SignUp_Screen extends StatelessWidget {
                                   bloc.ChangeEye();
                                 },
                                 obscureText: bloc.eyeVisible,
-                                controller: passwordController),
+                                controller: passwordController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Info ( Optional )',
                                 prefixIcon: const Icon(Icons.info_outline),
-                                controller: information_aboutController),
+                                controller: information_aboutController,
+                                raduis: 25.0),
                             const SizedBox(height: 30.0),
                             Row(
                               children: [
@@ -140,7 +149,7 @@ class SignUp_Screen extends StatelessWidget {
                                     value: selectedgender,
                                     onChanged: (value) {
                                         selectedgender = value as String;
-                                        bloc.ChangeDropDown();
+                                        bloc.ChangeState();
                                     },
                                     buttonStyleData: ButtonStyleData(
                                       height: 50,
@@ -223,7 +232,7 @@ class SignUp_Screen extends StatelessWidget {
                                     value: selectedAge,
                                     onChanged: (value) {
                                          selectedAge = value as int;
-                                          bloc.ChangeDropDown();
+                                          bloc.ChangeState();
                                     },
                                     buttonStyleData: ButtonStyleData(
                                       height: 50,

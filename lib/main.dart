@@ -4,6 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
+import 'package:university_project_property_app/Modules/Home_Screen.dart';
+import 'package:university_project_property_app/Modules/Login_Screen.dart';
+import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
+import 'package:university_project_property_app/Modules/Welcome_Screen.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
 import 'Modules/Chatting/Chat_Screen.dart';
 
@@ -30,7 +34,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo
             ),
             debugShowCheckedModeBanner: false,
-            home: const Chat_Screen(),
+            home: Home_Screen(),
           );
         },
       ),

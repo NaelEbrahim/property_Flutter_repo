@@ -47,17 +47,17 @@ class MyBloc extends Cubit<Bloc_States> {
     required String text,
   }) {
     Messages_Model message_model = Messages_Model(
-        senderId: receiverId ,
-        receiverId: '10031',
+        senderId: '10031' ,
+        receiverId: receiverId,
         datetime: datetime,
         houtWithminute: hourWithminute,
         text: text);
 
     FirebaseFirestore.instance
         .collection('UsersCollection')
-        .doc(receiverId)
-        .collection('chats')
         .doc('10031')
+        .collection('chats')
+        .doc(receiverId)
         .collection('messages')
         .add(message_model.tomap())
         .then((value) {
@@ -68,9 +68,9 @@ class MyBloc extends Cubit<Bloc_States> {
 
     FirebaseFirestore.instance
         .collection('UsersCollection')
-        .doc('10031')
-        .collection('chats')
         .doc(receiverId)
+        .collection('chats')
+        .doc('10031')
         .collection('messages')
         .add(message_model.tomap())
         .then((value) {
@@ -100,7 +100,7 @@ class MyBloc extends Cubit<Bloc_States> {
     });
   }
 
-  void ChangeDropDown() {
-    emit(ChangeDropdown());
+  void ChangeState () {
+    emit(ChangeAnyState());
   }
 }

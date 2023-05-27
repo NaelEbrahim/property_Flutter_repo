@@ -29,26 +29,28 @@ Widget reusableTextField(
         void Function()? suffixfunction,
         required TextEditingController controller,
         bool obscureText = false,
+        double raduis = 0.0,
+        Color fontColor = Colors.indigo,
         TextInputType textInputType = TextInputType.text}) =>
     TextFormField(
       controller: controller,
       obscureText: obscureText,
       cursorColor: Colors.black,
       keyboardType: textInputType,
-      style: const TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),
+      style: TextStyle(color: fontColor, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(raduis),
           borderSide: const BorderSide(color: Colors.white),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(raduis),
           borderSide: const BorderSide(color: Colors.indigo),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(raduis),
           borderSide: const BorderSide(color: Colors.red),
         ),
         prefixIcon: prefixIcon,
