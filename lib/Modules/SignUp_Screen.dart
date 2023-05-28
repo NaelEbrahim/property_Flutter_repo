@@ -135,21 +135,21 @@ class SignUp_Screen extends StatelessWidget {
                                       ],
                                     ),
                                     items: gender_items.map((item) => DropdownMenuItem<String>(
-                                              value: item,
-                                              child: Text(
-                                                item,
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ))
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ))
                                         .toList(),
                                     value: selectedgender,
                                     onChanged: (value) {
-                                        selectedgender = value as String;
-                                        bloc.ChangeState();
+                                      selectedgender = value as String;
+                                      bloc.ChangeState();
                                     },
                                     buttonStyleData: ButtonStyleData(
                                       height: 50,
@@ -186,7 +186,7 @@ class SignUp_Screen extends StatelessWidget {
                                     menuItemStyleData: const MenuItemStyleData(
                                       height: 40,
                                       padding:
-                                          EdgeInsets.only(left: 14, right: 14),
+                                      EdgeInsets.only(left: 14, right: 14),
                                     ),
                                   ),
                                 ),
@@ -218,21 +218,21 @@ class SignUp_Screen extends StatelessWidget {
                                     ),
                                     items: age_items
                                         .map((item) => DropdownMenuItem<int>(
-                                              value: item,
-                                              child: Text(
-                                                item.toString(),
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ))
+                                      value: item,
+                                      child: Text(
+                                        item.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ))
                                         .toList(),
                                     value: selectedAge,
                                     onChanged: (value) {
-                                         selectedAge = value as int;
-                                          bloc.ChangeState();
+                                      selectedAge = value as int;
+                                      bloc.ChangeState();
                                     },
                                     buttonStyleData: ButtonStyleData(
                                       height: 50,
@@ -269,7 +269,7 @@ class SignUp_Screen extends StatelessWidget {
                                     menuItemStyleData: const MenuItemStyleData(
                                       height: 40,
                                       padding:
-                                          EdgeInsets.only(left: 14, right: 14),
+                                      EdgeInsets.only(left: 14, right: 14),
                                     ),
                                   ),
                                 )

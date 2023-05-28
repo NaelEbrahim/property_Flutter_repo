@@ -6,6 +6,7 @@ import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
 import 'package:university_project_property_app/Models/Login_Model.dart';
 import 'package:university_project_property_app/Models/Messages_Model.dart';
+import 'package:university_project_property_app/Models/SignUp_Model.dart';
 import 'package:university_project_property_app/Remote/End_Points.dart';
 
 class MyBloc extends Cubit<Bloc_States> {
@@ -28,16 +29,17 @@ class MyBloc extends Cubit<Bloc_States> {
     emit(LoadingLoginState());
     Dio_Helper.postData(LOGIN, data).then((value) {
       login_model = Login_Model.fromjson(value.data);
-      print(login_model!.token);
       emit(SuccessLoginState());
     }).catchError((error) {
-      emit(ErrorLoginState(error));
+      emit(ErrorLoginState(error.toString()));
     });
   }
 
+  SignUp_Model ? signUp_Model ;
   void Signup(Map<String, dynamic> data) {
     emit(LoadingSignupState());
     Dio_Helper.postData(SIGNUP, data).then((value) {
+      signUp_Model = SignUp_Model.fromjson(value.data);
       emit(SuccessSignupState());
     }).catchError((error) {
       emit(ErrorSignupState());

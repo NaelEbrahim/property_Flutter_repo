@@ -2,7 +2,7 @@
 
 class Login_Model {
   User_Data ? user_data ;
-  String ? token ;
+  var token ;
 
   Login_Model.fromjson(Map<String,dynamic>json){
     token = json['token'];
@@ -11,14 +11,14 @@ class Login_Model {
 }
 
 class User_Data {
-  int ? id ;
-  String ? name ;
-  String ? email ;
-  String ? phone ;
-  String ? image ;
-  int ? age ;
-  String ? gender ;
-  String ? information_about ;
+  var id ;
+  var name ;
+  var email ;
+  var phone ;
+  var image ;
+  var age ;
+  var gender ;
+  var information_about ;
 
   User_Data.fromjson ( Map <String , dynamic> json ){
     id = json['id'];

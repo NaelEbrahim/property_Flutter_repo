@@ -6,6 +6,7 @@ import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
 import 'package:university_project_property_app/Modules/Home_Screen.dart';
 import 'package:university_project_property_app/Modules/Login_Screen.dart';
+import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
 
 void main() async {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo
             ),
             debugShowCheckedModeBanner: false,
-            home: Login_Screen(),
+            home: SignUp_Screen(),
           );
         },
       ),
