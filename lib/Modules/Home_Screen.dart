@@ -155,11 +155,12 @@ class Home_Screen extends StatelessWidget {
                         CurrentBottomNavIndex = index ;
                         cubit.ChangeState();
                       },
+                      selectedItemColor: Colors.blue,
                       items: const <BottomNavigationBarItem>[
-                        BottomNavigationBarItem(icon: Icon(Icons.house),label: 'Home'),
-                        BottomNavigationBarItem(icon: Icon(Icons.category_outlined),label: 'Filter'),
-                        BottomNavigationBarItem(icon: Icon(Icons.favorite),label: 'Favorite'),
-                        BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile'),
+                        BottomNavigationBarItem(icon: Icon(Icons.house_outlined),label: 'Home'),
+                        BottomNavigationBarItem(icon: Icon(Icons.filter_list),label: 'Filter'),
+                        BottomNavigationBarItem(icon: Icon(Icons.favorite_outline),label: 'Favorite'),
+                        BottomNavigationBarItem(icon: Icon(Icons.person_outline),label: 'Profile'),
                       ],
                     ),
                   ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
+import 'package:university_project_property_app/Models/Login_Model.dart';
 import 'package:university_project_property_app/Models/Messages_Model.dart';
 import 'package:university_project_property_app/Remote/End_Points.dart';
 
@@ -22,9 +23,12 @@ class MyBloc extends Cubit<Bloc_States> {
     emit(ChangeEyeIcon());
   }
 
+  Login_Model ? login_model ;
   void login(Map<String, dynamic> data) {
     emit(LoadingLoginState());
     Dio_Helper.postData(LOGIN, data).then((value) {
+      login_model = Login_Model.fromjson(value.data);
+      print(login_model!.token);
       emit(SuccessLoginState());
     }).catchError((error) {
       emit(ErrorLoginState(error));
