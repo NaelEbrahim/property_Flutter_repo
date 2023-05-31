@@ -109,4 +109,11 @@ class MyBloc extends Cubit<Bloc_States> {
   void ChangeState () {
     emit(ChangeAnyState());
   }
+
+  var selectedIndex = -1 ;
+  void ChangePropertyCategory (index){
+    selectedIndex = index ;
+    emit(ChangeAnyState());
+  }
+
 }

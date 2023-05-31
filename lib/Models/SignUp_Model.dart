@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables
+// ignore_for_file: camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, file_names
 
 class SignUp_Model {
   User_SignUp_Data ? user_data ;
