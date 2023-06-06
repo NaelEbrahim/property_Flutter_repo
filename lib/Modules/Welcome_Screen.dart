@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:university_project_property_app/Modules/Login_Screen.dart';
 import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
+import 'package:university_project_property_app/Shared/Constant.dart';
 
 class Welcome_Screen extends StatelessWidget {
   const Welcome_Screen({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class Welcome_Screen extends StatelessWidget {
               height: 60.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.0),
-                color: Colors.black,
+                color: myAppColor,
               ),
               child: reusableTextButton(
                 context: context,
@@ -87,7 +88,7 @@ class Welcome_Screen extends StatelessWidget {
                 reusableTextButton(
                   context: context,
                   buttontext: 'Log In',
-                  textColor: Colors.black,
+                  textColor: myAppColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                   function: () {
