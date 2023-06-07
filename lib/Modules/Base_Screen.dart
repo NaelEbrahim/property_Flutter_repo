@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
+import 'package:university_project_property_app/Modules/Favourite_Screen.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
-import 'Favourite_Screen.dart';
+import 'Filter_Screen.dart';
 import 'Filter_Screen.dart';
 import 'Home_Screen.dart';
 import 'Profile_Screen.dart';
@@ -15,7 +16,7 @@ class Base_Screen extends StatelessWidget {
 
   List <Widget> screens = [
     Home_Screen(),
-    const Filter_Screen(),
+    Filter_Screen(),
     Favourite_Screen(),
     const Profile_Screen()
   ] ;
