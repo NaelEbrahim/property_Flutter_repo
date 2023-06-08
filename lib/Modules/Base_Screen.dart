@@ -1,12 +1,11 @@
-// ignore_for_file: non_constant_identifier_names
-
+// ignore_for_file: non_constant_identifier_names, camel_case_types, file_names, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Modules/Favourite_Screen.dart';
+import 'package:university_project_property_app/Shared/App_Bars.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
-import 'Filter_Screen.dart';
 import 'Filter_Screen.dart';
 import 'Home_Screen.dart';
 import 'Profile_Screen.dart';
@@ -17,8 +16,15 @@ class Base_Screen extends StatelessWidget {
   List <Widget> screens = [
     Home_Screen(),
     Filter_Screen(),
-    Favourite_Screen(),
+    const Favourite_Screen(),
     const Profile_Screen()
+  ] ;
+
+  List <AppBar> appbars = [
+    Home_AppBar(),
+    Filter_AppBar(),
+    Favourite_AppBar(),
+    Profile_AppBar()
   ] ;
 
   var CurrentBottomNavIndex = 0 ;
@@ -32,6 +38,8 @@ class Base_Screen extends StatelessWidget {
         builder: (context, state) {
           var cubit = MyBloc.get(context);
           return Scaffold(
+            backgroundColor: ScaffoldColor,
+            appBar: appbars[CurrentBottomNavIndex],
             body: screens[CurrentBottomNavIndex],
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(

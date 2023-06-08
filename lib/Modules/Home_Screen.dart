@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, file_names
+// ignore_for_file: camel_case_types, file_names, must_be_immutable
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,113 +20,68 @@ class Home_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      backgroundColor: ScaffoldColor,
-      appBar: AppBar(
-        backgroundColor: Colors.grey[200],
-        bottomOpacity: 0.0,
-        elevation: 0.0,
-        // title:
-        centerTitle: true,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            reusableText(
-              text: 'Current Location',
-              fontsize: 14,
-              fontWeight: FontWeight.w200,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.blue,
-                ),
-                reusableText(text: 'Syria - Damascus', fontsize: 16),
-              ],
-            ),
-          ],
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.filter_alt_outlined,
-              color: Colors.black,
-            ),
-          ),
-        ],
-        leading: GestureDetector(
-          onTap: () {
-            Scaffold.of(context).openDrawer();
-          },
-          child: const Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              reusableTextField(
-                hintText: 'Search For Dream House',
-                raduis: 15.0,
-                fontColor: Colors.black,
-                hintstyle: const TextStyle(fontWeight: FontWeight.w200),
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
-                controller: searchcontroller,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0) ,
-                  child: CarouselSlider.builder(
-                    itemCount: img.length,
-                    itemBuilder: (context, index, l) {
-                      return Image.asset(
-                        width: MediaQuery.of(context).size.width - 20,
-                        'images/2.jpg',
-                        fit: BoxFit.cover,
-                      );
-                    },
-                    options: CarouselOptions(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      height: 170.0,
-                      initialPage: 0,
-                      reverse: false,
-                      autoPlay: true,
-                      enableInfiniteScroll: true,
-                      viewportFraction: 1.1,
-                      autoPlayInterval: const Duration(seconds: 7),
-                      autoPlayAnimationDuration: const Duration(seconds: 3),
-                      autoPlayCurve: Curves.decelerate,
-                      //enlargeCenterPage: true,
+      return BlocConsumer<MyBloc , Bloc_States>(
+        listener: (context, state) => (){},
+        builder: (context, state) {
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  reusableTextField(
+                    hintText: 'Search For Dream House',
+                    raduis: 15.0,
+                    fontColor: Colors.black,
+                    hintstyle: const TextStyle(fontWeight: FontWeight.w200),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                    ),
+                    controller: searchcontroller,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0) ,
+                      child: CarouselSlider.builder(
+                        itemCount: img.length,
+                        itemBuilder: (context, index, l) {
+                          return Image.asset(
+                            width: MediaQuery.of(context).size.width - 20,
+                            'images/2.jpg',
+                            fit: BoxFit.cover,
+                          );
+                        },
+                        options: CarouselOptions(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          height: 170.0,
+                          initialPage: 0,
+                          reverse: false,
+                          autoPlay: true,
+                          enableInfiniteScroll: true,
+                          viewportFraction: 1.1,
+                          autoPlayInterval: const Duration(seconds: 7),
+                          autoPlayAnimationDuration: const Duration(seconds: 3),
+                          autoPlayCurve: Curves.decelerate,
+                          //enlargeCenterPage: true,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) => card(204500, 'Syria - Damascus - Al Amin', 4,3,150,context),
+                    separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+                    itemCount: 5,
+                  ),
+                ],
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return card(204500, 'Syria - Damascus - Al Amin', 4,3,150,context);
-                },
-                separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-                itemCount: 5,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        },
+      );
   }
 
    card(int prize, String loc, int bedcount,int bathcount,int area,BuildContext context) {
@@ -192,7 +147,7 @@ class Home_Screen extends StatelessWidget {
                      ),
                      Text(bedcount.toString()),
 
-                     const SizedBox(width:40.0),
+                     const Spacer(),
 
                      const Icon(Icons.bathtub_outlined),
                      const SizedBox(
@@ -200,7 +155,7 @@ class Home_Screen extends StatelessWidget {
                      ),
                      Text(bedcount.toString()),
 
-                     const SizedBox(width:40.0),
+                     const Spacer(),
 
                      const Icon(Icons.area_chart_outlined),
                      const SizedBox(
