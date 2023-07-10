@@ -5,6 +5,7 @@ import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
 import 'package:university_project_property_app/Modules/Base_Screen.dart';
+import 'package:university_project_property_app/Modules/Property_Details.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
 
 void main() async {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo
             ),
             debugShowCheckedModeBanner: false,
-            home: Base_Screen()
+            home: Property_Details()
           );
         },
       ),

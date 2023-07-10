@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, file_names
 import 'package:flutter/material.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
@@ -95,3 +95,17 @@ AppBar Favourite_AppBar () => AppBar(
   centerTitle: true,
 );
 
+AppBar Property_Details_AppBar () => AppBar(
+  backgroundColor: myAppColor,
+  leading: IconButton(
+    onPressed: (){},
+    icon: const Icon(Icons.arrow_back,color: Colors.white),
+  ),
+  title: reusableText(
+      text: 'Property Details',
+      fontsize: 19,
+      fontColor: Colors.white,
+      fontWeight: FontWeight.bold
+  ),
+  centerTitle: true,
+);

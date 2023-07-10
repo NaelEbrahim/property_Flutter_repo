@@ -11,7 +11,7 @@ Widget reusableText(
     Text(
       text,
       maxLines: maxLines,
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
       overflow: TextOverflow.ellipsis,
       style: GoogleFonts.poppins(
           fontWeight: fontWeight,

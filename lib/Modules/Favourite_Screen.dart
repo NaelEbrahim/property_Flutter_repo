@@ -8,24 +8,24 @@ class Favourite_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              ListView.separated(
-                shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => card(25300,"Damascus",3,2,120,context),
-                  separatorBuilder: (context, index) => const SizedBox(height: 20.0),
-                  itemCount: 10
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => card(25300,"Damascus",3,2,120,context),
+                separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+                itemCount: 10
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 
   card(int prize, String loc, int bedcount,int bathcount,int area,BuildContext context) {
