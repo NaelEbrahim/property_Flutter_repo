@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo
             ),
             debugShowCheckedModeBanner: false,
-            home: Message_Screen()
+            home: Base_Screen()
           );
         },
       ),
