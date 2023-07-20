@@ -7,7 +7,7 @@ import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import '../Shared/Constant.dart';
-import 'Add_Property.dart';
+import 'Add_Property/Add_Property.dart';
 
 class Filter_Screen extends StatelessWidget {
   Filter_Screen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class Filter_Screen extends StatelessWidget {
 
   int numberOfbedroom = 2 ;
 
-  SfRangeValues _values = SfRangeValues(20000.0, 60000.0);
+  SfRangeValues _values = const SfRangeValues(20000.0, 60000.0);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class Filter_Screen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   reusableText(
-                      text: 'Category :',
+                      text: 'Contract :',
                       fontsize: 15.0,
                       fontWeight: FontWeight.bold,
                       fontColor: Colors.grey
@@ -55,6 +55,7 @@ class Filter_Screen extends StatelessWidget {
                           child: reusableText(
                               text: "Sell",
                               fontsize: 17,
+                              align: TextAlign.center,
                               fontWeight: FontWeight.bold,
                               fontColor: ( sell ) ? Colors.white : Colors.black
                           ),
@@ -81,6 +82,7 @@ class Filter_Screen extends StatelessWidget {
                           child: reusableText(
                             text: "Rent",
                             fontsize: 17,
+                            align: TextAlign.center,
                             fontWeight: FontWeight.bold,
                             fontColor: ( !sell ) ? Colors.white : Colors.black,
                           ),

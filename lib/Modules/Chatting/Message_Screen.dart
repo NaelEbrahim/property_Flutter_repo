@@ -46,7 +46,7 @@ class Message_Screen extends StatelessWidget {
               ],
             ),
             body: ConditionalBuilder(
-              condition: cubit.messages.isNotEmpty || state is SuccessGetMessagesState ,
+              condition:  cubit.messages.isNotEmpty || state is SuccessGetMessagesState ,
               builder: (context) => Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -86,7 +86,6 @@ class Message_Screen extends StatelessWidget {
                               ),
                             ),
                           ),
-
                            Container(
                              color: myAppColor,
                              child: MaterialButton(
@@ -162,8 +161,8 @@ class Message_Screen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10.0),
                 topRight: Radius.circular(10.0),
                 bottomLeft: Radius.circular(10.0),

@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, file_names
 
 import 'package:dio/dio.dart';
 
@@ -9,15 +9,31 @@ class Dio_Helper {
   dio = Dio(
     BaseOptions(
       baseUrl: 'http://192.168.43.115:8000/api/',
+      headers: {
+        'Accept' : 'application/json',
+      }
     )
   );
   }
 
-  static Future <Response> postData ( String url , Map <String , dynamic> data ) {
+  static Future <Response> postData ({
+    required String url ,
+    required Map <String , dynamic> data ,
+    headers }) {
     return dio.post(
         url ,
-        data: data
+        data: data,
+        options: Options(
+          responseType: ResponseType.json,
+          headers: {
+           'Authorization' : '$headers'
+          })
     );
   }
+
+  static Future <Response> getData (String url){
+    return dio.get(url);
+  }
+
 
 }

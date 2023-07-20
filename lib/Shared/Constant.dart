@@ -2,6 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-Color myAppColor = const Color(0xff052d5d);
+const Color myAppColor = const Color(0xff052d5d);
 
 Color ScaffoldColor =  Colors.grey[200]!;

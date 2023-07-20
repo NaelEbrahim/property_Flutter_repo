@@ -1,14 +1,14 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 import 'package:flutter/material.dart';
+import 'package:university_project_property_app/Modules/Search_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:university_project_property_app/Shared/Resources.dart';
 
 AppBar Home_AppBar () => AppBar(
   backgroundColor: myAppColor,
   bottomOpacity: 0.0,
   elevation: 0.0,
-  // title:
-  centerTitle: true,
   title: Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
@@ -30,13 +30,15 @@ AppBar Home_AppBar () => AppBar(
       ),
     ],
   ),
-  actions: const [
+  actions:  [
     Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Icon(
-        Icons.filter_alt_outlined,
-        color: Colors.white,
-      ),
+      padding: const EdgeInsets.all(8.0),
+      child: IconButton(
+          onPressed: (){
+            Navigator.push(homeScreenContext!, MaterialPageRoute(builder: (context) => Search_Screen()));
+          } ,
+          icon: const Icon(Icons.search,size: 27.0),
+      )
     ),
   ],
   leading: GestureDetector(
@@ -95,6 +97,23 @@ AppBar Favourite_AppBar () => AppBar(
   centerTitle: true,
 );
 
+AppBar Search_AppBar () => AppBar(
+  backgroundColor: myAppColor,
+  leading: IconButton(
+    onPressed: (){
+      Navigator.pop(searchScreenContext!);
+    },
+    icon: const Icon(Icons.arrow_back,color: Colors.white),
+  ),
+  title: reusableText(
+      text: 'Search',
+      fontsize: 19,
+      fontColor: Colors.white,
+      fontWeight: FontWeight.bold
+  ),
+  centerTitle: true,
+);
+
 AppBar Property_Details_AppBar () => AppBar(
   backgroundColor: myAppColor,
   leading: IconButton(
@@ -103,6 +122,39 @@ AppBar Property_Details_AppBar () => AppBar(
   ),
   title: reusableText(
       text: 'Property Details',
+      fontsize: 19,
+      fontColor: Colors.white,
+      fontWeight: FontWeight.bold
+  ),
+  centerTitle: true,
+);
+
+AppBar Add_Property_AppBar () => AppBar(
+  backgroundColor: myAppColor,
+  elevation: 0.0,
+  leading: IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed:(){}
+  ),
+  title: reusableText(
+      text: 'Add Property',
+      fontsize: 20,
+      fontColor: Colors.white,
+      fontWeight: FontWeight.bold
+  ),
+  centerTitle: true,
+) ;
+
+AppBar Picked_Images_AppBar (BuildContext context) => AppBar(
+  backgroundColor: myAppColor,
+  leading: IconButton(
+    onPressed: (){
+      Navigator.pop(context);
+    },
+    icon: const Icon(Icons.arrow_back,color: Colors.white),
+  ),
+  title: reusableText(
+      text: 'Property Images',
       fontsize: 19,
       fontColor: Colors.white,
       fontWeight: FontWeight.bold

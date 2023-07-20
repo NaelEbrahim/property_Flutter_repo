@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
+import 'package:university_project_property_app/Modules/Add_Property/Picked_Images.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:university_project_property_app/Shared/Resources.dart';
+import '../../Shared/App_Bars.dart';
 
 class property_category {
   String title_type ;
@@ -22,9 +25,17 @@ List <property_category> category_list = [
 class Add_Property extends StatelessWidget {
   Add_Property({Key? key}) : super(key: key);
 
-  bool sell = true ;
+  bool sell = true;
 
+  String type = 'house';
+  String sell_rent = 'sell' ;
   var numberOfRoomcontroller = TextEditingController();
+  var areacontroller = TextEditingController();
+  var namePropertycontroller = TextEditingController();
+  var pricecontroller = TextEditingController();
+  var locationcontroller = TextEditingController();
+  var descriptioncontroller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +47,7 @@ class Add_Property extends StatelessWidget {
           var cubit = MyBloc.get(context);
           return Scaffold(
             backgroundColor: ScaffoldColor,
-            appBar: AppBar(
-              backgroundColor: myAppColor,
-              elevation: 0.0,
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed:(){}
-              ),
-              title: reusableText(
-                  text: 'Add Property',
-                  fontsize: 20,
-                  fontColor: Colors.white,
-                  fontWeight: FontWeight.bold
-              ),
-              centerTitle: true,
-            ),
+            appBar: Add_Property_AppBar(),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -79,6 +76,7 @@ class Add_Property extends StatelessWidget {
                                 child: reusableText(
                                     text: "Sell",
                                     fontsize: 17,
+                                    align: TextAlign.center,
                                     fontWeight: FontWeight.bold,
                                     fontColor: ( sell ) ? Colors.white : Colors.black
                                 ),
@@ -87,6 +85,7 @@ class Add_Property extends StatelessWidget {
                             onTap: (){
                               if ( !sell ) {
                                 sell = !sell;
+                                sell_rent = (sell) ? 'sell' : 'rent' ;
                                 cubit.ChangeState();
                               }
                             },
@@ -105,6 +104,7 @@ class Add_Property extends StatelessWidget {
                                 child: reusableText(
                                     text: "Rent",
                                     fontsize: 17,
+                                    align: TextAlign.center,
                                     fontWeight: FontWeight.bold,
                                     fontColor: ( !sell ) ? Colors.white : Colors.black,
                                 ),
@@ -113,6 +113,7 @@ class Add_Property extends StatelessWidget {
                             onTap: (){
                               if ( sell ) {
                                 sell = !sell;
+                                sell_rent = (sell) ? 'sell' : 'rent' ;
                                 cubit.ChangeState();
                               }
                             },
@@ -149,7 +150,21 @@ class Add_Property extends StatelessWidget {
                             hintText: 'Area in Square Meter',
                             prefixIcon: const Icon(Icons.stacked_line_chart),
                             raduis: 20.0,
-                            controller: numberOfRoomcontroller
+                            controller: areacontroller
+                        ),
+                        const SizedBox(height: 20.0),
+                        reusableText(
+                            text: 'Property Name :',
+                            fontsize: 14.0,
+                            fontWeight: FontWeight.bold,
+                            fontColor: Colors.grey
+                        ),
+                        const SizedBox(height: 10.0),
+                        reusableTextField(
+                            hintText: 'Property Title',
+                            prefixIcon: const Icon(Icons.title),
+                            raduis: 20.0,
+                            controller: namePropertycontroller
                         ),
                         if ( cubit.selectedIndex == 0)
                         const SizedBox(height: 20.0),
@@ -183,7 +198,7 @@ class Add_Property extends StatelessWidget {
                             raduis: 20.0,
                             textInputType: TextInputType.phone,
                             prefixIcon: const Icon(Icons.monetization_on),
-                            controller: numberOfRoomcontroller
+                            controller: pricecontroller
                         ),
                         const SizedBox(height: 20.0),
                         reusableText(
@@ -197,22 +212,84 @@ class Add_Property extends StatelessWidget {
                             hintText: 'Location',
                             raduis: 20.0,
                             prefixIcon: const Icon(Icons.location_on),
-                            controller: numberOfRoomcontroller
+                            controller: locationcontroller
                         ),
                         const SizedBox(height: 20.0),
                         reusableText(
-                            text: 'Property Info :',
+                            text: 'Property Description :',
                             fontsize: 14.0,
                             fontWeight: FontWeight.bold,
                             fontColor: Colors.grey
                         ),
                         const SizedBox(height: 10.0),
                         reusableTextField(
-                            hintText: 'Info',
+                            hintText: 'Description',
                             raduis: 20.0,
                             prefixIcon: const Icon(Icons.info),
-                            controller: numberOfRoomcontroller
+                            controller: descriptioncontroller
                         ),
+                        const SizedBox(height: 20.0),
+                        reusableText(
+                            text: 'Property Images :',
+                            fontsize: 14.0,
+                            fontWeight: FontWeight.bold,
+                            fontColor: Colors.grey
+                        ),
+                        const SizedBox(height: 10.0),
+                        Row(children:[
+                          Container(
+                            height: 70.0,
+                            width:( MediaQuery.of(context).size.width/2)-30,
+                            decoration: BoxDecoration(
+                              color: myAppColor,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: reusableTextButton(
+                              context: context,
+                              buttontext: 'Select Images',
+                              textColor: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              function: (){
+                                cubit.AddToSelectedImages();
+                              },
+                            ),
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: (){
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => Picked_Images()
+                                  ));
+                              },
+                            child: Container(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              height: 80.0,
+                              width: (MediaQuery.of(context).size.width/2)-60,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20.0)
+                              ),
+                              child: Stack(
+                                alignment: AlignmentDirectional.bottomCenter,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional.center,
+                                      child: Icon(Icons.photo_library,size: 35.0,color: myAppColor)),
+                                  Container(
+                                    width: double.infinity,
+                                    color: Colors.black.withOpacity(0.7),
+                                    child: reusableText(
+                                        text: 'Images',
+                                        fontsize: 10.0,
+                                        fontColor: Colors.white,
+                                        align: TextAlign.center
+                                    ))
+                                ],
+                              )
+                            ),
+                          )
+                        ]),
                         const SizedBox(height: 30.0),
                         Align(
                           alignment: Alignment.center,
@@ -228,7 +305,24 @@ class Add_Property extends StatelessWidget {
                                 buttontext: 'Add',
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                function: (){},
+                                function: (){
+                                  xFilesToBase64(FileToimages).then((value){
+                                  cubit.AddProperty(
+                                        data: {
+                                         'typeofproperty' : type,
+                                         'rent_or_sell' : sell_rent,
+                                         'address' : locationcontroller.text,
+                                         'numberofRooms' : numberOfRoomcontroller.text,
+                                         'descreption' : descriptioncontroller.text,
+                                         'nameState' : namePropertycontroller.text,
+                                         'area' : areacontroller.text,
+                                         'price' : pricecontroller.text,
+                                         'image[]' : base64Strings,
+                                        },
+                                        header: 'Bearer 5|RMf5c1wDW3vxQTzofJCZCuodHt1MlqTzSgv5bKrV'
+                                  );
+                                  });
+                                },
                             ),
                           ),
                         )
@@ -242,11 +336,13 @@ class Add_Property extends StatelessWidget {
       ),
     );
   }
+
   Widget BuildCategory ( property_category item , BuildContext context , index ) {
     var cubit = MyBloc.get(context);
     return GestureDetector(
       onTap: (){
-        MyBloc.get(context).ChangePropertyCategory(index);
+        cubit.ChangePropertyCategory(index);
+        type = category_list[cubit.selectedIndex].title_type ;
       },
       child: Container(
           height: 100.0,

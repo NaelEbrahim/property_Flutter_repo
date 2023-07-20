@@ -1,11 +1,14 @@
 // ignore_for_file: camel_case_types, file_names, must_be_immutable
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
+import 'package:university_project_property_app/Models/Home_Model.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:university_project_property_app/Shared/Resources.dart';
 
 class Home_Screen extends StatelessWidget {
    Home_Screen({Key? key}) : super(key: key);
@@ -23,68 +26,63 @@ class Home_Screen extends StatelessWidget {
       return BlocConsumer<MyBloc , Bloc_States>(
         listener: (context, state) => (){},
         builder: (context, state) {
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  reusableTextField(
-                    hintText: 'Search For Dream House',
-                    raduis: 15.0,
-                    fontColor: Colors.black,
-                    hintstyle: const TextStyle(fontWeight: FontWeight.w200),
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    controller: searchcontroller,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0) ,
-                      child: CarouselSlider.builder(
-                        itemCount: img.length,
-                        itemBuilder: (context, index, l) {
-                          return Image.asset(
-                            width: MediaQuery.of(context).size.width - 20,
-                            'images/2.jpg',
-                            fit: BoxFit.cover,
-                          );
-                        },
-                        options: CarouselOptions(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          height: 170.0,
-                          initialPage: 0,
-                          reverse: false,
-                          autoPlay: true,
-                          enableInfiniteScroll: true,
-                          viewportFraction: 1.1,
-                          autoPlayInterval: const Duration(seconds: 7),
-                          autoPlayAnimationDuration: const Duration(seconds: 3),
-                          autoPlayCurve: Curves.decelerate,
-                          //enlargeCenterPage: true,
+          homeScreenContext = context ;
+          var cubit = MyBloc.get(context);
+          return ConditionalBuilder(
+              condition: cubit.home_model != null ,
+              builder: (context) => SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0) ,
+                          child: CarouselSlider.builder(
+                            itemCount: img.length,
+                            itemBuilder: (context, index, l) {
+                              return Image.asset(
+                                width: MediaQuery.of(context).size.width - 20,
+                                'images/2.jpg',
+                                fit: BoxFit.cover,
+                              );
+                            },
+                            options: CarouselOptions(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              height: 170.0,
+                              initialPage: 0,
+                              reverse: false,
+                              autoPlay: true,
+                              enableInfiniteScroll: true,
+                              viewportFraction: 1.1,
+                              autoPlayInterval: const Duration(seconds: 7),
+                              autoPlayAnimationDuration: const Duration(seconds: 3),
+                              autoPlayCurve: Curves.decelerate,
+                              //enlargeCenterPage: true,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) => card(cubit.home_model!.propertylist[index],context),
+                        separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+                        itemCount: cubit.home_model!.propertylist.length,
+                      ),
+                    ],
                   ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) => card(204500, 'Syria - Damascus - Al Amin', 4,3,150,context),
-                    separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-                    itemCount: 5,
-                  ),
-                ],
+                ),
               ),
-            ),
+              fallback: (context) => const Center(child: CircularProgressIndicator())
           );
         },
       );
   }
 
-   card(int prize, String loc, int bedcount,int bathcount,int area,BuildContext context) {
+   card(PropertyModel item , BuildContext context) {
      return Container(
        clipBehavior: Clip.antiAliasWithSaveLayer,
        decoration: BoxDecoration(
@@ -111,7 +109,7 @@ class Home_Screen extends StatelessWidget {
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
                  reusableText(
-                     text: '\$${prize.toString()}',
+                     text: '\$${item.price.toString()}',
                      fontsize: 20,
                      fontColor: myAppColor,
                      fontWeight: FontWeight.bold
@@ -134,7 +132,7 @@ class Home_Screen extends StatelessWidget {
                  ),
                  reusableText(
                    maxLines: 1,
-                   text: loc,
+                   text: item.address.toString(),
                    fontsize: 14,
                    fontWeight: FontWeight.w200,
                    fontColor: Colors.grey,
@@ -145,7 +143,7 @@ class Home_Screen extends StatelessWidget {
                      const SizedBox(
                        width: 5,
                      ),
-                     Text(bedcount.toString()),
+                     Text(item.numberofRooms.toString()),
 
                      const Spacer(),
 
@@ -153,7 +151,7 @@ class Home_Screen extends StatelessWidget {
                      const SizedBox(
                        width: 5,
                      ),
-                     Text(bedcount.toString()),
+                     Text('2'),
 
                      const Spacer(),
 
@@ -161,7 +159,7 @@ class Home_Screen extends StatelessWidget {
                      const SizedBox(
                        width: 5,
                      ),
-                     Text(bedcount.toString()),
+                     Text(item.area.toString()),
                    ],
                  ),
                ],

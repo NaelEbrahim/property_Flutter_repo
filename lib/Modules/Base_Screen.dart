@@ -32,7 +32,7 @@ class Base_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => MyBloc(),
+        create: (context) => MyBloc()..GetAllProperty(),
       child: BlocConsumer <MyBloc,Bloc_States> (
         listener: (context, state) => (){},
         builder: (context, state) {

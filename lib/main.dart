@@ -5,8 +5,12 @@ import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
 import 'package:university_project_property_app/Modules/Base_Screen.dart';
+import 'package:university_project_property_app/Modules/Chatting/Message_Screen.dart';
 import 'package:university_project_property_app/Modules/Property_Details.dart';
+import 'package:university_project_property_app/Modules/Search_Screen.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
+
+import 'Modules/Add_Property/Add_Property.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo
             ),
             debugShowCheckedModeBanner: false,
-            home: Property_Details()
+            home: Message_Screen()
           );
         },
       ),

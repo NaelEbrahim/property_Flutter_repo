@@ -1,18 +1,37 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
+import 'package:university_project_property_app/Models/Home_Model.dart';
 import 'package:university_project_property_app/Models/Login_Model.dart';
 import 'package:university_project_property_app/Models/Messages_Model.dart';
 import 'package:university_project_property_app/Models/SignUp_Model.dart';
 import 'package:university_project_property_app/Remote/End_Points.dart';
+import 'package:university_project_property_app/Shared/Resources.dart';
 
 class MyBloc extends Cubit<Bloc_States> {
   MyBloc() : super(Initial_State());
 
   static MyBloc get(context) => BlocProvider.of(context);
+
+
+  final ImagePicker imagePicker = ImagePicker() ;
+  void AddToSelectedImages () async {
+    final List <XFile> SelectedImages = await imagePicker.pickMultiImage() ;
+    if ( SelectedImages.isNotEmpty ){
+     FileToimages.addAll(SelectedImages);
+    }
+    emit(ChangeAnyState());
+  }
+
+  void DeleteFromSelectedImages (int index) {
+    FileToimages.removeAt(index);
+    emit(ChangeAnyState());
+  }
+
 
   bool eyeVisible = true;
 
@@ -27,7 +46,7 @@ class MyBloc extends Cubit<Bloc_States> {
   Login_Model ? login_model ;
   void login(Map<String, dynamic> data) {
     emit(LoadingLoginState());
-    Dio_Helper.postData(LOGIN, data).then((value) {
+    Dio_Helper.postData(url: LOGIN,data: data).then((value) {
       login_model = Login_Model.fromjson(value.data);
       emit(SuccessLoginState());
     }).catchError((error) {
@@ -38,7 +57,7 @@ class MyBloc extends Cubit<Bloc_States> {
   SignUp_Model ? signUp_Model ;
   void Signup(Map<String, dynamic> data) {
     emit(LoadingSignupState());
-    Dio_Helper.postData(SIGNUP, data).then((value) {
+    Dio_Helper.postData(url: SIGNUP,data:  data).then((value) {
       signUp_Model = SignUp_Model.fromjson(value.data);
       emit(SuccessSignupState());
     }).catchError((error) {
@@ -46,6 +65,52 @@ class MyBloc extends Cubit<Bloc_States> {
     });
   }
 
+
+  void AddProperty ({
+  required Map <String , dynamic > data ,
+  required header   
+  }){
+      emit(LoadingAddProperty());
+   Dio_Helper.postData(
+       url: ADDPROPERTY,
+       data: data,
+       headers: header
+   ).then((value) {
+      emit(SuccessAddProperty());
+   }).catchError((error){
+      emit(ErrorAddProperty(error.toString()));
+  });
+}
+
+Home_Model ? home_model ;
+Future GetAllProperty () {
+    emit(LoadingGetAllProperty());
+    return Dio_Helper.getData(
+        GETALLPROPERTY).then((value){
+          home_model = Home_Model.fromjson(value.data);
+          emit(SuccessGetAllProperty());
+    }
+    ).catchError((error){
+      emit(ErrorGetAllProperty(error.toString()));
+      print(error.toString());
+    });
+}
+
+  Future Search ( Map <String , dynamic > data ) {
+  emit(LoadingSearchProperty());
+    return Dio_Helper.postData(
+        url: SEARCH ,
+        data: data
+    ).then((value) {
+      emit(SuccessSearchProperty());
+      print(value.data);
+    }).catchError((error){
+      emit(ErrorSearchProperty(error.toString()));
+      print(error.toString());
+    });
+  }
+  
+  //Chatting 
   void SendMessage({
     required String receiverId,
     required String datetime,
@@ -110,7 +175,7 @@ class MyBloc extends Cubit<Bloc_States> {
     emit(ChangeAnyState());
   }
 
-  var selectedIndex = -1 ;
+  var selectedIndex = 0 ;
   void ChangePropertyCategory (index){
     selectedIndex = index ;
     emit(ChangeAnyState());
