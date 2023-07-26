@@ -5,12 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
+import 'package:university_project_property_app/Models/Filter_Model.dart';
 import 'package:university_project_property_app/Models/Home_Model.dart';
 import 'package:university_project_property_app/Models/Login_Model.dart';
 import 'package:university_project_property_app/Models/Messages_Model.dart';
+import 'package:university_project_property_app/Models/Search Model.dart';
 import 'package:university_project_property_app/Models/SignUp_Model.dart';
 import 'package:university_project_property_app/Remote/End_Points.dart';
 import 'package:university_project_property_app/Shared/Resources.dart';
+import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
 
 class MyBloc extends Cubit<Bloc_States> {
   MyBloc() : super(Initial_State());
@@ -18,7 +21,7 @@ class MyBloc extends Cubit<Bloc_States> {
   static MyBloc get(context) => BlocProvider.of(context);
 
 
-  final ImagePicker imagePicker = ImagePicker() ;
+  final ImagePicker imagePicker = ImagePicker () ;
   void AddToSelectedImages () async {
     final List <XFile> SelectedImages = await imagePicker.pickMultiImage() ;
     if ( SelectedImages.isNotEmpty ){
@@ -48,8 +51,15 @@ class MyBloc extends Cubit<Bloc_States> {
     emit(LoadingLoginState());
     Dio_Helper.postData(url: LOGIN,data: data).then((value) {
       login_model = Login_Model.fromjson(value.data);
+      if( login_model!.token != null ) {
+        sharedPreferences.putData(login_model!.token);
+        sharedPreferences.putUserData({
+          'user_name' : login_model!.user_data!.name.toString(),
+        });
+      }
       emit(SuccessLoginState());
     }).catchError((error) {
+
       emit(ErrorLoginState(error.toString()));
     });
   }
@@ -59,6 +69,7 @@ class MyBloc extends Cubit<Bloc_States> {
     emit(LoadingSignupState());
     Dio_Helper.postData(url: SIGNUP,data:  data).then((value) {
       signUp_Model = SignUp_Model.fromjson(value.data);
+      sharedPreferences.putData(signUp_Model!.token);
       emit(SuccessSignupState());
     }).catchError((error) {
       emit(ErrorSignupState());
@@ -78,6 +89,7 @@ class MyBloc extends Cubit<Bloc_States> {
    ).then((value) {
       emit(SuccessAddProperty());
    }).catchError((error){
+     print(error.toString());
       emit(ErrorAddProperty(error.toString()));
   });
 }
@@ -96,20 +108,54 @@ Future GetAllProperty () {
     });
 }
 
+  Search_Model ? search_model ;
   Future Search ( Map <String , dynamic > data ) {
+    if ( search_model != null ) {
+      search_model!.propertylist = [] ;
+    }
   emit(LoadingSearchProperty());
     return Dio_Helper.postData(
         url: SEARCH ,
         data: data
     ).then((value) {
+      search_model = Search_Model.fromjson(value.data['result']);
       emit(SuccessSearchProperty());
-      print(value.data);
     }).catchError((error){
       emit(ErrorSearchProperty(error.toString()));
       print(error.toString());
     });
   }
-  
+
+
+  Filter_Model ? filter_model ; 
+  Future filter (Map <String , dynamic> data ) {
+    emit(LoadingFilterProperty());
+    return Dio_Helper.postData(
+       url: FILTER,
+       data: data
+   ).then((value) {
+     filter_model = Filter_Model.fromjson(value.data['properties']);
+     print(filter_model!.propertylist[0].area);
+      emit(SuccessFilterProperty());
+    }).catchError((error){
+     emit(ErrorFilterProperty(error.toString()));
+     print(error.toString());
+    });
+  }
+
+  Future Logout ( header ) {
+    emit(LoadingLogoutProperty());
+    return Dio_Helper.postData(
+        url: LOGOUT,
+        data: {},
+        headers: header
+    ).then((value) {
+      emit(SuccessLogoutProperty());
+    }).catchError((error){
+      emit(ErrorLogoutProperty(error.toString()));
+    });
+  }
+
   //Chatting 
   void SendMessage({
     required String receiverId,

@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, file_names, must_be_immutable
+// ignore_for_file: camel_case_types, file_names, must_be_immutable, non_constant_identifier_names
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Models/Home_Model.dart';
+import 'package:university_project_property_app/Modules/Property_Details.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Resources.dart';
@@ -26,7 +27,7 @@ class Home_Screen extends StatelessWidget {
       return BlocConsumer<MyBloc , Bloc_States>(
         listener: (context, state) => (){},
         builder: (context, state) {
-          homeScreenContext = context ;
+          baseScreenContext = context ;
           var cubit = MyBloc.get(context);
           return ConditionalBuilder(
               condition: cubit.home_model != null ,
@@ -68,7 +69,7 @@ class Home_Screen extends StatelessWidget {
                       ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) => card(cubit.home_model!.propertylist[index],context),
+                        itemBuilder: (BuildContext context, int index) => BuildCard(cubit.home_model!.propertylist[index],context),
                         separatorBuilder: (context, index) => const SizedBox(height: 10.0),
                         itemCount: cubit.home_model!.propertylist.length,
                       ),
@@ -82,7 +83,7 @@ class Home_Screen extends StatelessWidget {
       );
   }
 
-   card(PropertyModel item , BuildContext context) {
+   BuildCard (PropertyModel item , BuildContext context) {
      return Container(
        clipBehavior: Clip.antiAliasWithSaveLayer,
        decoration: BoxDecoration(
@@ -117,17 +118,26 @@ class Home_Screen extends StatelessWidget {
                  Container(
                    width: 100,
                    height: 25,
-                   decoration:  BoxDecoration(
+                   decoration:  const BoxDecoration(
                      color: myAppColor,
-                     borderRadius: const BorderRadius.all(
+                     borderRadius: BorderRadius.all(
                        Radius.circular(5),
                      ),
                    ),
-                   child: const Center(
-                     child: Text(
-                       'View',
-                       style: TextStyle(color: Colors.white),
-                     ),
+                   child: Center(
+                     child: reusableTextButton(
+                         context: context ,
+                         buttontext: 'View',
+                         fontSize: 12.0,
+                         fontWeight: FontWeight.w500,
+                         textColor: Colors.white,
+                         function: (){
+                           Navigator.push(
+                               context,
+                               MaterialPageRoute(builder: (context) => Property_Details(item))
+                           );
+                         }
+                     )
                    ),
                  ),
                  reusableText(
@@ -143,7 +153,7 @@ class Home_Screen extends StatelessWidget {
                      const SizedBox(
                        width: 5,
                      ),
-                     Text(item.numberofRooms.toString()),
+                     reusableText(text: item.numberofRooms.toString(), fontsize: 13),
 
                      const Spacer(),
 
@@ -151,7 +161,7 @@ class Home_Screen extends StatelessWidget {
                      const SizedBox(
                        width: 5,
                      ),
-                     Text('2'),
+                     reusableText(text: item.numberofBaths.toString(), fontsize: 13),
 
                      const Spacer(),
 
@@ -159,7 +169,7 @@ class Home_Screen extends StatelessWidget {
                      const SizedBox(
                        width: 5,
                      ),
-                     Text(item.area.toString()),
+                     reusableText(text: item.area.toString(), fontsize: 13)
                    ],
                  ),
                ],

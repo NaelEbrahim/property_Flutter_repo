@@ -1,6 +1,7 @@
-// ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
+// ignore_for_file: camel_case_types, file_names, non_constant_identifier_names, must_be_immutable
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:university_project_property_app/Models/Home_Model.dart';
 import 'package:university_project_property_app/Shared/App_Bars.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
@@ -11,17 +12,22 @@ class RowComponent {
   RowComponent(this.text, this.icon);
 }
 
-List <RowComponent> rowItem = [
-  RowComponent('203 m\u00B2', Icons.area_chart_outlined),
-  RowComponent('4 beds', Icons.bed_outlined),
-  RowComponent('2 baths', Icons.bathtub_outlined),
-];
 
 class Property_Details extends StatelessWidget {
-  const Property_Details({Key? key}) : super(key: key);
+  var information ;
+
+
+  Property_Details(this.information, {super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    List <RowComponent> rowItem = [
+      RowComponent('${information.area.toString()} m\u00B2', Icons.area_chart_outlined),
+      RowComponent('${information.numberofRooms.toString()} beds', Icons.bed_outlined),
+      RowComponent('${information.numberofBaths.toString()} baths', Icons.bathtub_outlined),
+    ];
+
     return Scaffold(
       backgroundColor: ScaffoldColor,
       appBar: Property_Details_AppBar(),
@@ -87,7 +93,7 @@ class Property_Details extends StatelessWidget {
                       children: [
                         reusableText(text: 'Owner', fontsize: 11,fontColor: Colors.grey),
                         const SizedBox(height: 5.0),
-                        reusableText(text: 'Rami Ahmed', fontsize: 14,fontWeight: FontWeight.bold)
+                        reusableText(text: information.ownername.toString() , fontsize: 14,fontWeight: FontWeight.bold)
                       ],
                     ),
                     const Spacer(),
@@ -120,10 +126,13 @@ class Property_Details extends StatelessWidget {
                           width: 2.0,
                         ),
                       ),
-                      child: const Icon(
-                        Icons.phone,
+                      child: IconButton(
+                        onPressed: (){
+
+                        },
+                        icon : const Icon(Icons.phone),
                         color: Colors.white,
-                        size: 20.0,
+                        iconSize: 20.0,
                       ),
                     ),
                     const SizedBox(width: 10.0)
@@ -134,7 +143,7 @@ class Property_Details extends StatelessWidget {
               reusableText(text: 'Description :', fontsize: 15.0,fontWeight: FontWeight.bold),
               const SizedBox(height: 5.0),
               reusableText(
-                  text: 'This House Was Build From High Quality Material And Experience From About Three Years Age , The garden Is So Clean And Beautiful Which You can Use Every Single Day , This is a Real Dream House.',
+                  text: information.descreption.toString(),
                   fontsize: 13.0,
                   fontColor: Colors.grey,
                   maxLines: 4),
@@ -153,7 +162,12 @@ class Property_Details extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on,color: Colors.black),
                       const SizedBox(width: 20.0),
-                      reusableText(text: "Damascus Central City - Mazzeh - 223 ST ", fontsize: 12,fontWeight: FontWeight.bold,maxLines: 1)
+                      reusableText(
+                          text: "${information.namestate.toString().toUpperCase()} - ${information.address.toString().toUpperCase()} ",
+                          fontsize: 12,
+                          fontWeight: FontWeight.bold,
+                          maxLines: 1
+                      )
                     ]
                   ),
                 ),
@@ -173,7 +187,7 @@ class Property_Details extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        reusableText(text: '\$75000', fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: Colors.white),
+                        reusableText(text: '\$${information.price.toString()}', fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: Colors.white),
                         const SizedBox(width: 10.0),
                         reusableText(text: '/  Purchase Now', fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: Colors.white),
                       ],
@@ -209,3 +223,8 @@ class Property_Details extends StatelessWidget {
       )
   );
 }
+
+
+/*
+'This House Was Build From High Quality Material And Experience From About Three Years Age , The garden Is So Clean And Beautiful Which You can Use Every Single Day , This is a Real Dream House.'
+ */

@@ -3,9 +3,11 @@
 class Login_Model {
   User_Data ? user_data ;
   var token ;
+  var message ;
 
   Login_Model.fromjson(Map<String,dynamic>json){
     token = json['token'];
+    message = json['message'];
     user_data = ( json['token'] == null ) ? null : User_Data.fromjson(json['user']) ;
   }
 }

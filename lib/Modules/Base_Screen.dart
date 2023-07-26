@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Modules/Favourite_Screen.dart';
+import 'package:university_project_property_app/Modules/Filter/Filter_Screen.dart';
 import 'package:university_project_property_app/Shared/App_Bars.dart';
+import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
-import 'Filter_Screen.dart';
 import 'Home_Screen.dart';
 import 'Profile_Screen.dart';
 
@@ -38,6 +39,7 @@ class Base_Screen extends StatelessWidget {
         builder: (context, state) {
           var cubit = MyBloc.get(context);
           return Scaffold(
+            drawer: opendrawer(context),
             backgroundColor: ScaffoldColor,
             appBar: appbars[CurrentBottomNavIndex],
             body: screens[CurrentBottomNavIndex],

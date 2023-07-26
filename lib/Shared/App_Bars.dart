@@ -35,28 +35,27 @@ AppBar Home_AppBar () => AppBar(
       padding: const EdgeInsets.all(8.0),
       child: IconButton(
           onPressed: (){
-            Navigator.push(homeScreenContext!, MaterialPageRoute(builder: (context) => Search_Screen()));
-          } ,
+            Navigator.push(baseScreenContext!, MaterialPageRoute(builder: (context) => Search_Screen()));
+              } ,
           icon: const Icon(Icons.search,size: 27.0),
       )
     ),
   ],
-  leading: GestureDetector(
-    onTap: () {
-      // Scaffold.of(context).openDrawer();
+  leading: IconButton(
+    onPressed: (){
+      Scaffold.of(baseScreenContext!).openDrawer();
     },
-    child: const Icon(
-      Icons.menu,
-      color: Colors.white,
-    ),
-  ),
+    icon: const Icon(Icons.menu, color: Colors.white),
+  )
 );
 
 AppBar Profile_AppBar () => AppBar(
   backgroundColor: myAppColor,
   leading: IconButton(
-    onPressed: (){},
-    icon: const Icon(Icons.arrow_back,color: Colors.white),
+    onPressed: (){
+      Scaffold.of(baseScreenContext!).openDrawer();
+    },
+    icon: const Icon(Icons.menu, color: Colors.white),
   ),
   title: reusableText(
       text: 'Profile',
@@ -70,8 +69,10 @@ AppBar Profile_AppBar () => AppBar(
 AppBar Filter_AppBar () => AppBar(
   backgroundColor: myAppColor,
   leading: IconButton(
-    onPressed: (){},
-    icon: const Icon(Icons.arrow_back,color: Colors.white),
+    onPressed: (){
+      Scaffold.of(baseScreenContext!).openDrawer();
+    },
+    icon: const Icon(Icons.menu, color: Colors.white),
   ),
   title: reusableText(
       text: 'Filter',
@@ -85,8 +86,10 @@ AppBar Filter_AppBar () => AppBar(
 AppBar Favourite_AppBar () => AppBar(
   backgroundColor: myAppColor,
   leading: IconButton(
-    onPressed: (){},
-    icon: const Icon(Icons.arrow_back,color: Colors.white),
+    onPressed: (){
+      Scaffold.of(baseScreenContext!).openDrawer();
+    },
+    icon: const Icon(Icons.menu, color: Colors.white),
   ),
   title: reusableText(
       text: 'Favourite',

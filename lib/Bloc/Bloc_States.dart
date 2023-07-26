@@ -65,6 +65,28 @@ class ErrorSearchProperty extends Bloc_States {
   ErrorSearchProperty(this.error);
 }
 
+//******************* FILTER PROPERTY STATES *****************//
+class LoadingFilterProperty extends Bloc_States {}
+
+class SuccessFilterProperty extends Bloc_States {}
+
+class ErrorFilterProperty extends Bloc_States {
+  String ? error ;
+
+  ErrorFilterProperty(this.error);
+}
+
+//******************* LOGOUT PROPERTY STATES *****************//
+class LoadingLogoutProperty extends Bloc_States {}
+
+class SuccessLogoutProperty extends Bloc_States {}
+
+class ErrorLogoutProperty extends Bloc_States {
+  String ? error ;
+
+  ErrorLogoutProperty(this.error);
+}
+
 //******************* OTHER STATES *****************//
 class ChangeEyeIcon extends Bloc_States {}
 

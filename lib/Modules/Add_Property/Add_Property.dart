@@ -273,7 +273,7 @@ class Add_Property extends StatelessWidget {
                               child: Stack(
                                 alignment: AlignmentDirectional.bottomCenter,
                                 children: [
-                                  Align(
+                                  const Align(
                                     alignment: AlignmentDirectional.center,
                                       child: Icon(Icons.photo_library,size: 35.0,color: myAppColor)),
                                   Container(
@@ -314,12 +314,12 @@ class Add_Property extends StatelessWidget {
                                          'address' : locationcontroller.text,
                                          'numberofRooms' : numberOfRoomcontroller.text,
                                          'descreption' : descriptioncontroller.text,
-                                         'nameState' : namePropertycontroller.text,
+                                         'nameState' : 'damasucs',
                                          'area' : areacontroller.text,
                                          'price' : pricecontroller.text,
-                                         'image[]' : base64Strings,
+                                         'image[]' : 'base64Strings',
                                         },
-                                        header: 'Bearer 5|RMf5c1wDW3vxQTzofJCZCuodHt1MlqTzSgv5bKrV'
+                                        header: '8|D4K8TbYyaMqXT3RbB2USDmMJxT1L4UMOHpGOhjSd'
                                   );
                                   });
                                 },

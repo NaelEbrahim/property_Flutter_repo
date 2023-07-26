@@ -1,32 +1,47 @@
-// ignore_for_file: camel_case_types, file_names, must_be_immutable, non_constant_identifier_names
+// ignore_for_file: camel_case_types, file_names, must_be_immutable, non_constant_identifier_names, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
+import 'package:university_project_property_app/Modules/Filter/Filter_Result.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
-import '../Shared/Constant.dart';
-import 'Add_Property/Add_Property.dart';
+import 'package:university_project_property_app/Shared/Resources.dart';
+import '../../Shared/Constant.dart';
+import '../Add_Property/Add_Property.dart';
 
 class Filter_Screen extends StatelessWidget {
   Filter_Screen({Key? key}) : super(key: key);
 
   bool sell = true ;
 
-  var numberOfRoomcontroller = TextEditingController();
+  var areacontroller = TextEditingController();
+
+  var locationcontroller = TextEditingController();
 
   int numberOfbathroom = 3 ;
 
-  int numberOfbedroom = 2 ;
+  int numberOfroom = 2 ;
 
-  SfRangeValues _values = const SfRangeValues(20000.0, 60000.0);
+  String type = 'house' ;
+
+  String sell_rent = 'sell' ;
+
+
+  SfRangeValues values = const SfRangeValues(20000.0, 60000.0);
+
+  double minprice = 20000.0 ;
+
+  double maxprice = 60000.0 ;
+
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer <MyBloc , Bloc_States>(
       listener: (context, state) => (){},
       builder: (context, state) {
+        baseScreenContext = context ;
         var cubit = MyBloc.get(context);
         return SingleChildScrollView(
             child: Container(
@@ -64,6 +79,7 @@ class Filter_Screen extends StatelessWidget {
                       onTap: (){
                         if ( !sell ) {
                           sell = !sell;
+                          sell_rent = (sell) ? 'sell' : 'rent' ;
                           cubit.ChangeState();
                         }
                       },
@@ -91,6 +107,7 @@ class Filter_Screen extends StatelessWidget {
                       onTap: (){
                         if ( sell ) {
                           sell = !sell;
+                          sell_rent = (sell) ? 'sell' : 'rent' ;
                           cubit.ChangeState();
                         }
                       },
@@ -127,21 +144,22 @@ class Filter_Screen extends StatelessWidget {
                       hintText: 'Area in Square Meter',
                       prefixIcon: const Icon(Icons.stacked_line_chart),
                       raduis: 20.0,
-                      controller: numberOfRoomcontroller
+                      textInputType: TextInputType.number,
+                      controller: areacontroller
                   ),
                   const SizedBox(height: 20.0),
                   reusableText(
                       text: 'Property Location :',
                       fontsize: 14.0,
                       fontWeight: FontWeight.bold,
-                      fontColor: Colors.grey
+                      fontColor: Colors.grey,
                   ),
                   const SizedBox(height: 10.0),
                   reusableTextField(
                       hintText: 'Write Location',
                       prefixIcon: const Icon(Icons.location_on),
                       raduis: 20.0,
-                      controller: numberOfRoomcontroller
+                      controller: locationcontroller
                   ),
                   const SizedBox(height: 20.0),
                   reusableText(
@@ -154,7 +172,7 @@ class Filter_Screen extends StatelessWidget {
                   SfRangeSliderTheme(
                       data: SfRangeSliderThemeData(
                           tooltipBackgroundColor: ScaffoldColor,
-                          tooltipTextStyle: TextStyle(
+                          tooltipTextStyle: const TextStyle(
                               color: myAppColor,
                               fontWeight: FontWeight.bold
                           )
@@ -162,14 +180,15 @@ class Filter_Screen extends StatelessWidget {
                       child: SfRangeSlider(
                         min: 10000.0,
                         max: 100000.0,
-                        values: _values,
+                        values: values,
                         activeColor: myAppColor,
                         stepSize: 1000.0,
                         inactiveColor: myAppColor.withOpacity(0.3),
                         shouldAlwaysShowTooltip: true,
-                        //   tooltipShape: SfPaddleTooltipShape(),
                         onChanged: (value) {
-                          _values = value ;
+                          maxprice = value.end ;
+                          minprice = value.start ;
+                          values = value ;
                           cubit.ChangeState();
                         },
                       )
@@ -193,8 +212,8 @@ class Filter_Screen extends StatelessWidget {
                                   IconButton(
                                       iconSize: 20.0,
                                       onPressed: (){
-                                        if ( numberOfbedroom > 1) {
-                                          numberOfbedroom --;
+                                        if ( numberOfroom > 1) {
+                                          numberOfroom --;
                                           cubit.ChangeState();
                                         }
                                       },
@@ -203,14 +222,14 @@ class Filter_Screen extends StatelessWidget {
                                   ),
                                   const Spacer(),
                                   reusableText(
-                                      text: numberOfbedroom.toString(),
+                                      text: numberOfroom.toString(),
                                       fontsize: 16
                                   ),
                                   const Spacer(),
                                   IconButton(
                                       onPressed: (){
-                                        if ( numberOfbedroom < 10 ) {
-                                          numberOfbedroom ++;
+                                        if ( numberOfroom < 10 ) {
+                                          numberOfroom ++;
                                           cubit.ChangeState();
                                         }
                                       },
@@ -284,7 +303,20 @@ class Filter_Screen extends StatelessWidget {
                           buttontext: 'Search',
                           textColor: Colors.white,
                           fontWeight: FontWeight.w600,
-                          function: (){}
+                          function: (){
+                            cubit.filter({
+                              'typeofproperty' : type ,
+                              'rent_or_sell' : sell_rent ,
+                              'state' : 'damasucs' ,
+                              'location' : locationcontroller.text ,
+                              'area' : areacontroller.text ,
+                              'num_of_rooms' : numberOfroom ,
+                              'minprice' : minprice.round() ,
+                              'maxprice' : maxprice.round()
+                            }).then((value) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Result(cubit.filter_model!.propertylist)));
+                            });
+                          }
                       ),
                     ),
                   )
@@ -300,7 +332,8 @@ class Filter_Screen extends StatelessWidget {
     var cubit = MyBloc.get(context);
     return GestureDetector(
       onTap: (){
-        MyBloc.get(context).ChangePropertyCategory(index);
+        cubit.ChangePropertyCategory(index);
+        type = category_list[cubit.selectedIndex].title_type ;
       },
       child: Container(
           height: 100.0,

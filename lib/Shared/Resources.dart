@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 // Resources
 List <XFile> FileToimages = [];
 
-BuildContext ? homeScreenContext ;
+BuildContext ? baseScreenContext ;
 BuildContext ? searchScreenContext ;
 
 

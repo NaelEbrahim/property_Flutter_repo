@@ -26,7 +26,7 @@ class Dio_Helper {
         options: Options(
           responseType: ResponseType.json,
           headers: {
-           'Authorization' : '$headers'
+           'Authorization' : 'Bearer $headers'
           })
     );
   }

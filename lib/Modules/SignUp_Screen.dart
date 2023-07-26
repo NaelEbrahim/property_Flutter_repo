@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
+import 'package:university_project_property_app/Modules/Login_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
+import 'package:university_project_property_app/Shared/Constant.dart';
 
 class SignUp_Screen extends StatelessWidget {
   SignUp_Screen({Key? key}) : super(key: key);
@@ -283,7 +285,7 @@ class SignUp_Screen extends StatelessWidget {
                                 height: 60.0,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30.0),
-                                    color: Colors.indigo),
+                                    color: myAppColor),
                                 child: reusableTextButton(
                                     context: context,
                                     buttontext: 'CREATE',
@@ -318,10 +320,15 @@ class SignUp_Screen extends StatelessWidget {
                                 reusableTextButton(
                                     context: context,
                                     buttontext: 'Login',
-                                    textColor: Colors.indigo,
+                                    textColor: myAppColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
-                                    function: () {})
+                                    function: (){
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Login_Screen()),
+                                          (route) => false);
+                                    })
                               ],
                             ),
                             const SizedBox(height: 20.0),

@@ -1,34 +1,48 @@
 // ignore_for_file: camel_case_types, file_names
+import 'package:conditional_builder_null_safety/example/example.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university_project_property_app/Bloc/Bloc.dart';
+import 'package:university_project_property_app/Bloc/Bloc_States.dart';
+import 'package:university_project_property_app/Models/Home_Model.dart';
+import 'package:university_project_property_app/Modules/Property_Details.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:university_project_property_app/Shared/Resources.dart';
 
 class Favourite_Screen extends StatelessWidget {
   const Favourite_Screen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      physics: const BouncingScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            ListView.separated(
-              shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => card(25300,"Damascus",3,2,120,context),
-                separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-                itemCount: 10
+    return BlocConsumer<MyBloc , Bloc_States>(
+      listener: (context, state) => {},
+      builder: (context, state) {
+        baseScreenContext = context ;
+        var cubit = MyBloc.get(context);
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => BuildCard(cubit.home_model!.propertylist[index],context),
+                    separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+                    itemCount: 10
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
-  card(int prize, String loc, int bedcount,int bathcount,int area,BuildContext context) {
+  BuildCard (PropertyModel item , BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
@@ -55,7 +69,7 @@ class Favourite_Screen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 reusableText(
-                    text: '\$${prize.toString()}',
+                    text: '\$${item.price.toString()}',
                     fontsize: 20,
                     fontColor: myAppColor,
                     fontWeight: FontWeight.bold
@@ -63,22 +77,31 @@ class Favourite_Screen extends StatelessWidget {
                 Container(
                   width: 100,
                   height: 25,
-                  decoration:  BoxDecoration(
+                  decoration:  const BoxDecoration(
                     color: myAppColor,
-                    borderRadius: const BorderRadius.all(
+                    borderRadius: BorderRadius.all(
                       Radius.circular(5),
                     ),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'View',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  child: Center(
+                      child: reusableTextButton(
+                          context: context ,
+                          buttontext: 'View',
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w500,
+                          textColor: Colors.white,
+                          function: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Property_Details(item))
+                            );
+                          }
+                      )
                   ),
                 ),
                 reusableText(
                   maxLines: 1,
-                  text: loc,
+                  text: item.address.toString(),
                   fontsize: 14,
                   fontWeight: FontWeight.w200,
                   fontColor: Colors.grey,
@@ -89,7 +112,7 @@ class Favourite_Screen extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(bedcount.toString()),
+                    reusableText(text: item.numberofRooms.toString(), fontsize: 13),
 
                     const Spacer(),
 
@@ -97,7 +120,7 @@ class Favourite_Screen extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(bedcount.toString()),
+                    reusableText(text: item.numberofBaths.toString(), fontsize: 13),
 
                     const Spacer(),
 
@@ -105,7 +128,7 @@ class Favourite_Screen extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(bedcount.toString()),
+                    reusableText(text: item.area.toString(), fontsize: 13)
                   ],
                 ),
               ],

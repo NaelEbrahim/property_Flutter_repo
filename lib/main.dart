@@ -4,19 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
+import 'package:university_project_property_app/Modules/Add_Property/Add_Property.dart';
 import 'package:university_project_property_app/Modules/Base_Screen.dart';
 import 'package:university_project_property_app/Modules/Chatting/Message_Screen.dart';
+import 'package:university_project_property_app/Modules/Home_Screen.dart';
+import 'package:university_project_property_app/Modules/Login_Screen.dart';
 import 'package:university_project_property_app/Modules/Property_Details.dart';
 import 'package:university_project_property_app/Modules/Search_Screen.dart';
+import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
-
-import 'Modules/Add_Property/Add_Property.dart';
+import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:university_project_property_app/Shared/Resources.dart';
+import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   Dio_Helper.init();
+  await sharedPreferences.init();
   runApp(const MyApp());
 }
 
@@ -28,14 +34,14 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => MyBloc(),
       child: BlocConsumer<MyBloc, Bloc_States>(
-        listener: (context, state) => () {},
+        listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
             theme: ThemeData(
-              primarySwatch: Colors.indigo
+              primarySwatch : MaterialMyAppColor
             ),
             debugShowCheckedModeBanner: false,
-            home: Base_Screen()
+            home: ( sharedPreferences.getData('token') != null ) ? Base_Screen() : Login_Screen()
           );
         },
       ),
