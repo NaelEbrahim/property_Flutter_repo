@@ -1,4 +1,6 @@
-// ignore_for_file: camel_case_types, file_names
+// ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
+
+import 'package:image_picker/image_picker.dart';
 
 abstract class Bloc_States {}
 
@@ -14,14 +16,78 @@ class ErrorLoginState extends Bloc_States {
   ErrorLoginState(this.error);
 }
 
-//******************* SIGNUP STATES BLOC*****************//
+//******************* SIGNUP STATES *****************//
 class LoadingSignupState extends Bloc_States {}
 
 class SuccessSignupState extends Bloc_States {}
 
 class ErrorSignupState extends Bloc_States {}
 
+//******************* CHATTING STATES *****************//
+class SuccessSendMessageState extends Bloc_States {}
+
+class ErrorSendMessageState extends Bloc_States {}
+
+class SuccessGetMessagesState extends Bloc_States {}
+
+class SuccessReceiveMessagesState extends Bloc_States {}
+
+//******************* ADD PROPERTY STATES *****************//
+class LoadingAddProperty extends Bloc_States {}
+
+class SuccessAddProperty extends Bloc_States {}
+
+class ErrorAddProperty extends Bloc_States {
+  String ? error ;
+
+  ErrorAddProperty(this.error);
+}
+
+//******************* GET ALL PROPERTY STATES *****************//
+class LoadingGetAllProperty extends Bloc_States {}
+
+class SuccessGetAllProperty extends Bloc_States {}
+
+class ErrorGetAllProperty extends Bloc_States {
+  String ? error ;
+
+  ErrorGetAllProperty(this.error);
+}
+
+//******************* SEARCH PROPERTY STATES *****************//
+class LoadingSearchProperty extends Bloc_States {}
+
+class SuccessSearchProperty extends Bloc_States {}
+
+class ErrorSearchProperty extends Bloc_States {
+  String ? error ;
+
+  ErrorSearchProperty(this.error);
+}
+
+//******************* FILTER PROPERTY STATES *****************//
+class LoadingFilterProperty extends Bloc_States {}
+
+class SuccessFilterProperty extends Bloc_States {}
+
+class ErrorFilterProperty extends Bloc_States {
+  String ? error ;
+
+  ErrorFilterProperty(this.error);
+}
+
+//******************* LOGOUT PROPERTY STATES *****************//
+class LoadingLogoutProperty extends Bloc_States {}
+
+class SuccessLogoutProperty extends Bloc_States {}
+
+class ErrorLogoutProperty extends Bloc_States {
+  String ? error ;
+
+  ErrorLogoutProperty(this.error);
+}
+
 //******************* OTHER STATES *****************//
 class ChangeEyeIcon extends Bloc_States {}
 
-class ChangeDropdown extends Bloc_States {}
+class ChangeAnyState extends Bloc_States {}

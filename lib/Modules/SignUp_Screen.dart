@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
+import 'package:university_project_property_app/Modules/Login_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
+import 'package:university_project_property_app/Shared/Constant.dart';
 
 class SignUp_Screen extends StatelessWidget {
   SignUp_Screen({Key? key}) : super(key: key);
@@ -64,23 +66,29 @@ class SignUp_Screen extends StatelessWidget {
                                 fontsize: 16,
                                 fontColor: Colors.grey,
                                 fontWeight: FontWeight.w500),
-                            const SizedBox(height: 60.0),
+                            const SizedBox(height: 40.0),
                             reusableTextField(
                                 hintText: 'Name',
                                 prefixIcon: const Icon(Icons.person_outline),
-                                controller: nameController),
+                                controller: nameController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Email',
                                 prefixIcon: const Icon(Icons.email_outlined),
                                 textInputType: TextInputType.emailAddress,
-                                controller: emailController),
+                                controller: emailController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Phone',
                                 prefixIcon: const Icon(Icons.phone_android_outlined),
                                 textInputType: TextInputType.phone,
-                                controller: phoneController),
+                                controller: phoneController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Password',
@@ -91,12 +99,15 @@ class SignUp_Screen extends StatelessWidget {
                                   bloc.ChangeEye();
                                 },
                                 obscureText: bloc.eyeVisible,
-                                controller: passwordController),
+                                controller: passwordController,
+                                raduis: 25.0
+                            ),
                             const SizedBox(height: 30.0),
                             reusableTextField(
                                 hintText: 'Info ( Optional )',
                                 prefixIcon: const Icon(Icons.info_outline),
-                                controller: information_aboutController),
+                                controller: information_aboutController,
+                                raduis: 25.0),
                             const SizedBox(height: 30.0),
                             Row(
                               children: [
@@ -126,21 +137,21 @@ class SignUp_Screen extends StatelessWidget {
                                       ],
                                     ),
                                     items: gender_items.map((item) => DropdownMenuItem<String>(
-                                              value: item,
-                                              child: Text(
-                                                item,
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ))
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ))
                                         .toList(),
                                     value: selectedgender,
                                     onChanged: (value) {
-                                        selectedgender = value as String;
-                                        bloc.ChangeDropDown();
+                                      selectedgender = value as String;
+                                      bloc.ChangeState();
                                     },
                                     buttonStyleData: ButtonStyleData(
                                       height: 50,
@@ -177,7 +188,7 @@ class SignUp_Screen extends StatelessWidget {
                                     menuItemStyleData: const MenuItemStyleData(
                                       height: 40,
                                       padding:
-                                          EdgeInsets.only(left: 14, right: 14),
+                                      EdgeInsets.only(left: 14, right: 14),
                                     ),
                                   ),
                                 ),
@@ -209,21 +220,21 @@ class SignUp_Screen extends StatelessWidget {
                                     ),
                                     items: age_items
                                         .map((item) => DropdownMenuItem<int>(
-                                              value: item,
-                                              child: Text(
-                                                item.toString(),
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ))
+                                      value: item,
+                                      child: Text(
+                                        item.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ))
                                         .toList(),
                                     value: selectedAge,
                                     onChanged: (value) {
-                                         selectedAge = value as int;
-                                          bloc.ChangeDropDown();
+                                      selectedAge = value as int;
+                                      bloc.ChangeState();
                                     },
                                     buttonStyleData: ButtonStyleData(
                                       height: 50,
@@ -260,7 +271,7 @@ class SignUp_Screen extends StatelessWidget {
                                     menuItemStyleData: const MenuItemStyleData(
                                       height: 40,
                                       padding:
-                                          EdgeInsets.only(left: 14, right: 14),
+                                      EdgeInsets.only(left: 14, right: 14),
                                     ),
                                   ),
                                 )
@@ -274,7 +285,7 @@ class SignUp_Screen extends StatelessWidget {
                                 height: 60.0,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30.0),
-                                    color: Colors.indigo),
+                                    color: myAppColor),
                                 child: reusableTextButton(
                                     context: context,
                                     buttontext: 'CREATE',
@@ -309,10 +320,15 @@ class SignUp_Screen extends StatelessWidget {
                                 reusableTextButton(
                                     context: context,
                                     buttontext: 'Login',
-                                    textColor: Colors.indigo,
+                                    textColor: myAppColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
-                                    function: () {})
+                                    function: (){
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Login_Screen()),
+                                          (route) => false);
+                                    })
                               ],
                             ),
                             const SizedBox(height: 20.0),

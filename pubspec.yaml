@@ -40,6 +40,18 @@ dependencies:
   flutter_bloc: ^8.1.2
   dio: ^5.1.2
   conditional_builder_null_safety: ^0.0.6
+  syncfusion_flutter_sliders: ^21.2.9
+  syncfusion_flutter_core: ^21.2.9
+  carousel_slider: ^4.2.1
+  image_picker: ^1.0.1
+  http_parser: ^4.0.2
+  shared_preferences: ^2.2.0
+  fluttertoast: ^8.2.2
+
+  #FireBase
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.0
+  cloud_firestore: ^4.5.1
 
 
 dev_dependencies:
@@ -68,6 +80,14 @@ flutter:
   assets:
     - images/login.png
     - images/sign_up.png
+    - images/house_test.jpg
+    - images/1.png
+    - images/2.jpg
+    - images/3.jpg
+    - images/person.jpg
+    - images/noImages.png
+    - images/googleIcon.ico
+    - images/noresult.png
      #- images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
