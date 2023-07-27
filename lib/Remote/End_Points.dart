@@ -2,7 +2,7 @@
 
 const String LOGIN = 'login' ;
 
-const String SIGNUP = 'register' ;
+const String SIGNUP = 'rigester' ;
 
 const String ADDPROPERTY = 'add_property' ;
 

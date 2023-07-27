@@ -19,7 +19,7 @@ class Home_Model {
 }
 
 class PropertyModel {
-  var id;
+  var ownerid;
   var typeofproperty;
   var rent_or_sell;
   var address;
@@ -37,9 +37,9 @@ class PropertyModel {
   PropertyModel.fromjson( Map <String , dynamic > data , Map<String, dynamic> json ){
     ownername = data['owner_name'] ;
     ownerimage = ( data['owner_image'] == null ) ? null : data['owner_image'] ;
-    namestate = data['name_state'] ;
+    namestate = data['name_state']['nameState'] ;
     ownerphone = data['owner_phone'] ;
-    id = json['id'];
+    ownerid = json['users_id'];
     typeofproperty = json['typeofproperty'];
     rent_or_sell = json['rent_or_sell'];
     address = json['address'];

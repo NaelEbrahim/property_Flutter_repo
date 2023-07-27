@@ -2,9 +2,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:university_project_property_app/Models/Home_Model.dart';
+import 'package:university_project_property_app/Modules/Chatting/Message_Screen.dart';
 import 'package:university_project_property_app/Shared/App_Bars.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RowComponent {
   late String text ;
@@ -97,38 +99,32 @@ class Property_Details extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Container(
-                      height: 35.0,
-                      width: 35.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: myAppColor,
-                        border: Border.all(
-                          color: myAppColor,
-                          width: 2.0,
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.message_outlined,
+                    CircleAvatar(
+                      backgroundColor: myAppColor,
+                      child: IconButton(
+                        onPressed: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Message_Screen({
+                                    'ownerId' : information.ownerid.toString(),
+                                    'ownername' : information.ownername,
+                                    'ownerimage' : information.ownerimage.toString(),
+                                    'ownerphone' : information.ownerphone.toString()
+                                  })),
+                            );
+                        },
+                        icon : const Icon(Icons.chat_outlined),
                         color: Colors.white,
-                        size: 20.0,
+                        iconSize: 20.0,
                       ),
                     ),
                     const SizedBox(width: 15.0),
-                    Container(
-                      height: 35.0,
-                      width: 35.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: myAppColor,
-                        border: Border.all(
-                          color: myAppColor,
-                          width: 2.0,
-                        ),
-                      ),
+                    CircleAvatar(
+                      backgroundColor: myAppColor,
                       child: IconButton(
                         onPressed: (){
-
+                          launchUrl(Uri(scheme: 'tel', path: information.ownerphone.toString() ));
                         },
                         icon : const Icon(Icons.phone),
                         color: Colors.white,
@@ -163,10 +159,10 @@ class Property_Details extends StatelessWidget {
                       const Icon(Icons.location_on,color: Colors.black),
                       const SizedBox(width: 20.0),
                       reusableText(
-                          text: "${information.namestate.toString().toUpperCase()} - ${information.address.toString().toUpperCase()} ",
+                          text: '${information.namestate.toString().toUpperCase()} - ${information.address.toString().toUpperCase()}',
                           fontsize: 12,
                           fontWeight: FontWeight.bold,
-                          maxLines: 1
+                          maxLines: 1,
                       )
                     ]
                   ),

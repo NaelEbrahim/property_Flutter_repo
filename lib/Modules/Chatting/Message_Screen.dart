@@ -7,17 +7,23 @@ import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Models/Messages_Model.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class Message_Screen extends StatelessWidget {
-  Message_Screen({Key? key}) : super(key: key);
+
+  late Map <String , dynamic > data ;
+
+
+  Message_Screen(this.data, {super.key});
 
   var messagecontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => MyBloc()..GetMessages(receiverId: '10052'),
+        create: (context) => MyBloc()..GetMessages(receiverId: data['ownerId']),
       child: BlocConsumer <MyBloc , Bloc_States>(
         listener: (context, state) => (){},
         builder: (context, state) {
@@ -33,7 +39,7 @@ class Message_Screen extends StatelessWidget {
               ),
               centerTitle: true,
               title: reusableText(
-                  text: 'Sami Wilson',
+                  text: data['ownername'].toString().toUpperCase(),
                   fontsize: 20.0,
                   fontColor: Colors.white
               ),
@@ -41,7 +47,9 @@ class Message_Screen extends StatelessWidget {
                 IconButton(
                     padding: const EdgeInsets.only(right: 10.0),
                     icon: const Icon(Icons.phone),
-                    onPressed: (){}
+                    onPressed: (){
+                      launchUrl(Uri(scheme: 'tel', path: data['ownerphone'] ));
+                    }
                 )
               ],
             ),
@@ -56,7 +64,7 @@ class Message_Screen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                           itemBuilder: (context, index) {
                             var message = MyBloc.get(context).messages[index];
-                            if ( message.senderId == '10031' ) {
+                            if ( message.senderId == sharedPreferences.getUserData()['user_id'] ) {
                                 return SendMyMessage(message) ;
                               }
                             return SendMessage(message) ;
@@ -91,7 +99,7 @@ class Message_Screen extends StatelessWidget {
                              child: MaterialButton(
                                 onPressed: (){
                                   cubit.SendMessage(
-                                      receiverId: '10052',
+                                      receiverId: data['ownerId'],
                                       datetime: DateTime.now().toString(),
                                       hourWithminute: '${DateTime.now().hour}:${DateTime.now().minute}',
                                       text: messagecontroller.text
