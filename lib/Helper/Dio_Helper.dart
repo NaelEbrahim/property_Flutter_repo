@@ -18,7 +18,7 @@ class Dio_Helper {
 
   static Future <Response> postData ({
     required String url ,
-    required Map <String , dynamic> data ,
+    required  data ,//Map <String , dynamic>
     headers }) {
     return dio.post(
         url ,

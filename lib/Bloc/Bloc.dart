@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, file_names
+// ignore_for_file: non_constant_identifier_names, file_names, prefer_typing_uninitialized_variables
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,6 +55,7 @@ class MyBloc extends Cubit<Bloc_States> {
         sharedPreferences.putData(login_model!.token);
         sharedPreferences.putUserData({
           'user_name' : login_model!.user_data!.name.toString(),
+          'user_id' : login_model!.user_data!.id.toString()
         });
       }
       emit(SuccessLoginState());
@@ -65,14 +66,16 @@ class MyBloc extends Cubit<Bloc_States> {
   }
 
   SignUp_Model ? signUp_Model ;
-  void Signup(Map<String, dynamic> data) {
+  void Signup( var data) { //Map<String, dynamic> data
     emit(LoadingSignupState());
     Dio_Helper.postData(url: SIGNUP,data:  data).then((value) {
       signUp_Model = SignUp_Model.fromjson(value.data);
       sharedPreferences.putData(signUp_Model!.token);
       emit(SuccessSignupState());
+      print(value.data);
     }).catchError((error) {
       emit(ErrorSignupState());
+      print(error.toString());
     });
   }
 
@@ -89,7 +92,6 @@ class MyBloc extends Cubit<Bloc_States> {
    ).then((value) {
       emit(SuccessAddProperty());
    }).catchError((error){
-     print(error.toString());
       emit(ErrorAddProperty(error.toString()));
   });
 }
@@ -104,7 +106,6 @@ Future GetAllProperty () {
     }
     ).catchError((error){
       emit(ErrorGetAllProperty(error.toString()));
-      print(error.toString());
     });
 }
 
@@ -122,7 +123,6 @@ Future GetAllProperty () {
       emit(SuccessSearchProperty());
     }).catchError((error){
       emit(ErrorSearchProperty(error.toString()));
-      print(error.toString());
     });
   }
 
@@ -135,11 +135,9 @@ Future GetAllProperty () {
        data: data
    ).then((value) {
      filter_model = Filter_Model.fromjson(value.data['properties']);
-     print(filter_model!.propertylist[0].area);
       emit(SuccessFilterProperty());
     }).catchError((error){
      emit(ErrorFilterProperty(error.toString()));
-     print(error.toString());
     });
   }
 
@@ -164,7 +162,7 @@ Future GetAllProperty () {
     required String text,
   }) {
     Messages_Model message_model = Messages_Model(
-        senderId: '10031' ,
+        senderId: sharedPreferences.getUserData()['user_id'],
         receiverId: receiverId,
         datetime: datetime,
         houtWithminute: hourWithminute,
@@ -172,7 +170,7 @@ Future GetAllProperty () {
 
     FirebaseFirestore.instance
         .collection('UsersCollection')
-        .doc('10031')
+        .doc(sharedPreferences.getUserData()['user_id'])
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -187,7 +185,7 @@ Future GetAllProperty () {
         .collection('UsersCollection')
         .doc(receiverId)
         .collection('chats')
-        .doc('10031')
+        .doc(sharedPreferences.getUserData()['user_id'])
         .collection('messages')
         .add(message_model.tomap())
         .then((value) {
@@ -202,7 +200,7 @@ Future GetAllProperty () {
   void GetMessages({required receiverId}) {
     FirebaseFirestore.instance
         .collection('UsersCollection')
-        .doc('10031')
+        .doc(sharedPreferences.getUserData()['user_id'])
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -221,8 +219,23 @@ Future GetAllProperty () {
     emit(ChangeAnyState());
   }
 
+  var imagepath ;
+  Future getGallaryImage(BuildContext context) async {
+    XFile ? inputimage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (inputimage != null) {
+      imagepath = inputimage.path;
+    }
+  }
+
+  void changeimage(BuildContext context) {
+    getGallaryImage(context).then((value) {
+      emit(ChangeAnyState());
+    });
+  }
+
+
   var selectedIndex = 0 ;
-  void ChangePropertyCategory (index){
+  void ChangePropertyCategory (int index){
     selectedIndex = index ;
     emit(ChangeAnyState());
   }

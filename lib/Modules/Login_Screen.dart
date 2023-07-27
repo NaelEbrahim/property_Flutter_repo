@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Modules/Base_Screen.dart';
-import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
+import 'package:university_project_property_app/Modules/SignUp/SignUp1_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
 
@@ -182,7 +182,7 @@ class Login_Screen extends StatelessWidget {
                                   function: (){
                                     Navigator.pushAndRemoveUntil(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SignUp_Screen()),
+                                        MaterialPageRoute(builder: (context) => SignUp1_Screen()),
                                             (route) => false
                                     );
                                   }

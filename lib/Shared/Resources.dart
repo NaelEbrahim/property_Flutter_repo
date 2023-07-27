@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 // Resources
 List <XFile> FileToimages = [];
+late Map <String , dynamic> signup_data ;
 
 BuildContext ? baseScreenContext ;
 BuildContext ? searchScreenContext ;

@@ -23,7 +23,7 @@ class Picked_Images extends StatelessWidget {
         listener: (context, state) => {},
         builder: (context, state) {
             return WillPopScope(
-            onWillPop:  () async => await onWillPop(context),
+            onWillPop: () async => await onWillPop(context),
             child: Scaffold(
               appBar: Picked_Images_AppBar(context),
               body: Center(

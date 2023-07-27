@@ -11,7 +11,8 @@ import 'package:university_project_property_app/Modules/Home_Screen.dart';
 import 'package:university_project_property_app/Modules/Login_Screen.dart';
 import 'package:university_project_property_app/Modules/Property_Details.dart';
 import 'package:university_project_property_app/Modules/Search_Screen.dart';
-import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
+import 'package:university_project_property_app/Modules/SignUp/Base_SignUp_Screen.dart';
+import 'package:university_project_property_app/Modules/SignUp/SignUp1_Screen.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Resources.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
               primarySwatch : MaterialMyAppColor
             ),
             debugShowCheckedModeBanner: false,
-            home: ( sharedPreferences.getData('token') != null ) ? Base_Screen() : Login_Screen()
+            home: Base_SignUp_Screen()//( sharedPreferences.getData('token') != null ) ? Base_Screen() : Login_Screen()
           );
         },
       ),

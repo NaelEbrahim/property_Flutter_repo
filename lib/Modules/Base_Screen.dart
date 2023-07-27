@@ -28,7 +28,7 @@ class Base_Screen extends StatelessWidget {
     Profile_AppBar()
   ] ;
 
-  var CurrentBottomNavIndex = 0 ;
+  int CurrentBottomNavIndex = 0 ;
 
   @override
   Widget build(BuildContext context) {

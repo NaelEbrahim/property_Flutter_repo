@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:university_project_property_app/Modules/Login_Screen.dart';
-import 'package:university_project_property_app/Modules/SignUp_Screen.dart';
+import 'package:university_project_property_app/Modules/SignUp/SignUp1_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
 
@@ -65,7 +65,7 @@ class Welcome_Screen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SignUp_Screen(),
+                      builder: (context) => Login_Screen(),
                     ),
                   );
                 },
