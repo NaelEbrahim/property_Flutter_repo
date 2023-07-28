@@ -36,7 +36,7 @@ class Base_SignUp_Screen extends StatelessWidget {
             if ( MyBloc.get(context).signUp_Model!.token != null ) {
               Navigator.push(context, MaterialPageRoute(builder: (context) => Base_Screen()));
               Fluttertoast.showToast(
-                  msg: 'Welcome  ${MyBloc.get(context).login_model!.user_data!.name.toString().toUpperCase()}',
+                  msg: 'Welcome  ${MyBloc.get(context).signUp_Model!.user_data!.name.toString().toUpperCase()}',
                   toastLength:
                   Toast.LENGTH_SHORT,
                   gravity: ToastGravity.TOP,
@@ -49,7 +49,7 @@ class Base_SignUp_Screen extends StatelessWidget {
             }
             else{
               Fluttertoast.showToast(
-                  msg: MyBloc.get(context).login_model!.message,
+                  msg: 'Email / Phone is Already used or you enter worng data',
                   toastLength:
                   Toast.LENGTH_SHORT,
                   gravity: ToastGravity.TOP,
@@ -75,7 +75,7 @@ class Base_SignUp_Screen extends StatelessWidget {
                             children: [
                               Container(
                                   padding: const EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
-                                  child: screens[cubit.selectedIndex]//
+                                  child: screens[cubit.selectedIndex]
                               ),
                             ],
                           )
