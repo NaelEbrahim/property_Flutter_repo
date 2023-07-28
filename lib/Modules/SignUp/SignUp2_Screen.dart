@@ -247,7 +247,7 @@ class SignUp2_Screen extends StatelessWidget {
                               'information_about': signup_data['information_about'],
                               'age': selectedAge.toString(),
                               'gender': selectedgender.toString(),
-                              'image[]' : [await MultipartFile.fromFile(
+                              'image[]' : [ await MultipartFile.fromFile(
                                   cubit.imagepath,
                                   filename: cubit.imagepath
                               )

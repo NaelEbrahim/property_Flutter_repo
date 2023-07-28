@@ -117,10 +117,12 @@ AppBar Search_AppBar () => AppBar(
   centerTitle: true,
 );
 
-AppBar Property_Details_AppBar () => AppBar(
+AppBar Property_Details_AppBar (BuildContext context) => AppBar(
   backgroundColor: myAppColor,
   leading: IconButton(
-    onPressed: (){},
+    onPressed: (){
+      Navigator.pop(context);
+    },
     icon: const Icon(Icons.arrow_back,color: Colors.white),
   ),
   title: reusableText(

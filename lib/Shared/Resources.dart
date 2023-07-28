@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, file_names
-import 'dart:convert';
-import 'dart:typed_data';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,13 +12,11 @@ BuildContext ? searchScreenContext ;
 
 
 // Some Converts
-List <String> base64Strings = [];
-Future < List <String> > xFilesToBase64 ( List <XFile> xFiles ) async {
-  for ( XFile xFile in xFiles ) {
-    Uint8List bytes = await xFile.readAsBytes();
-    String base64String = base64Encode(bytes);
-    base64Strings.add(base64String);
+List  images = [] ;
+ void xFilesToFiles ( List <XFile> xFiles ) async {
+  for ( XFile item in xFiles ) {
+    MultipartFile file  = await MultipartFile.fromFile( item.path , filename: item.path ) ;
+    images.add(file);
   }
-  return base64Strings;
 }
 

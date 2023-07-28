@@ -10,11 +10,8 @@ import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class Message_Screen extends StatelessWidget {
-
-  late Map <String , dynamic > data ;
-
+  late Map<String, dynamic> data;
 
   Message_Screen(this.data, {super.key});
 
@@ -23,54 +20,55 @@ class Message_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => MyBloc()..GetMessages(receiverId: data['ownerId']),
-      child: BlocConsumer <MyBloc , Bloc_States>(
-        listener: (context, state) => (){},
+      create: (context) => MyBloc()..GetMessages(receiverId: data['ownerId']),
+      child: BlocConsumer<MyBloc, Bloc_States>(
+        listener: (context, state) => () {},
         builder: (context, state) {
           var cubit = MyBloc.get(context);
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: myAppColor,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_outlined),
-                onPressed: (){
-                  Navigator.pop(context);
-                },
+              appBar: AppBar(
+                backgroundColor: myAppColor,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new_outlined),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                centerTitle: true,
+                title: reusableText(
+                    text: data['ownername'].toString().toUpperCase(),
+                    fontsize: 20.0,
+                    fontColor: Colors.white),
+                actions: [
+                  IconButton(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      icon: const Icon(Icons.phone),
+                      onPressed: () {
+                        launchUrl(Uri(scheme: 'tel', path: '0${data['ownerphone']}'));
+                      })
+                ],
               ),
-              centerTitle: true,
-              title: reusableText(
-                  text: data['ownername'].toString().toUpperCase(),
-                  fontsize: 20.0,
-                  fontColor: Colors.white
-              ),
-              actions: [
-                IconButton(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    icon: const Icon(Icons.phone),
-                    onPressed: (){
-                      launchUrl(Uri(scheme: 'tel', path: data['ownerphone'] ));
-                    }
-                )
-              ],
-            ),
-            body: ConditionalBuilder(
-              condition:  cubit.messages.isNotEmpty || state is SuccessGetMessagesState ,
-              builder: (context) => Padding(
+              body: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
                     Expanded(
-                      child: ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            var message = MyBloc.get(context).messages[index];
-                            if ( message.senderId == sharedPreferences.getUserData()['user_id'] ) {
-                                return SendMyMessage(message) ;
+                      child: ConditionalBuilder(
+                        condition: cubit.messages.isNotEmpty || state is SuccessGetMessagesState,
+                        builder: (context) => (cubit.messages.isNotEmpty)?ListView.separated(
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var message = cubit.messages[index];
+                              if (message.senderId == sharedPreferences.getUserData()['user_id']) {
+                                return SendMyMessage(message);
                               }
-                            return SendMessage(message) ;
-                          },
-                          separatorBuilder:(context, index) => const SizedBox(height: 10.0),
-                          itemCount: MyBloc.get(context).messages.length
+                              return SendMessage(message , data['ownerimage'] );
+                            },
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 10.0),
+                            itemCount: MyBloc.get(context).messages.length) :
+                        Center(child: Image.asset('images/nomessages.png',height: 200.0,width: 200.0)),
+                        fallback: (context) => const Center(child: CircularProgressIndicator()),
                       ),
                     ),
                     const SizedBox(height: 30.0),
@@ -88,48 +86,45 @@ class Message_Screen extends StatelessWidget {
                             child: TextFormField(
                               controller: messagecontroller,
                               decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Message',
-                                prefixIcon: Icon(Icons.telegram)
-                              ),
+                                  border: InputBorder.none,
+                                  hintText: 'Message',
+                                  prefixIcon: Icon(Icons.telegram)),
                             ),
                           ),
-                           Container(
-                             color: myAppColor,
-                             child: MaterialButton(
-                                onPressed: (){
-                                  cubit.SendMessage(
-                                      receiverId: data['ownerId'],
-                                      datetime: DateTime.now().toString(),
-                                      hourWithminute: '${DateTime.now().hour}:${DateTime.now().minute}',
-                                      text: messagecontroller.text
-                                  );
-                                  messagecontroller.text = '' ;
-                                },
+                          Container(
+                            color: myAppColor,
+                            child: MaterialButton(
+                              onPressed: () {
+                                cubit.SendMessage(
+                                    receiverId: data['ownerId'],
+                                    datetime: DateTime.now().toString(),
+                                    hourWithminute:
+                                        '${DateTime.now().hour}:${DateTime.now().minute}',
+                                    text: messagecontroller.text);
+                                messagecontroller.text = '';
+                              },
                               minWidth: 1.0,
-                              child: const Icon(Icons.send,color: Colors.white,size: 16.0),
-                          ),
-                           )
+                              child: const Icon(Icons.send,
+                                  color: Colors.white, size: 16.0),
+                            ),
+                          )
                         ],
                       ),
                     )
                   ],
                 ),
-              ),
-              fallback: (context) => const Center(child: CircularProgressIndicator()),
-            )
-          );
+              ));
         },
-      ) ,
+      ),
     );
   }
 
-  Widget SendMessage ( Messages_Model message ) => Align(
-    alignment: AlignmentDirectional.centerStart,
-    child: Row(
+  Widget SendMessage( Messages_Model message , image ) => Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: Row(
           children: [
-            const CircleAvatar(
-              backgroundImage: NetworkImage('https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?w=740&t=st=1684829039~exp=1684829639~hmac=1fcea6b939b685a82ea101268e3922325fc945b4c1eef0cb5e21d46ffc0e09d7'),
+             CircleAvatar(
+              backgroundImage: (image.isNotEmpty)?NetworkImage(image[0]) : Image.asset('images/inisital_image.png').image,
               radius: 25.0,
             ),
             const SizedBox(width: 5.0),
@@ -138,59 +133,58 @@ class Message_Screen extends StatelessWidget {
               children: [
                 Container(
                   decoration: const BoxDecoration(
-                      borderRadius:  BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10.0),
                         topRight: Radius.circular(10.0),
                         bottomRight: Radius.circular(10.0),
                       ),
-                      color: Colors.grey
-                  ),
+                      color: Colors.grey),
                   padding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
-                      horizontal: 10.0
-                  ),
+                      vertical: 5.0, horizontal: 10.0),
                   child: reusableText(
                       text: message.text!,
                       fontsize: 15.0,
                       fontWeight: FontWeight.w500,
-                      fontColor: Colors.white
-                  ),
+                      fontColor: Colors.white),
                 ),
-                reusableText(text: message.houtWithminute!, fontsize: 11.0,fontColor: Colors.grey,fontWeight: FontWeight.bold)
+                reusableText(
+                    text: message.houtWithminute!,
+                    fontsize: 11.0,
+                    fontColor: Colors.grey,
+                    fontWeight: FontWeight.bold)
               ],
             )
           ],
         ),
-  ) ;
+      );
 
-  Widget SendMyMessage ( Messages_Model message ) => Align(
-    alignment: AlignmentDirectional.centerEnd,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                topRight: Radius.circular(10.0),
-                bottomLeft: Radius.circular(10.0),
-              ),
-              color: myAppColor
-          ),
-          padding: const EdgeInsets.symmetric(
-              vertical: 5.0,
-              horizontal: 10.0
-          ),
-          child: reusableText(
-              text: message.text!,
-              fontsize: 15.0,
-              fontWeight: FontWeight.w500,
-              fontColor: Colors.white
-          ),
+  Widget SendMyMessage(Messages_Model message) => Align(
+        alignment: AlignmentDirectional.centerEnd,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(10.0),
+                  ),
+                  color: myAppColor),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+              child: reusableText(
+                  text: message.text!,
+                  fontsize: 15.0,
+                  fontWeight: FontWeight.w500,
+                  fontColor: Colors.white),
+            ),
+            reusableText(
+                text: message.houtWithminute!,
+                fontsize: 11.0,
+                fontColor: Colors.grey,
+                fontWeight: FontWeight.bold)
+          ],
         ),
-        reusableText(text: message.houtWithminute!, fontsize: 11.0,fontColor: Colors.grey,fontWeight: FontWeight.bold)
-      ],
-    ),
-  ) ;
-
+      );
 }

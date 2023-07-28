@@ -21,11 +21,11 @@ class MyBloc extends Cubit<Bloc_States> {
   static MyBloc get(context) => BlocProvider.of(context);
 
 
-  final ImagePicker imagePicker = ImagePicker () ;
   void AddToSelectedImages () async {
-    final List <XFile> SelectedImages = await imagePicker.pickMultiImage() ;
+    List <XFile> SelectedImages = await ImagePicker().pickMultiImage() ;
     if ( SelectedImages.isNotEmpty ){
      FileToimages.addAll(SelectedImages);
+     xFilesToFiles(SelectedImages);
     }
     emit(ChangeAnyState());
   }
@@ -66,24 +66,23 @@ class MyBloc extends Cubit<Bloc_States> {
   }
 
   SignUp_Model ? signUp_Model ;
-  void Signup( var data) { //Map<String, dynamic> data
+  void Signup( var data) {
     emit(LoadingSignupState());
     Dio_Helper.postData(url: SIGNUP,data:  data).then((value) {
       signUp_Model = SignUp_Model.fromjson(value.data);
       sharedPreferences.putData(signUp_Model!.token);
+      sharedPreferences.putUserData({
+        'user_name' : signUp_Model!.user_data!.name.toString(),
+        'user_id' : signUp_Model!.user_data!.id.toString()
+      });
       emit(SuccessSignupState());
-      print(value.data);
     }).catchError((error) {
       emit(ErrorSignupState());
-      print(error.toString());
     });
   }
 
 
-  void AddProperty ({
-  required Map <String , dynamic > data ,
-  required header   
-  }){
+  void AddProperty ({required data ,required header}){
       emit(LoadingAddProperty());
    Dio_Helper.postData(
        url: ADDPROPERTY,
@@ -93,7 +92,8 @@ class MyBloc extends Cubit<Bloc_States> {
       emit(SuccessAddProperty());
    }).catchError((error){
       emit(ErrorAddProperty(error.toString()));
-  });
+      print(error.toString());
+    });
 }
 
 Home_Model ? home_model ;
@@ -101,11 +101,12 @@ Future GetAllProperty () {
     emit(LoadingGetAllProperty());
     return Dio_Helper.getData(
         GETALLPROPERTY).then((value){
-          home_model = Home_Model.fromjson(value.data);
+            home_model = Home_Model.fromjson(value.data);
           emit(SuccessGetAllProperty());
     }
     ).catchError((error){
       emit(ErrorGetAllProperty(error.toString()));
+      print(error.toString());
     });
 }
 

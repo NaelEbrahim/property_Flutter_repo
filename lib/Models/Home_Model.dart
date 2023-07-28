@@ -3,7 +3,7 @@
 class Home_Model {
   List<PropertyModel> propertylist = [];
 
-  Home_Model.fromjson( List <dynamic> json ) {
+  Home_Model.fromjson( json ) {
     if (json != null) {
       for (var element in json) {
         Map < String , dynamic > data = {
@@ -26,17 +26,17 @@ class PropertyModel {
   var area;
   var numberofRooms;
   var numberofBaths ;
-  var image;
+  List <String> image = [] ;
   var descreption;
   var price;
   var ownername ;
-  var ownerimage ;
+  List <String> ownerimage = [] ;
   var ownerphone ;
   var namestate ;
 
   PropertyModel.fromjson( Map <String , dynamic > data , Map<String, dynamic> json ){
     ownername = data['owner_name'] ;
-    ownerimage = ( data['owner_image'] == null ) ? null : data['owner_image'] ;
+
     namestate = data['name_state']['nameState'] ;
     ownerphone = data['owner_phone'] ;
     ownerid = json['users_id'];
@@ -46,8 +46,17 @@ class PropertyModel {
     area = json['area'];
     numberofRooms = json['numberofRooms'];
     numberofBaths = json['bathRoom'] ;
-    image = json['image'];
     descreption = json['descreption'];
     price = json['price'];
+    if ( data['owner_image'] != null ){
+      for (String element in data['owner_image']){
+        ownerimage.add(element) ;
+      }
+    }
+    if ( json['image'] != null ){
+      for (String element in json['image']){
+          image.add(element) ;
+      }
+    }
   }
 }

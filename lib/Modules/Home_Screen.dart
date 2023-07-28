@@ -12,9 +12,9 @@ import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Resources.dart';
 
 class Home_Screen extends StatelessWidget {
-   Home_Screen({Key? key}) : super(key: key);
+  Home_Screen({Key? key}) : super(key: key);
 
-   var searchcontroller = TextEditingController();
+  var searchcontroller = TextEditingController();
 
   List img = [
     'images/2.jpg',
@@ -23,169 +23,165 @@ class Home_Screen extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context){
-      return BlocConsumer<MyBloc , Bloc_States>(
-        listener: (context, state) => (){},
-        builder: (context, state) {
-          baseScreenContext = context ;
-          var cubit = MyBloc.get(context);
-          return ConditionalBuilder(
-              condition: cubit.home_model != null ,
-              builder: (context) => SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0) ,
-                          child: CarouselSlider.builder(
-                            itemCount: img.length,
-                            itemBuilder: (context, index, l) {
-                              return Image.asset(
-                                width: MediaQuery.of(context).size.width - 20,
-                                'images/2.jpg',
-                                fit: BoxFit.cover,
-                              );
-                            },
-                            options: CarouselOptions(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              height: 170.0,
-                              initialPage: 0,
-                              reverse: false,
-                              autoPlay: true,
-                              enableInfiniteScroll: true,
-                              viewportFraction: 1.1,
-                              autoPlayInterval: const Duration(seconds: 7),
-                              autoPlayAnimationDuration: const Duration(seconds: 3),
-                              autoPlayCurve: Curves.decelerate,
-                              //enlargeCenterPage: true,
+  Widget build(BuildContext context) {
+    return BlocConsumer<MyBloc, Bloc_States>(
+      listener: (context, state) => () {},
+      builder: (context, state) {
+        baseScreenContext = context;
+        var cubit = MyBloc.get(context);
+        return ConditionalBuilder(
+            condition: cubit.home_model != null,
+            builder: (context) => (cubit.home_model!.propertylist.isNotEmpty)
+                ? SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: CarouselSlider.builder(
+                              itemCount: img.length,
+                              itemBuilder: (context, index, l) {
+                                return Image.asset(
+                                  width: MediaQuery.of(context).size.width -
+                                      20,
+                                  'images/2.jpg',
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                              options: CarouselOptions(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                height: 170.0,
+                                initialPage: 0,
+                                reverse: false,
+                                autoPlay: true,
+                                enableInfiniteScroll: true,
+                                viewportFraction: 1.1,
+                                autoPlayInterval:
+                                    const Duration(seconds: 7),
+                                autoPlayAnimationDuration:
+                                    const Duration(seconds: 3),
+                                autoPlayCurve: Curves.decelerate,
+                                //enlargeCenterPage: true,
+                              ),
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 10.0),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) =>
+                                BuildCard(
+                                    cubit.home_model!.propertylist[index],
+                                    context),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 10.0),
+                            itemCount: cubit.home_model!.propertylist.length,
+                          ),
+                        ],
                       ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) => BuildCard(cubit.home_model!.propertylist[index],context),
-                        separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-                        itemCount: cubit.home_model!.propertylist.length,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              fallback: (context) => const Center(child: CircularProgressIndicator())
-          );
-        },
-      );
+                    ),
+                  )
+                : Center(child: Image.asset('images/noresult.png',height: 200.0,width: 200.0)),
+            fallback: (context) => const Center(child:  CircularProgressIndicator()));
+      },
+    );
   }
 
-   BuildCard (PropertyModel item , BuildContext context) {
-     return Container(
-       clipBehavior: Clip.antiAliasWithSaveLayer,
-       decoration: BoxDecoration(
-           color: Colors.white,
-         borderRadius: BorderRadius.circular(10.0)
-       ),
-       width: MediaQuery.of(context).size.width,
-       height: 140,
-       child: Row(
-         crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-           Image.asset(
-             'images/house_test.jpg',
-             width: MediaQuery.of(context).size.width * 0.3,
-             height: 140,
-             fit: BoxFit.cover,
-           ),
-           const SizedBox(
-             width: 10,
-           ),
-           Expanded(
-             child: Column(
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 reusableText(
-                     text: '\$${item.price.toString()}',
-                     fontsize: 20,
-                     fontColor: myAppColor,
-                     fontWeight: FontWeight.bold
-                 ),
-                 Container(
-                   width: 100,
-                   height: 25,
-                   decoration:  const BoxDecoration(
-                     color: myAppColor,
-                     borderRadius: BorderRadius.all(
-                       Radius.circular(5),
-                     ),
-                   ),
-                   child: Center(
-                     child: reusableTextButton(
-                         context: context ,
-                         buttontext: 'View',
-                         fontSize: 12.0,
-                         fontWeight: FontWeight.w500,
-                         textColor: Colors.white,
-                         function: (){
-                           Navigator.push(
-                               context,
-                               MaterialPageRoute(builder: (context) => Property_Details(item))
-                           );
-                         }
-                     )
-                   ),
-                 ),
-                 reusableText(
-                   maxLines: 1,
-                   text: item.address.toString(),
-                   fontsize: 14,
-                   fontWeight: FontWeight.w200,
-                   fontColor: Colors.grey,
-                 ),
-                 Row(
-                   children: [
-                     const Icon(Icons.bed),
-                     const SizedBox(
-                       width: 5,
-                     ),
-                     reusableText(text: item.numberofRooms.toString(), fontsize: 13),
-
-                     const Spacer(),
-
-                     const Icon(Icons.bathtub_outlined),
-                     const SizedBox(
-                       width: 5,
-                     ),
-                     reusableText(text: item.numberofBaths.toString(), fontsize: 13),
-
-                     const Spacer(),
-
-                     const Icon(Icons.area_chart_outlined),
-                     const SizedBox(
-                       width: 5,
-                     ),
-                     reusableText(text: item.area.toString(), fontsize: 13)
-                   ],
-                 ),
-               ],
-             ),
-           ),
-           IconButton(
-             onPressed: (){},
-             icon: const Icon(
-                 Icons.favorite,
-                 size: 27.0,
-                 color: Colors.red
-             ),
-             padding: const EdgeInsets.all(8.0),
-           )
-         ],
-       ),
-     );
-   }
+  BuildCard(PropertyModel item, BuildContext context) {
+    return Container(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+      width: MediaQuery.of(context).size.width,
+      height: 140,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(
+            (item.image.isNotEmpty) ? item.image[0] : 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: 140,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                reusableText(
+                    text: '\$${item.price.toString()}',
+                    fontsize: 20,
+                    fontColor: myAppColor,
+                    fontWeight: FontWeight.bold),
+                Container(
+                  width: 100,
+                  height: 25,
+                  decoration: const BoxDecoration(
+                    color: myAppColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
+                  child: Center(
+                      child: reusableTextButton(
+                          context: context,
+                          buttontext: 'View',
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w500,
+                          textColor: Colors.white,
+                          function: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Property_Details(item)));
+                          })),
+                ),
+                reusableText(
+                  maxLines: 1,
+                  text: item.address.toString(),
+                  fontsize: 14,
+                  fontWeight: FontWeight.w200,
+                  fontColor: Colors.grey,
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.bed),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    reusableText(
+                        text: item.numberofRooms.toString(), fontsize: 13),
+                    const Spacer(),
+                    const Icon(Icons.bathtub_outlined),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    reusableText(
+                        text: item.numberofBaths.toString(), fontsize: 13),
+                    const Spacer(),
+                    const Icon(Icons.area_chart_outlined),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    reusableText(text: item.area.toString(), fontsize: 13)
+                  ],
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.favorite, size: 27.0, color: Colors.red),
+            padding: const EdgeInsets.all(8.0),
+          )
+        ],
+      ),
+    );
+  }
 }

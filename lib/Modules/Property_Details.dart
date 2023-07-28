@@ -1,11 +1,11 @@
-// ignore_for_file: camel_case_types, file_names, non_constant_identifier_names, must_be_immutable
+// ignore_for_file: camel_case_types, file_names, non_constant_identifier_names, must_be_immutable, prefer_typing_uninitialized_variables
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:university_project_property_app/Models/Home_Model.dart';
 import 'package:university_project_property_app/Modules/Chatting/Message_Screen.dart';
 import 'package:university_project_property_app/Shared/App_Bars.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
+import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RowComponent {
@@ -30,9 +30,18 @@ class Property_Details extends StatelessWidget {
       RowComponent('${information.numberofBaths.toString()} baths', Icons.bathtub_outlined),
     ];
 
+    List <Widget> propertyImages = [] ;
+    for ( String item in information.image ){
+      propertyImages.add(Image(
+        image: NetworkImage(item),
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.cover,
+      ));
+    }
+
     return Scaffold(
       backgroundColor: ScaffoldColor,
-      appBar: Property_Details_AppBar(),
+      appBar: Property_Details_AppBar(context),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(10.0),
@@ -42,11 +51,7 @@ class Property_Details extends StatelessWidget {
                ClipRRect(
                  borderRadius: BorderRadius.circular(20.0),
                  child: CarouselSlider(
-                   items: [Image.asset(
-                     width: MediaQuery.of(context).size.width,
-                     'images/3.jpg',
-                     fit: BoxFit.cover,
-                   )],
+                   items: propertyImages,
                    options: CarouselOptions(
                      clipBehavior: Clip.antiAliasWithSaveLayer,
                      height: MediaQuery.of(context).size.height/2.5,
@@ -87,7 +92,7 @@ class Property_Details extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: CircleAvatar(
                         radius: 30.0,
-                        backgroundImage: Image.asset('images/person.jpg').image,
+                        backgroundImage: (information.ownerimage.isNotEmpty)?NetworkImage(information.ownerimage[0]) : Image.asset('images/inisital_image.png').image,
                       ),
                     ),
                     Column(
@@ -99,39 +104,44 @@ class Property_Details extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    CircleAvatar(
-                      backgroundColor: myAppColor,
-                      child: IconButton(
-                        onPressed: (){
-                            Navigator.push(
+                    if ( sharedPreferences.getUserData()['user_id'] != information.ownerid.toString() )
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: myAppColor,
+                          child: IconButton(
+                            onPressed: (){
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Message_Screen({
-                                    'ownerId' : information.ownerid.toString(),
-                                    'ownername' : information.ownername,
-                                    'ownerimage' : information.ownerimage.toString(),
-                                    'ownerphone' : information.ownerphone.toString()
-                                  })),
-                            );
-                        },
-                        icon : const Icon(Icons.chat_outlined),
-                        color: Colors.white,
-                        iconSize: 20.0,
-                      ),
-                    ),
-                    const SizedBox(width: 15.0),
-                    CircleAvatar(
-                      backgroundColor: myAppColor,
-                      child: IconButton(
-                        onPressed: (){
-                          launchUrl(Uri(scheme: 'tel', path: information.ownerphone.toString() ));
-                        },
-                        icon : const Icon(Icons.phone),
-                        color: Colors.white,
-                        iconSize: 20.0,
-                      ),
-                    ),
-                    const SizedBox(width: 10.0)
+                                    builder: (context) => Message_Screen({
+                                      'ownerId' : information.ownerid.toString(),
+                                      'ownername' : information.ownername,
+                                      'ownerimage' : information.ownerimage,
+                                      'ownerphone' : information.ownerphone.toString()
+                                    })),
+                              );
+                            },
+                            icon : const Icon(Icons.chat_outlined),
+                            color: Colors.white,
+                            iconSize: 20.0,
+                          ),
+                        ),
+                        const SizedBox(width: 15.0),
+                        CircleAvatar(
+                          backgroundColor: myAppColor,
+                          child: IconButton(
+                            onPressed: (){
+                              launchUrl(Uri(scheme: 'tel', path: '0${information.ownerphone.toString()}' ));
+                            },
+                            icon : const Icon(Icons.phone),
+                            color: Colors.white,
+                            iconSize: 20.0,
+                          ),
+                        ),
+                        const SizedBox(width: 10.0)
+                      ],
+                    )
                   ],
                 ),
               ),
