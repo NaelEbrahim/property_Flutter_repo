@@ -9,7 +9,7 @@ import 'package:university_project_property_app/Shared/App_Bars.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
 import 'Home_Screen.dart';
-import 'Profile_Screen.dart';
+import 'User_Profile/Profile_Screen.dart';
 
 class Base_Screen extends StatelessWidget {
   Base_Screen({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class Base_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => MyBloc()..GetAllProperty(),
+        create: (context) => MyBloc()..GetAllProperty()..HomeSlider()..GetMyProfile()..GetMyBankAccount(),
       child: BlocConsumer <MyBloc,Bloc_States> (
         listener: (context, state) => (){},
         builder: (context, state) {
@@ -42,7 +42,8 @@ class Base_Screen extends StatelessWidget {
             drawer: opendrawer(context),
             backgroundColor: ScaffoldColor,
             appBar: appbars[CurrentBottomNavIndex],
-            body: screens[CurrentBottomNavIndex],
+            body: (state is! LoadingUserLogout)? screens[CurrentBottomNavIndex]:
+            const Center(child: CircularProgressIndicator()),
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(
                     canvasColor: myAppColor

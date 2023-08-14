@@ -1,4 +1,5 @@
-import 'package:conditional_builder_null_safety/example/example.dart';
+// ignore_for_file: must_be_immutable, camel_case_types, file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,7 +35,7 @@ class Base_SignUp_Screen extends StatelessWidget {
         listener: (context, state) {
           if (state is SuccessSignupState) {
             if ( MyBloc.get(context).signUp_Model!.token != null ) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Base_Screen()));
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Base_Screen()),(route) => false);
               Fluttertoast.showToast(
                   msg: 'Welcome  ${MyBloc.get(context).signUp_Model!.user_data!.name.toString().toUpperCase()}',
                   toastLength:

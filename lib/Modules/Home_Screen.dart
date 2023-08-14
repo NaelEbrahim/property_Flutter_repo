@@ -16,12 +16,6 @@ class Home_Screen extends StatelessWidget {
 
   var searchcontroller = TextEditingController();
 
-  List img = [
-    'images/2.jpg',
-    'images/2.jpg',
-    'images/2.jpg',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MyBloc, Bloc_States>(
@@ -30,8 +24,8 @@ class Home_Screen extends StatelessWidget {
         baseScreenContext = context;
         var cubit = MyBloc.get(context);
         return ConditionalBuilder(
-            condition: cubit.home_model != null,
-            builder: (context) => (cubit.home_model!.propertylist.isNotEmpty)
+            condition: cubit.home_model != null && cubit.homeSlider_Model != null ,
+            builder: (context) => (cubit.home_model!.propertylist.isNotEmpty && cubit.homeSlider_Model!.sellProperty.isNotEmpty)
                 ? SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Padding(
@@ -41,13 +35,13 @@ class Home_Screen extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: CarouselSlider.builder(
-                              itemCount: img.length,
-                              itemBuilder: (context, index, l) {
-                                return Image.asset(
+                              itemCount: cubit.homeSlider_Model!.sellProperty.length,
+                              itemBuilder: (context, index , end) {
+                                return Image.network(
                                   width: MediaQuery.of(context).size.width -
                                       20,
-                                  'images/2.jpg',
-                                  fit: BoxFit.cover,
+                                  cubit.homeSlider_Model!.sellProperty[index].image[0],
+                                  fit: BoxFit.fill,
                                 );
                               },
                               options: CarouselOptions(
@@ -70,9 +64,8 @@ class Home_Screen extends StatelessWidget {
                           const SizedBox(height: 10.0),
                           ListView.separated(
                             shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) =>
-                                BuildCard(
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) => BuildCard(
                                     cubit.home_model!.propertylist[index],
                                     context),
                             separatorBuilder: (context, index) =>
@@ -90,6 +83,7 @@ class Home_Screen extends StatelessWidget {
   }
 
   BuildCard(PropertyModel item, BuildContext context) {
+    var cubit = MyBloc.get(context);
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
@@ -103,7 +97,7 @@ class Home_Screen extends StatelessWidget {
             (item.image.isNotEmpty) ? item.image[0] : 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
             width: MediaQuery.of(context).size.width * 0.3,
             height: 140,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
           const SizedBox(
             width: 10,
@@ -114,7 +108,8 @@ class Home_Screen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 reusableText(
-                    text: '\$${item.price.toString()}',
+                    text: (item.rent_or_sell == 'sell') ? '\$${item.price.toString()}':
+                    '\$${item.monthlyRent.toString()}/Month',
                     fontsize: 20,
                     fontColor: myAppColor,
                     fontWeight: FontWeight.bold),
@@ -146,8 +141,8 @@ class Home_Screen extends StatelessWidget {
                   maxLines: 1,
                   text: item.address.toString(),
                   fontsize: 14,
-                  fontWeight: FontWeight.w200,
-                  fontColor: Colors.grey,
+                  fontWeight: FontWeight.w400,
+                  fontColor: Colors.black45,
                 ),
                 Row(
                   children: [
@@ -176,7 +171,9 @@ class Home_Screen extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: (){
+              cubit.AddToFavorite(item.propertyId);
+            },
             icon: const Icon(Icons.favorite, size: 27.0, color: Colors.red),
             padding: const EdgeInsets.all(8.0),
           )

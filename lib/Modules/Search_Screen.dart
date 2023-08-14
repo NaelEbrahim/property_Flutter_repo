@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Models/Search Model.dart';
+import 'package:university_project_property_app/Modules/Property_Details.dart';
 import 'package:university_project_property_app/Shared/App_Bars.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
@@ -46,7 +47,8 @@ class Search_Screen extends StatelessWidget {
                                     hintText: 'Search For Dream House',
                                     prefixIcon: const Icon(Icons.search,
                                         color: Colors.grey, size: 20),
-                                    controller: searchcontroller),
+                                    controller: searchcontroller,
+                                ),
                               ),
                               Container(
                                 color: myAppColor,
@@ -76,7 +78,7 @@ class Search_Screen extends StatelessWidget {
                           ),
                         if (cubit.search_model != null)
                           Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
+                            padding: const EdgeInsets.only(top: 20.0),
                             child: ConditionalBuilder(
                               condition: state is! LoadingSearchProperty,
                               builder: (context) => (cubit
@@ -87,7 +89,7 @@ class Search_Screen extends StatelessWidget {
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder:
                                           (BuildContext context, int index) =>
-                                              BuildCard(
+                                              BuildSearchCard(
                                                   cubit.search_model!
                                                       .propertylist[index],
                                                   context),
@@ -115,7 +117,7 @@ class Search_Screen extends StatelessWidget {
     );
   }
 
-  BuildCard(PropertySearchModel item, BuildContext context) {
+  BuildSearchCard(PropertySearchModel item, BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
@@ -125,8 +127,8 @@ class Search_Screen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            'images/house_test.jpg',
+          Image.network(
+            (item.image.isNotEmpty) ? item.image[0] : 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
             width: MediaQuery.of(context).size.width * 0.3,
             height: 140,
             fit: BoxFit.cover,
@@ -140,7 +142,8 @@ class Search_Screen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 reusableText(
-                    text: '\$${item.price.toString()}',
+                    text: (item.rent_or_sell == 'sell') ? '\$${item.price.toString()}':
+                    '\$${item.monthlyRent.toString()}/Month',
                     fontsize: 20,
                     fontColor: myAppColor,
                     fontWeight: FontWeight.bold),
@@ -153,12 +156,20 @@ class Search_Screen extends StatelessWidget {
                       Radius.circular(5),
                     ),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'View',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+                  child: Center(
+                      child: reusableTextButton(
+                          context: context,
+                          buttontext: 'View',
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w500,
+                          textColor: Colors.white,
+                          function: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Property_Details(item)));
+                          })),
                 ),
                 reusableText(
                   maxLines: 1,
@@ -173,19 +184,21 @@ class Search_Screen extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(item.numberofRooms.toString()),
+                    reusableText(
+                        text: item.numberofRooms.toString(), fontsize: 13),
                     const Spacer(),
                     const Icon(Icons.bathtub_outlined),
                     const SizedBox(
                       width: 5,
                     ),
-                    const Text('2'),
+                    reusableText(
+                        text: item.numberofBaths.toString(), fontsize: 13),
                     const Spacer(),
                     const Icon(Icons.area_chart_outlined),
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(item.area.toString()),
+                    reusableText(text: item.area.toString(), fontsize: 13)
                   ],
                 ),
               ],

@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
               primarySwatch : MaterialMyAppColor
             ),
             debugShowCheckedModeBanner: false,
-            home:( sharedPreferences.getData('token') != null ) ? Base_Screen() : Login_Screen()
+            home: ( sharedPreferences.getData('token') != null ) ? Base_Screen() : Login_Screen()
           );
         },
       ),

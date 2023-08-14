@@ -250,10 +250,8 @@ class SignUp2_Screen extends StatelessWidget {
                               'image[]' : [ await MultipartFile.fromFile(
                                   cubit.imagepath,
                                   filename: cubit.imagepath
-                              )
-                              ]
-                            }
-                            )
+                              )]
+                            })
                         );
                        }else {
                          Fluttertoast.showToast(
