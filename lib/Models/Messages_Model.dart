@@ -17,7 +17,7 @@ class Messages_Model {
       required this.text
       });
 
-  Messages_Model.fromjson ( Map < String , dynamic > json ){
+  Messages_Model.fromjson ( json ){//Map < String , dynamic > json
     senderId = json['senderId'] ;
     receiverId = json['receiverId'] ;
     datetime = json['datetime'] ;

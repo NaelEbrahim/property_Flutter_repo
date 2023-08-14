@@ -53,6 +53,7 @@ class Add_Property extends StatelessWidget {
   var areacontroller = TextEditingController();
   var namePropertycontroller = TextEditingController();
   var pricecontroller = TextEditingController();
+  var rentpermonthcontroller = TextEditingController();
   var locationcontroller = TextEditingController();
   var descriptioncontroller = TextEditingController();
 
@@ -249,20 +250,46 @@ class Add_Property extends StatelessWidget {
                             const SizedBox(height: 20.0),
                           ],
                         ),
-                        reusableText(
-                            text: 'Property Price :',
-                            fontsize: 14.0,
-                            fontWeight: FontWeight.bold,
-                            fontColor: Colors.grey
+                        if( sell_rent == 'sell' )
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            reusableText(
+                                text: 'Property Price :',
+                                fontsize: 14.0,
+                                fontWeight: FontWeight.bold,
+                                fontColor: Colors.grey
+                            ),
+                            const SizedBox(height: 10.0),
+                            reusableTextField(
+                                hintText: 'Price',
+                                raduis: 20.0,
+                                textInputType: TextInputType.number,
+                                prefixIcon: const Icon(Icons.monetization_on),
+                                controller: pricecontroller
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 10.0),
-                        reusableTextField(
-                            hintText: 'Price',
-                            raduis: 20.0,
-                            textInputType: TextInputType.number,
-                            prefixIcon: const Icon(Icons.monetization_on),
-                            controller: pricecontroller
-                        ),
+                        if( sell_rent == 'rent' )
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              reusableText(
+                                  text: 'Property Rent :',
+                                  fontsize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontColor: Colors.grey
+                              ),
+                              const SizedBox(height: 10.0),
+                              reusableTextField(
+                                  hintText: 'Rent / Mounth',
+                                  raduis: 20.0,
+                                  textInputType: TextInputType.number,
+                                  prefixIcon: const Icon(Icons.monetization_on),
+                                  controller: rentpermonthcontroller
+                              ),
+                            ],
+                          ),
                         const SizedBox(height: 20.0),
                         reusableText(
                             text: 'Property Location :',
@@ -441,6 +468,7 @@ class Add_Property extends StatelessWidget {
                                             'area' : areacontroller.text,
                                             'bathRoom' : numberOfBathroomcontroller.text,
                                             'price' : pricecontroller.text,
+                                            'monthlyRent' : rentpermonthcontroller.text,
                                             'images[]' : images,
                                           }),
                                           header: sharedPreferences.getData('token').toString()
@@ -495,27 +523,3 @@ class Add_Property extends StatelessWidget {
     );
     }
 }
-
-
-
-
-
-
-
-/*
-
-const SizedBox(height: 20.0),
-                        reusableText(
-                            text: 'Property Name :',
-                            fontsize: 14.0,
-                            fontWeight: FontWeight.bold,
-                            fontColor: Colors.grey
-                        ),
-                        const SizedBox(height: 10.0),
-                        reusableTextField(
-                            hintText: 'Property Title',
-                            prefixIcon: const Icon(Icons.title),
-                            raduis: 20.0,
-                            controller: namePropertycontroller
-                        ),
- */

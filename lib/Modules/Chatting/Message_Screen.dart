@@ -48,72 +48,84 @@ class Message_Screen extends StatelessWidget {
                       })
                 ],
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ConditionalBuilder(
-                        condition: cubit.messages.isNotEmpty || state is SuccessGetMessagesState,
-                        builder: (context) => (cubit.messages.isNotEmpty)?ListView.separated(
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              var message = cubit.messages[index];
-                              if (message.senderId == sharedPreferences.getUserData()['user_id']) {
-                                return SendMyMessage(message);
-                              }
-                              return SendMessage(message , data['ownerimage'] );
-                            },
-                            separatorBuilder: (context, index) =>
+              body: Stack(
+                children: [
+                  Image.asset(
+                    'images/chat_background.jpg',
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ConditionalBuilder(
+                            condition: cubit.messages.isNotEmpty || state is SuccessGetMessagesState,
+                            builder: (context) => (cubit.messages.isNotEmpty)?ListView.separated(
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  var message = cubit.messages[index];
+                                  if (message.senderId == sharedPreferences.getUserData()['user_id']) {
+                                    return SendMyMessage(message);
+                                  }
+                                  return SendMessage(message , data['ownerimage'] );
+                                },
+                                separatorBuilder: (context, index) =>
                                 const SizedBox(height: 10.0),
-                            itemCount: MyBloc.get(context).messages.length) :
-                        Center(child: Image.asset('images/nomessages.png',height: 200.0,width: 200.0)),
-                        fallback: (context) => const Center(child: CircularProgressIndicator()),
-                      ),
-                    ),
-                    const SizedBox(height: 30.0),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: myAppColor,
+                                itemCount: MyBloc.get(context).messages.length) :
+                            Center(child: Image.asset('images/nomessages.png',height: 200.0,width: 200.0)),
+                            fallback: (context) => const Center(child: CircularProgressIndicator()),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: messagecontroller,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Message',
-                                  prefixIcon: Icon(Icons.telegram)),
+                        const SizedBox(height: 30.0),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: myAppColor,
                             ),
                           ),
-                          Container(
-                            color: myAppColor,
-                            child: MaterialButton(
-                              onPressed: () {
-                                cubit.SendMessage(
-                                    receiverId: data['ownerId'],
-                                    datetime: DateTime.now().toString(),
-                                    hourWithminute:
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: messagecontroller,
+                                  decoration: const InputDecoration(
+                                    filled: true,
+                                      fillColor: Colors.white,
+                                      border: InputBorder.none,
+                                      hintText: 'Message',
+                                      prefixIcon: Icon(Icons.telegram)),
+                                ),
+                              ),
+                              Container(
+                                color: myAppColor,
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    cubit.SendMessage(
+                                        receiverId: data['ownerId'],
+                                        datetime: DateTime.now().toString(),
+                                        hourWithminute:
                                         '${DateTime.now().hour}:${DateTime.now().minute}',
-                                    text: messagecontroller.text);
-                                messagecontroller.text = '';
-                              },
-                              minWidth: 1.0,
-                              child: const Icon(Icons.send,
-                                  color: Colors.white, size: 16.0),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ));
+                                        text: messagecontroller.text);
+                                    messagecontroller.text = '';
+                                  },
+                                  minWidth: 1.0,
+                                  child: const Icon(Icons.send,
+                                      color: Colors.white, size: 16.0),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )
+          );
         },
       ),
     );
@@ -150,7 +162,7 @@ class Message_Screen extends StatelessWidget {
                 reusableText(
                     text: message.houtWithminute!,
                     fontsize: 11.0,
-                    fontColor: Colors.grey,
+                    fontColor: Colors.white,
                     fontWeight: FontWeight.bold)
               ],
             )
@@ -182,7 +194,7 @@ class Message_Screen extends StatelessWidget {
             reusableText(
                 text: message.houtWithminute!,
                 fontsize: 11.0,
-                fontColor: Colors.grey,
+                fontColor: Colors.white,
                 fontWeight: FontWeight.bold)
           ],
         ),

@@ -29,11 +29,17 @@ class Filter_Screen extends StatelessWidget {
   String sell_rent = 'sell' ;
 
 
-  SfRangeValues values = const SfRangeValues(20000.0, 60000.0);
-
   double minprice = 20000.0 ;
 
   double maxprice = 60000.0 ;
+
+  double minrent = 1000.0 ;
+
+  double maxrent = 6000.0 ;
+
+  SfRangeValues sell_values = const SfRangeValues(20000.0, 60000.0);
+
+  SfRangeValues rent_values = const SfRangeValues(1000.0, 6000.0);
 
 
   @override
@@ -162,44 +168,93 @@ class Filter_Screen extends StatelessWidget {
                       controller: locationcontroller
                   ),
                   const SizedBox(height: 20.0),
-                  reusableText(
-                      text: 'Property Price :',
-                      fontsize: 14.0,
-                      fontWeight: FontWeight.bold,
-                      fontColor: Colors.grey
-                  ),
-                  const SizedBox(height: 50.0),
-                  SfRangeSliderTheme(
-                      data: SfRangeSliderThemeData(
-                          tooltipBackgroundColor: ScaffoldColor,
-                          tooltipTextStyle: const TextStyle(
-                              color: myAppColor,
-                              fontWeight: FontWeight.bold
-                          )
+                  if ( sell_rent == 'sell')
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      reusableText(
+                          text: 'Property Price :',
+                          fontsize: 14.0,
+                          fontWeight: FontWeight.bold,
+                          fontColor: Colors.grey
                       ),
-                      child: SfRangeSlider(
-                        min: 10000.0,
-                        max: 100000.0,
-                        values: values,
-                        activeColor: myAppColor,
-                        stepSize: 1000.0,
-                        inactiveColor: myAppColor.withOpacity(0.3),
-                        shouldAlwaysShowTooltip: true,
-                        onChanged: (value) {
-                          maxprice = value.end ;
-                          minprice = value.start ;
-                          values = value ;
-                          cubit.ChangeState();
-                        },
-                      )
+                      const SizedBox(height: 50.0),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width-40,
+                        child: SfRangeSliderTheme(
+                            data: SfRangeSliderThemeData(
+                                tooltipBackgroundColor: ScaffoldColor,
+                                tooltipTextStyle: const TextStyle(
+                                    color: myAppColor,
+                                    fontWeight: FontWeight.bold
+                                )
+                            ),
+                            child: SfRangeSlider(
+                              min: 10000.0,
+                              max: 100000.0,
+                              values: sell_values,
+                              activeColor: myAppColor,
+                              stepSize: 1000.0,
+                              inactiveColor: myAppColor.withOpacity(0.3),
+                              shouldAlwaysShowTooltip: true,
+                              onChanged: (value) {
+                                maxprice = value.end ;
+                                minprice = value.start ;
+                                sell_values = value ;
+                                cubit.ChangeState();
+                              },
+                            )
+                        ),
+                      ),
+                    ],
                   ),
+                  if ( sell_rent == 'rent')
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        reusableText(
+                            text: 'Property Rent :',
+                            fontsize: 14.0,
+                            fontWeight: FontWeight.bold,
+                            fontColor: Colors.grey
+                        ),
+                        const SizedBox(height: 50.0),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width-40,
+                          child: SfRangeSliderTheme(
+                              data: SfRangeSliderThemeData(
+                                  tooltipBackgroundColor: ScaffoldColor,
+                                  tooltipTextStyle: const TextStyle(
+                                      color: myAppColor,
+                                      fontWeight: FontWeight.bold
+                                  )
+                              ),
+                              child: SfRangeSlider(
+                                min: 200.0,
+                                max: 10000.0,
+                                values: rent_values,
+                                activeColor: myAppColor,
+                                stepSize: 100.0,
+                                inactiveColor: myAppColor.withOpacity(0.3),
+                                shouldAlwaysShowTooltip: true,
+                                onChanged: (value) {
+                                  maxrent = value.end ;
+                                  minrent = value.start ;
+                                rent_values = value ;
+                                  cubit.ChangeState();
+                                },
+                              )
+                          ),
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 20.0),
                   Row(
                     children: [
                       Expanded(
                         child: Column(
                           children: [
-                            reusableText(text: 'Bedroom', fontsize: 15.0,fontColor: Colors.grey,fontWeight: FontWeight.bold),
+                            reusableText(text: 'Room', fontsize: 15.0,fontColor: Colors.grey,fontWeight: FontWeight.bold),
                             const SizedBox(height: 5.0),
                             Container(
                               height: 55.0,
@@ -304,18 +359,36 @@ class Filter_Screen extends StatelessWidget {
                           textColor: Colors.white,
                           fontWeight: FontWeight.w600,
                           function: (){
-                            cubit.filter({
+                            if (sell_rent == 'sell') {
+                              cubit.filter({
                               'typeofproperty' : type ,
                               'rent_or_sell' : sell_rent ,
-                              'state' : 'damasucs' ,
+                              'state' : 'damascus' ,
                               'location' : locationcontroller.text ,
                               'area' : areacontroller.text ,
                               'num_of_rooms' : numberOfroom ,
+                              'bathRoom' : numberOfbathroom ,
                               'minprice' : minprice.round() ,
-                              'maxprice' : maxprice.round()
+                              'maxprice' : maxprice.round() ,
                             }).then((value) {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Result(cubit.filter_model!.propertylist)));
                             });
+                            }
+                            if ( sell_rent == 'rent') {
+                              cubit.filter({
+                              'typeofproperty' : type ,
+                              'rent_or_sell' : sell_rent ,
+                              'state' : 'damascus' ,
+                              'location' : locationcontroller.text ,
+                              'area' : areacontroller.text ,
+                              'num_of_rooms' : numberOfroom ,
+                              'bathRoom' : numberOfbathroom ,
+                              'minRent' : minrent.round(),
+                              'maxRent' : maxrent.round(),
+                            }).then((value) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Result(cubit.filter_model!.propertylist)));
+                            });
+                            }
                           }
                       ),
                     ),

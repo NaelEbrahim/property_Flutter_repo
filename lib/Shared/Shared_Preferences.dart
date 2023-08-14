@@ -19,16 +19,23 @@ class sharedPreferences
     return sherdpreferance!.getString(data);
   }
 
-  static Future<bool> putyouareData(String youare) async {
-    return await sherdpreferance!.setString("youare", youare);
+  static Future<bool> putBankAccount(accountId) async {
+    return await sherdpreferance!.setString('bankAccount', accountId.toString());
   }
 
-  static String? getyouareData(String token)  {
-    return  sherdpreferance!.getString("youare");
+  static String ? getBankAccount() {
+    return sherdpreferance!.getString('bankAccount');
+  }
+
+  static void removeFromUserData () {
+    sherdpreferance!.remove('bankAccount');
   }
 
   static void logout ()  {
     sherdpreferance!.remove("token");
+    if ( sherdpreferance!.getString('bankAccount') != null ){
+      sherdpreferance!.remove('bankAccount');
+    }
   }
 
   static Future <bool> putUserData ( Map <String,dynamic> data ) async {
@@ -39,16 +46,6 @@ class sharedPreferences
     String ? encoded_current_user = sherdpreferance!.getString("User_Data") ;
     Map <String,dynamic> current_user =  jsonDecode(encoded_current_user!);
     return current_user ;
-  }
-
-  static Future <bool> putCurrentexpertData ( Map <String,dynamic> data ) async {
-    return await sherdpreferance!.setString("Currentexpert", jsonEncode(data));
-  }
-
-  static Map <String,dynamic> getCurrentExpertData()  {
-    String? encoded_current_expert = sherdpreferance!.getString("Currentexpert") ;
-    Map <String,dynamic> current_expert =  jsonDecode(encoded_current_expert!);
-    return current_expert ;
   }
 
 }

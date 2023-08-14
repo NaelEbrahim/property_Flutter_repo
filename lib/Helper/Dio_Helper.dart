@@ -18,7 +18,7 @@ class Dio_Helper {
 
   static Future <Response> postData ({
     required String url ,
-    required  data ,//Map <String , dynamic>
+    required  data ,
     headers }) {
     return dio.post(
         url ,
@@ -31,8 +31,18 @@ class Dio_Helper {
     );
   }
 
-  static Future <Response> getData (String url){
-    return dio.get(url);
+  static Future <Response> getData ({
+    required String url,
+    headers
+  }){
+    return dio.get(
+        url,
+        options: Options(
+            responseType: ResponseType.json,
+            headers: {
+              'Authorization' : 'Bearer $headers'
+            })
+    );
   }
 
 

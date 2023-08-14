@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Modules/Add_Property/Add_Property.dart';
+import 'package:university_project_property_app/Modules/Chatting/Chat_Screen.dart';
 import 'package:university_project_property_app/Modules/Login_Screen.dart';
+import 'package:university_project_property_app/Modules/MyBankAccount.dart';
+import 'package:university_project_property_app/Modules/MyPublications_Screen.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
 
@@ -114,10 +116,13 @@ Widget opendrawer(BuildContext context) {
           stops: [0.24, 0.2],
         ),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
         Container(
-            padding: const EdgeInsetsDirectional.only(top: 50.0, start: 90.0),
+            padding: const EdgeInsetsDirectional.only(top: 50.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 reusableText(
                     text: "Hello!",
@@ -125,6 +130,7 @@ Widget opendrawer(BuildContext context) {
                     fontColor: Colors.white,
                     fontsize: 40.0),
                 const SizedBox(height: 25.0),
+                if ( sharedPreferences.getUserData() != null )
                 reusableText(
                     text: sharedPreferences.getUserData()['user_name'].toString().toUpperCase(),
                     fontColor: Colors.white,
@@ -142,6 +148,28 @@ Widget opendrawer(BuildContext context) {
               scrollDirection: Axis.vertical,
               children: [
                 ListTile(
+                  leading: const Icon(Icons.monetization_on, color: myAppColor),
+                  title: reusableText(
+                      text: "My Bank Account",
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.bold),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyBankAccount()));
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.post_add_outlined, color: myAppColor),
+                  title: reusableText(
+                      text: "My Publications",
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.bold),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MyPublications_Screen()));
+                  },
+                ),
+                ListTile(
                   leading: const Icon(Icons.add_circle_outlined, color: myAppColor),
                   title: reusableText(
                       text: "Add Property",
@@ -153,14 +181,17 @@ Widget opendrawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.monetization_on, color: myAppColor),
+                  leading: const Icon(Icons.chat_outlined, color: myAppColor),
                   title: reusableText(
-                      text: "My Balancs",
+                      text: "My Chats",
                       fontsize: 15.0,
                       fontWeight: FontWeight.bold),
                   onTap: () {
-                    //  _Showdialog(context);
-                    // print(sharedhelper.getCurrentExpertData()['expert_name']);
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Chat_Screen()));
                   },
                 ),
                 ListTile(
@@ -181,14 +212,13 @@ Widget opendrawer(BuildContext context) {
                       fontsize: 15.0,
                       fontWeight: FontWeight.bold),
                   onTap: () {
-                    MyBloc.get(context)
-                        .Logout(sharedPreferences.getData('token'));
-                    sharedPreferences.logout();
                     Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Login_Screen()));
+                    MyBloc.get(context).Logout(sharedPreferences.getData('token')).then((value) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Screen()),(route)=>false);
+                    });
                   },
                 ),
               ],

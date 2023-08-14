@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.2.0
   fluttertoast: ^8.2.2
   url_launcher: ^6.1.12
+  flutter_rating_bar: ^4.0.1
 
   #FireBase
   firebase_core: ^2.9.0
@@ -80,16 +81,14 @@ flutter:
   assets:
     - images/login.png
     - images/sign_up.png
-    - images/house_test.jpg
-    - images/1.png
     - images/2.jpg
-    - images/3.jpg
     - images/person.jpg
     - images/noImages.png
     - images/googleIcon.ico
     - images/noresult.png
     - images/inisital_image.png
     - images/nomessages.png
+    - images/chat_background.jpg
      #- images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 import 'package:flutter/material.dart';
 import 'package:university_project_property_app/Modules/Search_Screen.dart';
+import 'package:university_project_property_app/Modules/User_Profile/UpdateProfile_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
 import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Resources.dart';
@@ -64,6 +65,11 @@ AppBar Profile_AppBar () => AppBar(
       fontWeight: FontWeight.bold
   ),
   centerTitle: true,
+  actions: [
+    IconButton(onPressed: (){
+      Navigator.push(baseScreenContext!, MaterialPageRoute(builder: (context) => UpdateProfile_Screen()));
+    }, icon: const Icon(Icons.edit))
+  ],
 );
 
 AppBar Filter_AppBar () => AppBar(
