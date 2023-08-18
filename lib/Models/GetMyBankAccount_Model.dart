@@ -4,8 +4,10 @@ class GetMyBankAccount_Model {
   var number_account ;
   var value_of_account ;
 
-  GetMyBankAccount_Model.fromjson ( Map <String , dynamic> json ){
-    number_account = json['number_account'];
-    value_of_account = json['value_of_account'] ;
+  GetMyBankAccount_Model.fromjson ( json ){
+    if ( json != null ) {
+      number_account = json['number_account'];
+      value_of_account = json['value_of_account'];
+    }
   }
 }

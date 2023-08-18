@@ -16,8 +16,10 @@ import 'package:university_project_property_app/Models/Login_Model.dart';
 import 'package:university_project_property_app/Models/Messages_Model.dart';
 import 'package:university_project_property_app/Models/Profile_Model.dart';
 import 'package:university_project_property_app/Models/Search Model.dart';
+import 'package:university_project_property_app/Models/ShowFavorite_Model.dart';
 import 'package:university_project_property_app/Models/SignUp_Model.dart';
 import 'package:university_project_property_app/Remote/End_Points.dart';
+import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Resources.dart';
 import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
 import '../Models/GetUserProfile_Model.dart';
@@ -242,8 +244,10 @@ class MyBloc extends Cubit<Bloc_States> {
       url: MYBANKACCOUNT,
       headers: sharedPreferences.getData('token').toString()
     ).then((value){
-      getMyBankAccount_model = GetMyBankAccount_Model.fromjson(value.data);
-      sharedPreferences.putBankAccount(getMyBankAccount_model!.number_account);
+      getMyBankAccount_model = GetMyBankAccount_Model.fromjson(value.data['result']);
+      if ( value.data['result'] != null ) {
+        sharedPreferences.putBankAccount(getMyBankAccount_model!.number_account);
+      }
       emit(SuccessGetMyBankAccount());
     }).catchError((error){
       emit(ErrorGetMyBankAccount(error.toString()));
@@ -273,6 +277,33 @@ class MyBloc extends Cubit<Bloc_States> {
       emit(SuccessAddToFavorite());
     }).catchError((error){
       emit(ErrorAddToFavorite(error.toString()));
+    });
+  }
+  
+  Future DeleteFavorite ( property_id ) {
+    emit(LoadingDeleteFromFavorite());
+    return Dio_Helper.postData(
+        url: DELETEFAVORITE,
+        headers: sharedPreferences.getData('token'),
+        data: {'id_property' : property_id}
+    ).then((value) {
+      emit(SuccessDeleteFromFavorite());
+    }).catchError((error){
+      emit(ErrorDeleteFromFavorite(error.toString()));
+    });
+  }
+
+  ShowFavorite_Model ? showFavorite_Model ;
+  Future ShowUserFavorite () {
+    emit(LoadingShowUserFavorite());
+    return Dio_Helper.getData(
+        url: SHOWFAVORITE,
+        headers: sharedPreferences.getData('token')).
+    then((value) {
+      showFavorite_Model = ShowFavorite_Model.fromjson(value.data['result']);
+      emit(SuccessShowUserFavorite());
+    }).catchError((error){
+      emit(ErrorShowUserFavorite(error.toString()));
     });
   }
 
@@ -424,4 +455,27 @@ class MyBloc extends Cubit<Bloc_States> {
     selectedIndex = index;
     emit(ChangeAnyState());
   }
+
+  bool isDark = ( sharedPreferences.getAppTheme('isDark') == null ) ? false : sharedPreferences.getAppTheme('isDark')! ;
+
+  void ChangeAppTheme (){
+    isDark = !isDark ;
+    sharedPreferences.putAppTheme(key: 'isDark', value: isDark);
+    myAppColorLight = (!isDark) ? const Color(0xff052d5d) : const Color(0xff728495) ;
+    ScaffoldColorLight = (!isDark) ? Colors.grey[200]! : const Color(0xff263A47) ;
+    primaryTextColorLight = (!isDark) ? Colors.black : Colors.white ;
+    secondryTextColorLight = (!isDark) ? Colors.black45 : Colors.white54;
+    containerBackgroundColor = (!isDark) ? Colors.white : const Color(0xff4A5B6A) ;
+    emit(ChangeAnyState());
+  }
+
+  void initAppTheme () {
+    myAppColorLight = (!isDark) ? const Color(0xff052d5d) : const Color(0xff728495) ;
+    ScaffoldColorLight = (!isDark) ? Colors.grey[200]! : const Color(0xff263A47) ;
+    primaryTextColorLight = (!isDark) ? Colors.black : Colors.white ;
+    secondryTextColorLight = (!isDark) ? Colors.black45 : Colors.white54;
+    containerBackgroundColor = (!isDark) ? Colors.white : const Color(0xff4A5B6A) ;
+    emit(ChangeAnyState());
+  }
+
 }

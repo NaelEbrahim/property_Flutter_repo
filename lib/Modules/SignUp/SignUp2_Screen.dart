@@ -44,18 +44,18 @@ class SignUp2_Screen extends StatelessWidget {
                           (cubit.imagepath == null) ? const AssetImage('images/inisital_image.png') : Image.file(File(cubit.imagepath)).image,
                           backgroundColor: Colors.grey,
                           radius: 80.0),
-                      const CircleAvatar(
+                       CircleAvatar(
                         radius: 17.0,
-                        backgroundColor: myAppColor,
+                        backgroundColor: myAppColorLight,
                         child:
-                        Icon(Icons.add, color: Colors.white),
+                        const Icon(Icons.add, color: Colors.white),
                       )
                     ])),
             const SizedBox(height:15.0),
             reusableText(
                 text: 'Personal Photo',
                 fontsize: 15.0,
-                fontColor: Colors.black45,
+                fontColor: secondryTextColorLight,
                 fontWeight: FontWeight.w500
             ),
             const SizedBox(height: 50.0),
@@ -64,21 +64,21 @@ class SignUp2_Screen extends StatelessWidget {
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     isExpanded: true,
-                    hint: const Row(
+                    hint: Row(
                       children:  [
-                        Icon(
+                         Icon(
                           Icons.list,
                           size: 16,
-                          color: Colors.black,
+                          color: primaryTextColorLight,
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             'Select Gender',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: primaryTextColorLight,
                             ),
                           ),
                         ),
@@ -88,10 +88,10 @@ class SignUp2_Screen extends StatelessWidget {
                       value: item,
                       child: Text(
                         item,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: primaryTextColorLight,
                         ),
                       ),
                     )).toList(),
@@ -108,25 +108,25 @@ class SignUp2_Screen extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
-                          color: Colors.black26,
+                          color: secondryTextColorLight,
                         ),
-                        color: Colors.white,
+                        color: containerBackgroundColor,
                       ),
                       elevation: 1,
                     ),
-                    iconStyleData: const IconStyleData(
-                      icon: Icon(
+                    iconStyleData: IconStyleData(
+                      icon: const Icon(
                         Icons.arrow_drop_down_outlined,
                       ),
                       iconSize: 22,
-                      iconEnabledColor: Colors.black,
+                      iconEnabledColor: primaryTextColorLight,
                     ),
                     dropdownStyleData: DropdownStyleData(
                       //maxHeight: 200,
                       width: 170,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
-                        color: Colors.white,
+                        color: containerBackgroundColor,
                       ),
                       scrollbarTheme: const ScrollbarThemeData(
                         radius: Radius.circular(40),
@@ -143,14 +143,14 @@ class SignUp2_Screen extends StatelessWidget {
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     isExpanded: true,
-                    hint: const Row(
+                    hint: Row(
                       children:  [
                         Icon(
                           Icons.list,
                           size: 16,
-                          color: Colors.black,
+                          color: primaryTextColorLight,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
                         Expanded(
@@ -159,7 +159,7 @@ class SignUp2_Screen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: primaryTextColorLight,
                             ),
                           ),
                         ),
@@ -170,10 +170,10 @@ class SignUp2_Screen extends StatelessWidget {
                       value: item,
                       child: Text(
                         item.toString(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: primaryTextColorLight,
                         ),
                       ),
                     ))
@@ -191,25 +191,25 @@ class SignUp2_Screen extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
-                          color: Colors.black26,
+                          color: secondryTextColorLight,
                         ),
-                        color: Colors.white,
+                        color: containerBackgroundColor,
                       ),
                       elevation: 1,
                     ),
-                    iconStyleData: const IconStyleData(
-                      icon: Icon(
+                    iconStyleData: IconStyleData(
+                      icon: const Icon(
                         Icons.arrow_drop_down_outlined,
                       ),
                       iconSize: 22,
-                      iconEnabledColor: Colors.black,
+                      iconEnabledColor: primaryTextColorLight,
                     ),
                     dropdownStyleData: DropdownStyleData(
                       maxHeight: 130,
                       width: 160,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
-                        color: Colors.white,
+                        color: containerBackgroundColor,
                       ),
                       scrollbarTheme: const ScrollbarThemeData(
                         radius: Radius.circular(40),
@@ -217,8 +217,7 @@ class SignUp2_Screen extends StatelessWidget {
                     ),
                     menuItemStyleData: const MenuItemStyleData(
                       height: 40,
-                      padding:
-                      EdgeInsets.only(left: 14, right: 14),
+                      padding: EdgeInsets.only(left: 14, right: 14),
                     ),
                   ),
                 )
@@ -232,7 +231,7 @@ class SignUp2_Screen extends StatelessWidget {
                 height: 60.0,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
-                    color: myAppColor),
+                    color: myAppColorLight),
                 child: reusableTextButton(
                     context: context,
                     buttontext: 'CREATE',
@@ -280,11 +279,12 @@ class SignUp2_Screen extends StatelessWidget {
                 reusableText(
                   text: 'Already Have An Account?',
                   fontsize: 15,
+                  fontColor: primaryTextColorLight
                 ),
                 reusableTextButton(
                     context: context,
                     buttontext: 'Login',
-                    textColor: myAppColor,
+                    textColor: myAppColorLight,
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                     function: (){

@@ -14,9 +14,9 @@ class MyPublications_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ScaffoldColor,
+      backgroundColor: ScaffoldColorLight,
       appBar: AppBar(
-        backgroundColor: myAppColor,
+        backgroundColor: myAppColorLight,
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
@@ -50,7 +50,8 @@ class MyPublications_Screen extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+          color: containerBackgroundColor,
+          borderRadius: BorderRadius.circular(10.0)),
       width: MediaQuery.of(context).size.width,
       height: 140,
       child: Row(
@@ -74,14 +75,14 @@ class MyPublications_Screen extends StatelessWidget {
                     text: (item.rent_or_sell == 'sell') ? '\$${item.price.toString()}':
                     '\$${item.monthlyRent.toString()}/Month',
                     fontsize: 20,
-                    fontColor: myAppColor,
+                    fontColor: primaryTextColorLight,
                     fontWeight: FontWeight.bold),
                 Container(
                   width: 100,
                   height: 25,
-                  decoration: const BoxDecoration(
-                    color: myAppColor,
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: myAppColorLight,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(5),
                     ),
                   ),
@@ -105,29 +106,39 @@ class MyPublications_Screen extends StatelessWidget {
                   text: item.address.toString(),
                   fontsize: 14,
                   fontWeight: FontWeight.w400,
-                  fontColor: Colors.black45,
+                  fontColor: secondryTextColorLight,
                 ),
                 Row(
                   children: [
-                    const Icon(Icons.bed),
+                    Icon(Icons.bed_outlined,color: primaryTextColorLight),
                     const SizedBox(
                       width: 5,
                     ),
                     reusableText(
-                        text: item.numberofRooms.toString(), fontsize: 13),
+                        text: item.numberofRooms.toString(),
+                        fontsize: 13,
+                        fontColor: primaryTextColorLight
+                    ),
                     const Spacer(),
-                    const Icon(Icons.bathtub_outlined),
+                    Icon(Icons.bathtub_outlined,color: primaryTextColorLight),
                     const SizedBox(
                       width: 5,
                     ),
                     reusableText(
-                        text: item.numberofBaths.toString(), fontsize: 13),
+                        text: item.numberofBaths.toString(),
+                        fontsize: 13,
+                        fontColor: primaryTextColorLight
+                    ),
                     const Spacer(),
-                    const Icon(Icons.area_chart_outlined),
+                    Icon(Icons.area_chart_outlined,color: primaryTextColorLight),
                     const SizedBox(
                       width: 5,
                     ),
-                    reusableText(text: item.area.toString(), fontsize: 13),
+                    reusableText(
+                        text: item.area.toString(),
+                        fontsize: 13,
+                        fontColor: primaryTextColorLight
+                    ),
                     const SizedBox(
                       width: 20.0,
                     ),

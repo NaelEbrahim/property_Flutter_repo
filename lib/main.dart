@@ -1,13 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university_project_property_app/Bloc/Bloc.dart';
-import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Helper/Dio_Helper.dart';
 import 'package:university_project_property_app/Modules/Base_Screen.dart';
 import 'package:university_project_property_app/Modules/Login_Screen.dart';
 import 'package:university_project_property_app/Shared/BloC_Observer.dart';
-import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Shared_Preferences.dart';
 
 void main() async {
@@ -24,20 +21,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MyBloc(),
-      child: BlocConsumer<MyBloc, Bloc_States>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return MaterialApp(
-            theme: ThemeData(
-              primarySwatch : MaterialMyAppColor
-            ),
-            debugShowCheckedModeBanner: false,
-            home: ( sharedPreferences.getData('token') != null ) ? Base_Screen() : Login_Screen()
-          );
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ( sharedPreferences.getData('token') != null ) ? Base_Screen() : Login_Screen()
     );
   }
 }

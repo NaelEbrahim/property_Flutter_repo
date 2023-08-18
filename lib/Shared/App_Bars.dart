@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 import 'package:flutter/material.dart';
+import 'package:university_project_property_app/Bloc/Bloc.dart';
 import 'package:university_project_property_app/Modules/Search_Screen.dart';
 import 'package:university_project_property_app/Modules/User_Profile/UpdateProfile_Screen.dart';
 import 'package:university_project_property_app/Shared/Components.dart';
@@ -7,7 +8,7 @@ import 'package:university_project_property_app/Shared/Constant.dart';
 import 'package:university_project_property_app/Shared/Resources.dart';
 
 AppBar Home_AppBar () => AppBar(
-  backgroundColor: myAppColor,
+  backgroundColor: myAppColorLight,
   bottomOpacity: 0.0,
   elevation: 0.0,
   title: Column(
@@ -24,7 +25,7 @@ AppBar Home_AppBar () => AppBar(
         children: [
           const Icon(
             Icons.location_on_outlined,
-            color: Colors.blue,
+            color: Colors.white,
           ),
           reusableText(text: 'Syria - Damascus', fontsize: 16,fontColor: Colors.white),
         ],
@@ -33,7 +34,7 @@ AppBar Home_AppBar () => AppBar(
   ),
   actions:  [
     Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(right: 8.0),
       child: IconButton(
           onPressed: (){
             Navigator.push(baseScreenContext!, MaterialPageRoute(builder: (context) => Search_Screen()));
@@ -51,7 +52,7 @@ AppBar Home_AppBar () => AppBar(
 );
 
 AppBar Profile_AppBar () => AppBar(
-  backgroundColor: myAppColor,
+  backgroundColor: myAppColorLight,
   leading: IconButton(
     onPressed: (){
       Scaffold.of(baseScreenContext!).openDrawer();
@@ -73,7 +74,7 @@ AppBar Profile_AppBar () => AppBar(
 );
 
 AppBar Filter_AppBar () => AppBar(
-  backgroundColor: myAppColor,
+  backgroundColor: myAppColorLight,
   leading: IconButton(
     onPressed: (){
       Scaffold.of(baseScreenContext!).openDrawer();
@@ -90,7 +91,7 @@ AppBar Filter_AppBar () => AppBar(
 );
 
 AppBar Favourite_AppBar () => AppBar(
-  backgroundColor: myAppColor,
+  backgroundColor: myAppColorLight,
   leading: IconButton(
     onPressed: (){
       Scaffold.of(baseScreenContext!).openDrawer();
@@ -107,7 +108,7 @@ AppBar Favourite_AppBar () => AppBar(
 );
 
 AppBar Search_AppBar () => AppBar(
-  backgroundColor: myAppColor,
+  backgroundColor: myAppColorLight,
   leading: IconButton(
     onPressed: (){
       Navigator.pop(searchScreenContext!);
@@ -124,7 +125,7 @@ AppBar Search_AppBar () => AppBar(
 );
 
 AppBar Property_Details_AppBar (BuildContext context) => AppBar(
-  backgroundColor: myAppColor,
+  backgroundColor: myAppColorLight,
   leading: IconButton(
     onPressed: (){
       Navigator.pop(context);
@@ -140,12 +141,14 @@ AppBar Property_Details_AppBar (BuildContext context) => AppBar(
   centerTitle: true,
 );
 
-AppBar Add_Property_AppBar () => AppBar(
-  backgroundColor: myAppColor,
+AppBar Add_Property_AppBar (BuildContext context) => AppBar(
+  backgroundColor: myAppColorLight,
   elevation: 0.0,
   leading: IconButton(
       icon: const Icon(Icons.arrow_back),
-      onPressed:(){}
+      onPressed:(){
+        Navigator.pop(context);
+      }
   ),
   title: reusableText(
       text: 'Add Property',
@@ -157,7 +160,7 @@ AppBar Add_Property_AppBar () => AppBar(
 ) ;
 
 AppBar Picked_Images_AppBar (BuildContext context) => AppBar(
-  backgroundColor: myAppColor,
+  backgroundColor: myAppColorLight,
   leading: IconButton(
     onPressed: (){
       Navigator.pop(context);

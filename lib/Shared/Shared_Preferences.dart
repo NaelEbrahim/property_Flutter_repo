@@ -15,6 +15,18 @@ class sharedPreferences
     return await sherdpreferance!.setString("token", token);
   }
 
+  static Future <bool> putAppTheme ({
+    required String key,
+    required bool value
+}) async {
+    return await sherdpreferance!.setBool(key,value);
+  }
+
+  static bool ? getAppTheme (String key){
+    return sherdpreferance!.getBool(key);
+  }
+
+
   static String? getData(String data)  {
     return sherdpreferance!.getString(data);
   }

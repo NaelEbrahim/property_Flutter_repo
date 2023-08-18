@@ -56,7 +56,7 @@ class Welcome_Screen extends StatelessWidget {
               height: 60.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.0),
-                color: myAppColor,
+                color: myAppColorLight,
               ),
               child: reusableTextButton(
                 context: context,
@@ -88,7 +88,7 @@ class Welcome_Screen extends StatelessWidget {
                 reusableTextButton(
                   context: context,
                   buttontext: 'Log In',
-                  textColor: myAppColor,
+                  textColor: myAppColorLight,
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                   function: () {

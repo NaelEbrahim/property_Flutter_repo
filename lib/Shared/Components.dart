@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:university_project_property_app/Bloc/Bloc.dart';
@@ -39,9 +41,9 @@ Widget reusableTextField(
         required TextEditingController controller,
         bool obscureText = false,
         double raduis = 0.0,
-        Color fontColor = myAppColor,
+        Color fontColor = Colors.black45,//myAppColorLight,
         int maxlines = 1,
-        Color focuseColor = myAppColor,
+        Color focuseColor = Colors.black,//myAppColorLight,
         TextInputType textInputType = TextInputType.text,
         String? Function(String?)? validator}) =>
     TextFormField(
@@ -108,12 +110,12 @@ Widget opendrawer(BuildContext context) {
   return Drawer(
     width: 300,
     child: Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [myAppColor, Colors.white],
-          stops: [0.24, 0.2],
+          colors: [myAppColorLight, containerBackgroundColor],
+          stops: const [0.24, 0.2],
         ),
       ),
       child: Column(
@@ -148,44 +150,70 @@ Widget opendrawer(BuildContext context) {
               scrollDirection: Axis.vertical,
               children: [
                 ListTile(
-                  leading: const Icon(Icons.monetization_on, color: myAppColor),
+                  leading:  Icon(Icons.monetization_on, color: secondryTextColorLight),
                   title: reusableText(
                       text: "My Bank Account",
                       fontsize: 15.0,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      fontColor: primaryTextColorLight
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => MyBankAccount()));
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.post_add_outlined, color: myAppColor),
+                  leading:  Icon(Icons.post_add_outlined, color: secondryTextColorLight),
                   title: reusableText(
                       text: "My Publications",
                       fontsize: 15.0,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      fontColor: primaryTextColorLight
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const MyPublications_Screen()));
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.add_circle_outlined, color: myAppColor),
+                  leading:  Icon(Icons.add_circle_outlined, color: secondryTextColorLight),
                   title: reusableText(
                       text: "Add Property",
                       fontsize: 15.0,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      fontColor: primaryTextColorLight
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => Add_Property()));
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.chat_outlined, color: myAppColor),
+                  leading: Icon(Icons.dark_mode_outlined, color: secondryTextColorLight),
+                  title: SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    tileColor: containerBackgroundColor,
+                    title : reusableText(
+                        text: 'Dark Mode',
+                        fontsize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        fontColor: primaryTextColorLight
+                    ),
+                    value: MyBloc.get(context).isDark,
+                    onChanged: (value){
+                      MyBloc.get(context).ChangeAppTheme();
+                    },
+                    //secondary: ,
+                  ),
+                ),
+                ListTile(
+                  leading:  Icon(Icons.chat_outlined, color: secondryTextColorLight),
                   title: reusableText(
                       text: "My Chats",
                       fontsize: 15.0,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      fontColor: primaryTextColorLight
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(
@@ -195,22 +223,13 @@ Widget opendrawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.settings, color: myAppColor),
-                  title: reusableText(
-                      text: "Settings",
-                      fontsize: 15.0,
-                      fontWeight: FontWeight.bold),
-                  onTap: () {
-                    Navigator.pop(context);
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => expert_schedules()));
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout, color: myAppColor),
+                  leading:  Icon(Icons.logout, color: secondryTextColorLight),
                   title: reusableText(
                       text: "Logout",
                       fontsize: 15.0,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      fontColor: primaryTextColorLight
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     MyBloc.get(context).Logout(sharedPreferences.getData('token')).then((value) {

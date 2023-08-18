@@ -1,4 +1,6 @@
 // ignore_for_file: camel_case_types, file_names, must_be_immutable, non_constant_identifier_names, prefer_typing_uninitialized_variables
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -14,9 +16,21 @@ import '../Add_Property/Add_Property.dart';
 class Filter_Screen extends StatelessWidget {
   Filter_Screen({Key? key}) : super(key: key);
 
-  bool sell = true ;
+  final List<String> state_items = [
+    'Damascus',
+    'Aleppo',
+    'Homs',
+    'Daraa',
+    'DeirAlzour',
+    'Hasakeh',
+    'Raqqa',
+    'Latakkia',
+    'Swida',
+  ];
 
-  var areacontroller = TextEditingController();
+  String selectedstate = 'Damascus';
+
+  bool sell = true ;
 
   var locationcontroller = TextEditingController();
 
@@ -37,9 +51,17 @@ class Filter_Screen extends StatelessWidget {
 
   double maxrent = 6000.0 ;
 
+  double minarea = 120.0 ;
+
+  double maxarea = 300.0 ;
+
   SfRangeValues sell_values = const SfRangeValues(20000.0, 60000.0);
 
   SfRangeValues rent_values = const SfRangeValues(1000.0, 6000.0);
+
+  SfRangeValues area_values1 = const SfRangeValues(120.0, 300.0);
+
+  SfRangeValues area_values2 = const SfRangeValues(1000.0, 4000.0);
 
 
   @override
@@ -68,7 +90,7 @@ class Filter_Screen extends StatelessWidget {
                         height: 50,
                         width: (MediaQuery.of(context).size.width/2)-30,
                         decoration: BoxDecoration(
-                            color: ( sell ) ? myAppColor : Colors.white,
+                            color: ( sell ) ? myAppColorLight : Colors.white,
                             borderRadius: BorderRadius.circular(20.0)
                         ),
                         child: Padding(
@@ -96,7 +118,7 @@ class Filter_Screen extends StatelessWidget {
                         height: 50,
                         width: (MediaQuery.of(context).size.width/2)-30,
                         decoration: BoxDecoration(
-                            color: ( !sell ) ? myAppColor : Colors.white,
+                            color: ( !sell ) ? myAppColorLight : Colors.white,
                             borderRadius: BorderRadius.circular(20.0)
                         ),
                         child: Padding(
@@ -140,33 +162,141 @@ class Filter_Screen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20.0),
                   reusableText(
+                    text: 'Property Location :',
+                    fontsize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    fontColor: Colors.grey,
+                  ),
+                  const SizedBox(height: 10.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: reusableTextField(
+                            hintText: 'Location',
+                            raduis: 20.0,
+                            prefixIcon: const Icon(Icons.location_on),
+                            controller: locationcontroller
+                        ),
+                      ),
+                      const SizedBox(width: 10.0),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          items: state_items.map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          )).toList(),
+                          value: selectedstate,
+                          onChanged: (value) {
+                            selectedstate = value as String;
+                            cubit.ChangeState();
+                          },
+                          buttonStyleData: ButtonStyleData(
+                            height: 60,
+                            width: 125,
+                            padding: const EdgeInsets.only(
+                                left: 14, right: 14),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: Colors.black26,
+                              ),
+                              color: Colors.white,
+                            ),
+                            elevation: 1,
+                          ),
+                          dropdownStyleData: DropdownStyleData(
+                            maxHeight: 130,
+                            width: 125,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: Colors.white,
+                            ),
+                            scrollbarTheme: const ScrollbarThemeData(
+                              radius: Radius.circular(40),
+                            ),
+                          ),
+                          iconStyleData: const IconStyleData(
+                            icon: Icon(
+                              Icons.arrow_drop_down_outlined,
+                            ),
+                            iconSize: 20,
+                            iconEnabledColor: Colors.black,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20.0),
+                  reusableText(
                       text: 'Property Area :',
                       fontsize: 14.0,
                       fontWeight: FontWeight.bold,
                       fontColor: Colors.grey
                   ),
-                  const SizedBox(height: 10.0),
-                  reusableTextField(
-                      hintText: 'Area in Square Meter',
-                      prefixIcon: const Icon(Icons.stacked_line_chart),
-                      raduis: 20.0,
-                      textInputType: TextInputType.number,
-                      controller: areacontroller
+                  const SizedBox(height: 50.0),
+                  if ( cubit.selectedIndex != 1 )
+                    SizedBox(
+                    width: MediaQuery.of(context).size.width-40,
+                    child: SfRangeSliderTheme(
+                        data: SfRangeSliderThemeData(
+                            tooltipBackgroundColor: ScaffoldColorLight,
+                            tooltipTextStyle: TextStyle(
+                                color: myAppColorLight,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                        child: SfRangeSlider(
+                          min: 60.0,
+                          max: 1000.0,
+                          values: area_values1,
+                          activeColor: myAppColorLight,
+                          stepSize: 10.0,
+                          inactiveColor: myAppColorLight.withOpacity(0.3),
+                          shouldAlwaysShowTooltip: true,
+                          onChanged: (value) {
+                            maxarea = value.end ;
+                            minarea = value.start ;
+                            area_values1 = value ;
+                            cubit.ChangeState();
+                          },
+                        )
+                    ),
                   ),
-                  const SizedBox(height: 20.0),
-                  reusableText(
-                      text: 'Property Location :',
-                      fontsize: 14.0,
-                      fontWeight: FontWeight.bold,
-                      fontColor: Colors.grey,
-                  ),
-                  const SizedBox(height: 10.0),
-                  reusableTextField(
-                      hintText: 'Write Location',
-                      prefixIcon: const Icon(Icons.location_on),
-                      raduis: 20.0,
-                      controller: locationcontroller
-                  ),
+                  if ( cubit.selectedIndex == 1)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width-40,
+                      child: SfRangeSliderTheme(
+                          data: SfRangeSliderThemeData(
+                              tooltipBackgroundColor: ScaffoldColorLight,
+                              tooltipTextStyle: TextStyle(
+                                  color: myAppColorLight,
+                                  fontWeight: FontWeight.bold
+                              )
+                          ),
+                          child: SfRangeSlider(
+                            min: 50.0,
+                            max: 10000.0,
+                            values: area_values2,
+                            activeColor: myAppColorLight,
+                            stepSize: 10.0,
+                            inactiveColor: myAppColorLight.withOpacity(0.3),
+                            shouldAlwaysShowTooltip: true,
+                            onChanged: (value) {
+                              maxarea = value.end ;
+                              minarea = value.start ;
+                              area_values2 = value ;
+                              cubit.ChangeState();
+                            },
+                          )
+                      ),
+                    ),
                   const SizedBox(height: 20.0),
                   if ( sell_rent == 'sell')
                   Column(
@@ -183,9 +313,9 @@ class Filter_Screen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width-40,
                         child: SfRangeSliderTheme(
                             data: SfRangeSliderThemeData(
-                                tooltipBackgroundColor: ScaffoldColor,
-                                tooltipTextStyle: const TextStyle(
-                                    color: myAppColor,
+                                tooltipBackgroundColor: ScaffoldColorLight,
+                                tooltipTextStyle: TextStyle(
+                                    color: myAppColorLight,
                                     fontWeight: FontWeight.bold
                                 )
                             ),
@@ -193,9 +323,9 @@ class Filter_Screen extends StatelessWidget {
                               min: 10000.0,
                               max: 100000.0,
                               values: sell_values,
-                              activeColor: myAppColor,
+                              activeColor: myAppColorLight,
                               stepSize: 1000.0,
-                              inactiveColor: myAppColor.withOpacity(0.3),
+                              inactiveColor: myAppColorLight.withOpacity(0.3),
                               shouldAlwaysShowTooltip: true,
                               onChanged: (value) {
                                 maxprice = value.end ;
@@ -223,9 +353,9 @@ class Filter_Screen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width-40,
                           child: SfRangeSliderTheme(
                               data: SfRangeSliderThemeData(
-                                  tooltipBackgroundColor: ScaffoldColor,
-                                  tooltipTextStyle: const TextStyle(
-                                      color: myAppColor,
+                                  tooltipBackgroundColor: ScaffoldColorLight,
+                                  tooltipTextStyle: TextStyle(
+                                      color: myAppColorLight,
                                       fontWeight: FontWeight.bold
                                   )
                               ),
@@ -233,9 +363,9 @@ class Filter_Screen extends StatelessWidget {
                                 min: 200.0,
                                 max: 10000.0,
                                 values: rent_values,
-                                activeColor: myAppColor,
+                                activeColor: myAppColorLight,
                                 stepSize: 100.0,
-                                inactiveColor: myAppColor.withOpacity(0.3),
+                                inactiveColor: myAppColorLight.withOpacity(0.3),
                                 shouldAlwaysShowTooltip: true,
                                 onChanged: (value) {
                                   maxrent = value.end ;
@@ -346,52 +476,58 @@ class Filter_Screen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20.0),
                   Center(
-                    child: Container(
-                      height: 60.0,
-                      width: 150.0,
-                      decoration: BoxDecoration(
-                        color: myAppColor,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: reusableTextButton(
-                          context: context,
-                          buttontext: 'Search',
-                          textColor: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          function: (){
-                            if (sell_rent == 'sell') {
-                              cubit.filter({
-                              'typeofproperty' : type ,
-                              'rent_or_sell' : sell_rent ,
-                              'state' : 'damascus' ,
-                              'location' : locationcontroller.text ,
-                              'area' : areacontroller.text ,
-                              'num_of_rooms' : numberOfroom ,
-                              'bathRoom' : numberOfbathroom ,
-                              'minprice' : minprice.round() ,
-                              'maxprice' : maxprice.round() ,
-                            }).then((value) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Result(cubit.filter_model!.propertylist)));
-                            });
-                            }
-                            if ( sell_rent == 'rent') {
-                              cubit.filter({
-                              'typeofproperty' : type ,
-                              'rent_or_sell' : sell_rent ,
-                              'state' : 'damascus' ,
-                              'location' : locationcontroller.text ,
-                              'area' : areacontroller.text ,
-                              'num_of_rooms' : numberOfroom ,
-                              'bathRoom' : numberOfbathroom ,
-                              'minRent' : minrent.round(),
-                              'maxRent' : maxrent.round(),
-                            }).then((value) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Result(cubit.filter_model!.propertylist)));
-                            });
-                            }
-                          }
-                      ),
-                    ),
+                    child: ConditionalBuilder(
+                        condition: state is! LoadingFilterProperty,
+                        builder: (context) => Container(
+                          height: 60.0,
+                          width: 150.0,
+                          decoration: BoxDecoration(
+                            color: myAppColorLight,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: reusableTextButton(
+                              context: context,
+                              buttontext: 'Search',
+                              textColor: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              function: (){
+                                if (sell_rent == 'sell') {
+                                  cubit.filter({
+                                    'typeofproperty' : type ,
+                                    'rent_or_sell' : sell_rent ,
+                                    'state' : selectedstate ,
+                                    'location' : locationcontroller.text ,
+                                    'minarea' : minarea.round() ,
+                                    'maxarea' : maxarea.round() ,
+                                    'num_of_rooms' : numberOfroom ,
+                                    'bathRoom' : numberOfbathroom ,
+                                    'minprice' : minprice.round() ,
+                                    'maxprice' : maxprice.round() ,
+                                  }).then((value) {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Result(cubit.filter_model!.propertylist)));
+                                  });
+                                }
+                                if ( sell_rent == 'rent') {
+                                  cubit.filter({
+                                    'typeofproperty' : type ,
+                                    'rent_or_sell' : sell_rent ,
+                                    'state' : selectedstate ,
+                                    'location' : locationcontroller.text ,
+                                    'num_of_rooms' : numberOfroom ,
+                                    'bathRoom' : numberOfbathroom ,
+                                    'minarea' : minarea.round() ,
+                                    'maxarea' : maxarea.round() ,
+                                    'minRent' : minrent.round(),
+                                    'maxRent' : maxrent.round(),
+                                  }).then((value) {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Filter_Result(cubit.filter_model!.propertylist)));
+                                  });
+                                }
+                              }
+                          ),
+                        ),
+                        fallback: (context) => const CircularProgressIndicator()
+                    )
                   )
                 ],
               ),
@@ -412,7 +548,7 @@ class Filter_Screen extends StatelessWidget {
           height: 100.0,
           width: (MediaQuery.of(context).size.width/3)-30,
           decoration: BoxDecoration(
-              color: (cubit.selectedIndex == index) ? myAppColor : Colors.white,
+              color: (cubit.selectedIndex == index) ? myAppColorLight : Colors.white,
               borderRadius: BorderRadius.circular(15.0)
           ),
           child: Column(
@@ -420,12 +556,12 @@ class Filter_Screen extends StatelessWidget {
             children: [
               Icon(
                   item.icon_type,
-                  color: (cubit.selectedIndex == index) ? Colors.white : myAppColor,
+                  color: (cubit.selectedIndex == index) ? Colors.white : myAppColorLight,
                   size: 30
               ),
               reusableText(
                   text: item.title_type,
-                  fontColor: (cubit.selectedIndex == index) ? Colors.white : myAppColor,
+                  fontColor: (cubit.selectedIndex == index) ? Colors.white : myAppColorLight,
                   fontsize: 13
               ),
             ],

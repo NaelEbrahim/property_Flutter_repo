@@ -27,7 +27,7 @@ class Message_Screen extends StatelessWidget {
           var cubit = MyBloc.get(context);
           return Scaffold(
               appBar: AppBar(
-                backgroundColor: myAppColor,
+                backgroundColor: myAppColorLight,
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back_ios_new_outlined),
                   onPressed: () {
@@ -83,7 +83,7 @@ class Message_Screen extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: myAppColor,
+                              color: myAppColorLight,
                             ),
                           ),
                           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -101,7 +101,7 @@ class Message_Screen extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                color: myAppColor,
+                                color: myAppColorLight,
                                 child: MaterialButton(
                                   onPressed: () {
                                     cubit.SendMessage(
@@ -176,13 +176,13 @@ class Message_Screen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Container(
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10.0),
                     topRight: Radius.circular(10.0),
                     bottomLeft: Radius.circular(10.0),
                   ),
-                  color: myAppColor),
+                  color: myAppColorLight),
               padding:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
               child: reusableText(

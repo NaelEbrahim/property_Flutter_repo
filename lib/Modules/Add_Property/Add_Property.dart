@@ -22,7 +22,7 @@ class property_category {
   property_category(this.title_type, this.icon_type);
 }
 
-final List<String> gender_items = [
+final List<String> state_items = [
   'Damascus',
   'Aleppo',
   'Homs',
@@ -33,6 +33,7 @@ final List<String> gender_items = [
   'Latakkia',
   'Swida',
 ];
+
 String selectedstate = 'Damascus';
 
 List <property_category> category_list = [
@@ -106,8 +107,8 @@ class Add_Property extends StatelessWidget {
         builder: (context, state) {
           var cubit = MyBloc.get(context);
           return Scaffold(
-            backgroundColor: ScaffoldColor,
-            appBar: Add_Property_AppBar(),
+            backgroundColor: ScaffoldColorLight,
+            appBar: Add_Property_AppBar(context),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -128,7 +129,7 @@ class Add_Property extends StatelessWidget {
                               height: 50,
                               width: (MediaQuery.of(context).size.width/2)-30,
                               decoration: BoxDecoration(
-                                  color: ( sell ) ? myAppColor : Colors.white,
+                                  color: ( sell ) ? myAppColorLight : Colors.white,
                                   borderRadius: BorderRadius.circular(20.0)
                               ),
                               child: Padding(
@@ -156,7 +157,7 @@ class Add_Property extends StatelessWidget {
                               height: 50,
                               width: (MediaQuery.of(context).size.width/2)-30,
                               decoration: BoxDecoration(
-                                  color: ( !sell ) ? myAppColor : Colors.white,
+                                  color: ( !sell ) ? myAppColorLight : Colors.white,
                                   borderRadius: BorderRadius.circular(20.0)
                               ),
                               child: Padding(
@@ -311,7 +312,7 @@ class Add_Property extends StatelessWidget {
                             const SizedBox(width: 10.0),
                             DropdownButtonHideUnderline(
                               child: DropdownButton2(
-                                items: gender_items.map((item) => DropdownMenuItem<String>(
+                                items: state_items.map((item) => DropdownMenuItem<String>(
                                   value: item,
                                   child: Text(
                                     item,
@@ -390,7 +391,7 @@ class Add_Property extends StatelessWidget {
                             height: 70.0,
                             width:( MediaQuery.of(context).size.width/2)-30,
                             decoration: BoxDecoration(
-                              color: myAppColor,
+                              color: myAppColorLight,
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: reusableTextButton(
@@ -422,9 +423,9 @@ class Add_Property extends StatelessWidget {
                               child: Stack(
                                 alignment: AlignmentDirectional.bottomCenter,
                                 children: [
-                                  const Align(
+                                   Align(
                                     alignment: AlignmentDirectional.center,
-                                      child: Icon(Icons.photo_library,size: 35.0,color: myAppColor)),
+                                      child: Icon(Icons.photo_library,size: 35.0,color: myAppColorLight)),
                                   Container(
                                     width: double.infinity,
                                     color: Colors.black.withOpacity(0.7),
@@ -448,7 +449,7 @@ class Add_Property extends StatelessWidget {
                                 height: 60.0,
                                 width: 150.0,
                                 decoration: BoxDecoration(
-                                  color: myAppColor,
+                                  color: myAppColorLight,
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                                 child: reusableTextButton(
@@ -501,7 +502,7 @@ class Add_Property extends StatelessWidget {
           height: 100.0,
           width: (MediaQuery.of(context).size.width/3)-30,
           decoration: BoxDecoration(
-              color: (cubit.selectedIndex == index) ? myAppColor : Colors.white,
+              color: (cubit.selectedIndex == index) ? myAppColorLight : Colors.white,
               borderRadius: BorderRadius.circular(15.0)
           ),
           child: Column(
@@ -509,12 +510,12 @@ class Add_Property extends StatelessWidget {
             children: [
               Icon(
                   item.icon_type,
-                  color: (cubit.selectedIndex == index) ? Colors.white : myAppColor,
+                  color: (cubit.selectedIndex == index) ? Colors.white : myAppColorLight,
                   size: 30
               ),
               reusableText(
                   text: item.title_type,
-                  fontColor: (cubit.selectedIndex == index) ? Colors.white : myAppColor,
+                  fontColor: (cubit.selectedIndex == index) ? Colors.white : myAppColorLight,
                   fontsize: 13
               ),
             ],
