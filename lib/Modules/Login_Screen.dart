@@ -58,7 +58,7 @@ class Login_Screen extends StatelessWidget {
           builder: (context, state) {
             var bloc = MyBloc.get(context);
             return Scaffold(
-              backgroundColor: ScaffoldColor,
+              backgroundColor: ScaffoldColorLight,
               body: SafeArea(
                 child: SingleChildScrollView(
                   child: Container(
@@ -75,14 +75,15 @@ class Login_Screen extends StatelessWidget {
                             width: 200,
                           ),
                           reusableText(
-                              text: 'Welcome Back!',
-                              fontsize: 26,
-                              fontWeight: FontWeight.w700
+                            text: 'Welcome Back!',
+                            fontsize: 26,
+                            fontWeight: FontWeight.w700,
+                            fontColor: primaryTextColorLight
                           ),
                           reusableText(
                               text: 'Sign in to Continue',
                               fontsize: 15,
-                              fontColor: Colors.grey,
+                              fontColor: secondryTextColorLight,
                               fontWeight: FontWeight.w500
                           ),
                           const SizedBox(height: 50.0),
@@ -121,7 +122,7 @@ class Login_Screen extends StatelessWidget {
                               height: 60.0,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30.0),
-                                  color: myAppColor
+                                  color: myAppColorLight
                               ),
                               child: reusableTextButton(
                                   context: context,
@@ -142,7 +143,7 @@ class Login_Screen extends StatelessWidget {
                             fallback: (context) => const Center(child: CircularProgressIndicator()),
                           ),
                           const SizedBox(height: 50.0),
-                          reusableText(text: 'Or Connect Via', fontsize: 15.0,fontColor: Colors.grey),
+                          reusableText(text: 'Or Connect Via', fontsize: 15.0,fontColor: secondryTextColorLight),
                           const SizedBox(height: 20.0),
                           Container(
                             height: 50.0,
@@ -172,11 +173,12 @@ class Login_Screen extends StatelessWidget {
                               reusableText(
                                 text: 'Don\'t Have An Account? ',
                                 fontsize: 15,
+                                fontColor: primaryTextColorLight
                               ),
                               reusableTextButton(
                                   context: context,
                                   buttontext: 'Sign Up',
-                                  textColor: myAppColor,
+                                  textColor: myAppColorLight,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
                                   function: (){

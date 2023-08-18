@@ -85,7 +85,7 @@ class Property_Details extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: ScaffoldColor,
+            backgroundColor: ScaffoldColorLight,
             appBar: Property_Details_AppBar(context),
             body: SingleChildScrollView(
               child: Container(
@@ -113,7 +113,7 @@ class Property_Details extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 15.0),
-                    reusableText(text: 'Dream House', fontsize: 15.0, fontWeight: FontWeight.bold),
+                    reusableText(text: 'Dream House', fontsize: 15.0, fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                     const SizedBox(height: 10.0),
                     SizedBox(
                       height: 50.0,
@@ -129,7 +129,7 @@ class Property_Details extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white
+                          color: containerBackgroundColor
                       ),
                       child: Row(
                         children: [
@@ -144,9 +144,9 @@ class Property_Details extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                reusableText(text: 'Owner', fontsize: 11,fontColor: Colors.grey),
+                                reusableText(text: 'Owner', fontsize: 11,fontColor: secondryTextColorLight),
                                 const SizedBox(height: 3.0),
-                                reusableText(text: information.ownername.toString() , fontsize: 14,fontWeight: FontWeight.bold),
+                                reusableText(text: information.ownername.toString() , fontsize: 14,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                                 const SizedBox(height: 3.0),
                                 RatingBarIndicator(
                                   itemBuilder: (context, index) => const Icon(Icons.star,color: Colors.amber,),
@@ -171,7 +171,7 @@ class Property_Details extends StatelessWidget {
                            Row(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: myAppColor,
+                                  backgroundColor: myAppColorLight,
                                   child: IconButton(
                                     onPressed: (){
                                       Navigator.push(
@@ -192,7 +192,7 @@ class Property_Details extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 15.0),
                                 CircleAvatar(
-                                  backgroundColor: myAppColor,
+                                  backgroundColor: myAppColorLight,
                                   child: IconButton(
                                     onPressed: (){
                                       launchUrl(Uri(scheme: 'tel', path: '0${information.ownerphone.toString()}' ));
@@ -209,33 +209,35 @@ class Property_Details extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20.0),
-                    reusableText(text: 'Description :', fontsize: 15.0,fontWeight: FontWeight.bold),
+                    reusableText(text: 'Description :', fontsize: 15.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                     const SizedBox(height: 5.0),
                     reusableText(
                         text: information.descreption.toString(),
                         fontsize: 13.0,
-                        fontColor: Colors.grey,
-                        maxLines: 4),
+                        fontColor: secondryTextColorLight,
+                        maxLines: 4,
+                    ),
                     const SizedBox(height: 15.0),
-                    reusableText(text: 'Location :', fontsize: 15.0,fontWeight: FontWeight.bold),
+                    reusableText(text: 'Location :', fontsize: 15.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                     const SizedBox(height: 5.0),
                     Container(
                       height: 50.0,
                       decoration: BoxDecoration(
-                          color : Colors.white,
+                          color : containerBackgroundColor,
                           borderRadius: BorderRadius.circular(10.0)
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                             children: [
-                              const Icon(Icons.location_on,color: Colors.black),
+                              Icon(Icons.location_on,color: primaryTextColorLight),
                               const SizedBox(width: 20.0),
                               reusableText(
                                 text: '${information.namestate.toString().toUpperCase()} - ${information.address.toString().toUpperCase()}',
                                 fontsize: 12,
                                 fontWeight: FontWeight.bold,
                                 maxLines: 1,
+                                fontColor: primaryTextColorLight
                               )
                             ]
                         ),
@@ -251,7 +253,7 @@ class Property_Details extends StatelessWidget {
                             height: 55.0,
                             width: MediaQuery.of(context).size.width-100,
                             decoration: BoxDecoration(
-                                color: myAppColor,
+                                color: myAppColorLight,
                                 borderRadius: BorderRadius.circular(20.0)
                             ),
                             child: Padding(
@@ -322,16 +324,16 @@ class Property_Details extends StatelessWidget {
       width: (MediaQuery.of(context).size.width-60)/3,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color : Colors.white
+          color : containerBackgroundColor
       ),
       child : Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(item.icon,color: myAppColor),
+            Icon(item.icon,color: primaryTextColorLight),
             const SizedBox(width: 10.0),
-            reusableText(text: item.text, fontsize: 12.0)
+            reusableText(text: item.text, fontsize: 12.0,fontColor: primaryTextColorLight)
           ],
         ),
       )
@@ -348,7 +350,7 @@ class Property_Details extends StatelessWidget {
               fontWeight: FontWeight.bold
           ),
           const SizedBox(width: 5.0),
-          const Icon(Icons.verified_user_sharp,color: myAppColor),
+           Icon(Icons.verified_user_sharp,color: myAppColorLight),
         ],
       ),
       content: SingleChildScrollView(
@@ -381,7 +383,7 @@ class Property_Details extends StatelessWidget {
             Container(
               width: 100.0,
               decoration: BoxDecoration(
-                color: myAppColor,
+                color: myAppColorLight,
                 borderRadius: BorderRadius.circular(15.0)
               ),
               child: reusableTextButton(

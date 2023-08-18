@@ -8,6 +8,7 @@ import 'package:university_project_property_app/Bloc/Bloc_States.dart';
 import 'package:university_project_property_app/Modules/Base_Screen.dart';
 import 'package:university_project_property_app/Modules/SignUp/SignUp1_Screen.dart';
 import 'package:university_project_property_app/Modules/SignUp/SignUp2_Screen.dart';
+import 'package:university_project_property_app/Shared/Constant.dart';
 
 class Base_SignUp_Screen extends StatelessWidget {
    Base_SignUp_Screen({Key? key}) : super(key: key);
@@ -68,7 +69,7 @@ class Base_SignUp_Screen extends StatelessWidget {
             return WillPopScope(
                onWillPop: () async => await onWillPop(context),
                child: Scaffold(
-                  backgroundColor: Colors.grey[100],
+                  backgroundColor: ScaffoldColorLight,
                   body: SafeArea(
                       child: SingleChildScrollView(
                           child: Column(

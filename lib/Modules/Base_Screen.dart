@@ -21,32 +21,31 @@ class Base_Screen extends StatelessWidget {
     const Profile_Screen()
   ] ;
 
-  List <AppBar> appbars = [
-    Home_AppBar(),
-    Filter_AppBar(),
-    Favourite_AppBar(),
-    Profile_AppBar()
-  ] ;
-
   int CurrentBottomNavIndex = 0 ;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => MyBloc()..GetAllProperty()..HomeSlider()..GetMyProfile()..GetMyBankAccount(),
+        create: (context) => MyBloc()..initAppTheme()..GetAllProperty()..HomeSlider()..GetMyProfile()..GetMyBankAccount()..ShowUserFavorite(),
       child: BlocConsumer <MyBloc,Bloc_States> (
         listener: (context, state) => (){},
         builder: (context, state) {
+          List <AppBar> appbars = [
+            Home_AppBar(),
+            Filter_AppBar(),
+            Favourite_AppBar(),
+            Profile_AppBar()
+          ] ;
           var cubit = MyBloc.get(context);
           return Scaffold(
             drawer: opendrawer(context),
-            backgroundColor: ScaffoldColor,
+            backgroundColor: ScaffoldColorLight,
             appBar: appbars[CurrentBottomNavIndex],
             body: (state is! LoadingUserLogout)? screens[CurrentBottomNavIndex]:
             const Center(child: CircularProgressIndicator()),
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(
-                    canvasColor: myAppColor
+                  canvasColor: myAppColorLight
                 ),
                 child: Container(
                   padding: const EdgeInsets.all(10.0),

@@ -21,6 +21,8 @@ const String SHOWFAVORITE = 'show_favorate' ;
 
 const String ADDTOFAVORITE = 'favorate' ;
 
+const String DELETEFAVORITE = 'delete_favorate' ;
+
 const String HOMESLIDER = 'slider' ;
 
 const String USERRATE = 'addRate' ;

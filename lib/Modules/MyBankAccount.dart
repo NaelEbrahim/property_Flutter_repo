@@ -23,9 +23,9 @@ class MyBankAccount extends StatelessWidget {
         builder: (context, state) {
           var cubit = MyBloc.get(context);
           return  Scaffold(
-                backgroundColor: ScaffoldColor,
+                backgroundColor: ScaffoldColorLight,
                 appBar: AppBar(
-                  backgroundColor: myAppColor,
+                  backgroundColor: myAppColorLight,
                   leading: IconButton(
                     onPressed: (){
                       Navigator.pop(context);
@@ -59,7 +59,7 @@ class MyBankAccount extends StatelessWidget {
                                   reusableText(
                                       text: 'You Don\'t Have A Bank Account',
                                       fontsize: 18.0,
-                                      //fontColor: Colors.black45,
+                                       fontColor: primaryTextColorLight,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ],
@@ -70,7 +70,8 @@ class MyBankAccount extends StatelessWidget {
                                   reusableText(
                                       text: 'Your Bank Account',
                                       fontsize: 18.0,
-                                      fontWeight: FontWeight.bold
+                                      fontWeight: FontWeight.bold,
+                                      fontColor: primaryTextColorLight
                                   ),
                                   const SizedBox(height: 30.0),
                                   Container(

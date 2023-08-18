@@ -45,8 +45,9 @@ class UpdateProfile_Screen extends StatelessWidget {
         builder: (context, state) {
           var cubit = MyBloc.get(context);
           return Scaffold(
-            backgroundColor: ScaffoldColor,
+            backgroundColor: ScaffoldColorLight,
             appBar: AppBar(
+              backgroundColor: myAppColorLight,
               title: reusableText(
                   text: 'Edit Profile',
                   fontsize: 19.0,
@@ -72,18 +73,18 @@ class UpdateProfile_Screen extends StatelessWidget {
                                   (cubit.imagepath == null) ? const AssetImage('images/inisital_image.png') : Image.file(File(cubit.imagepath)).image,
                                   backgroundColor: Colors.grey,
                                   radius: 80.0),
-                              const CircleAvatar(
+                               CircleAvatar(
                                 radius: 17.0,
-                                backgroundColor: myAppColor,
+                                backgroundColor: myAppColorLight,
                                 child:
-                                Icon(Icons.add, color: Colors.white),
+                                const Icon(Icons.add, color: Colors.white),
                               )
                             ])),
                     const SizedBox(height:15.0),
                     reusableText(
                         text: 'New Personal Photo',
                         fontsize: 15.0,
-                        fontColor: Colors.black45,
+                        fontColor: secondryTextColorLight,
                         fontWeight: FontWeight.w500
                     ),
                     const SizedBox(height: 40.0),
@@ -127,7 +128,7 @@ class UpdateProfile_Screen extends StatelessWidget {
                         height: 60.0,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
-                            color: myAppColor),
+                            color: myAppColorLight),
                         child: reusableTextButton(
                             context: context,
                             buttontext: 'UPDATE',
@@ -148,12 +149,12 @@ class UpdateProfile_Screen extends StatelessWidget {
                                 updateData['information_about'] = information_aboutController.text;
                               }
 
-                              // if ( cubit.imagepath != null ) {
-                              //   updateData['image[]'] = [await MultipartFile.fromFile(
-                              //     cubit.imagepath,
-                              //     filename: cubit.imagepath
-                              //   )];
-                              // } // Wait Fix Backend
+                              if ( cubit.imagepath != null ) {
+                                updateData['image[]'] = [await MultipartFile.fromFile(
+                                  cubit.imagepath,
+                                  filename: cubit.imagepath
+                                )];
+                              } // Wait Fix Backend
 
                               if ( updateData.isNotEmpty ) {
                                 cubit.UpdateUserProfile(

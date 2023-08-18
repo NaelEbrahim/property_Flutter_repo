@@ -36,14 +36,17 @@ class SignUp1_Screen extends StatelessWidget {
                 width: 230,
               ),
               reusableText(
-                  text: 'Let\'s Get Started!',
-                  fontsize: 26,
-                  fontWeight: FontWeight.w700),
+                text: 'Let\'s Get Started!',
+                fontsize: 26,
+                fontWeight: FontWeight.w700,
+                fontColor: primaryTextColorLight
+              ),
               reusableText(
-                  text: 'Create A New Account',
-                  fontsize: 16,
-                  fontColor: Colors.grey,
-                  fontWeight: FontWeight.w500),
+                text: 'Create A New Account',
+                fontsize: 16,
+                fontColor: secondryTextColorLight,
+                fontWeight: FontWeight.w500,
+              ),
               const SizedBox(height: 40.0),
               reusableTextField(
                   hintText: 'Name',
@@ -88,7 +91,7 @@ class SignUp1_Screen extends StatelessWidget {
                 height: 60.0,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
-                    color: myAppColor),
+                    color: myAppColorLight),
                 child: reusableTextButton(
                     context: context,
                     buttontext: 'Next',

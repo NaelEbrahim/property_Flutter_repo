@@ -26,7 +26,7 @@ class Profile_Screen extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [myAppColor, ScaffoldColor],
+                    colors: [myAppColorLight, ScaffoldColorLight],
                     stops: const [0.2, 0.2],
                   ),
                 ),
@@ -49,7 +49,7 @@ class Profile_Screen extends StatelessWidget {
                           const SizedBox(height: 10.0),
                           Column(
                             children: [
-                              reusableText(text: cubit.profile_model!.user_profile_data!.name.toString().toUpperCase(), fontsize: 18.0,fontWeight: FontWeight.bold),
+                              reusableText(text: cubit.profile_model!.user_profile_data!.name.toString().toUpperCase(), fontsize: 18.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                               const SizedBox(height: 3.0),
                               reusableText(text: 'USER', fontsize: 13.0,fontWeight: FontWeight.bold,fontColor: Colors.grey),
                             ],
@@ -63,19 +63,9 @@ class Profile_Screen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          reusableText(text: 'Name', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColor),
+                          reusableText(text: 'Name', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColorLight),
                           const SizedBox(height: 5.0),
-                          reusableText(text: cubit.profile_model!.user_profile_data!.name, fontsize: 16.0,fontWeight: FontWeight.bold),
-                          const SizedBox(height: 5.0),
-                          const Divider(
-                            color: Colors.black26,
-                            thickness: 2,
-                          ),
-                          const SizedBox(height: 5.0),
-
-                          reusableText(text: 'Emial', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColor),
-                          const SizedBox(height: 5.0),
-                          reusableText(text: cubit.profile_model!.user_profile_data!.email, fontsize: 16.0,fontWeight: FontWeight.bold),
+                          reusableText(text: cubit.profile_model!.user_profile_data!.name, fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                           const SizedBox(height: 5.0),
                           const Divider(
                             color: Colors.black26,
@@ -83,19 +73,9 @@ class Profile_Screen extends StatelessWidget {
                           ),
                           const SizedBox(height: 5.0),
 
-                          reusableText(text: 'Age', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColor),
+                          reusableText(text: 'Emial', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColorLight),
                           const SizedBox(height: 5.0),
-                          reusableText(text: cubit.profile_model!.user_profile_data!.age.toString(), fontsize: 16.0,fontWeight: FontWeight.bold),
-                          const SizedBox(height: 5.0),
-                          const Divider(
-                            color: Colors.black26,
-                            thickness: 2,
-                          ),
-                          const SizedBox(height: 5.0),
-
-                          reusableText(text: 'Gender', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColor),
-                          const SizedBox(height: 5.0),
-                          reusableText(text: cubit.profile_model!.user_profile_data!.gender, fontsize: 16.0,fontWeight: FontWeight.bold),
+                          reusableText(text: cubit.profile_model!.user_profile_data!.email, fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                           const SizedBox(height: 5.0),
                           const Divider(
                             color: Colors.black26,
@@ -103,9 +83,9 @@ class Profile_Screen extends StatelessWidget {
                           ),
                           const SizedBox(height: 5.0),
 
-                          reusableText(text: 'Phone', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColor),
+                          reusableText(text: 'Age', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColorLight),
                           const SizedBox(height: 5.0),
-                          reusableText(text: '0${cubit.profile_model!.user_profile_data!.phone}', fontsize: 16.0,fontWeight: FontWeight.bold),
+                          reusableText(text: cubit.profile_model!.user_profile_data!.age.toString(), fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                           const SizedBox(height: 5.0),
                           const Divider(
                             color: Colors.black26,
@@ -113,9 +93,29 @@ class Profile_Screen extends StatelessWidget {
                           ),
                           const SizedBox(height: 5.0),
 
-                          reusableText(text: 'Info', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColor),
+                          reusableText(text: 'Gender', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColorLight),
                           const SizedBox(height: 5.0),
-                          reusableText(text: cubit.profile_model!.user_profile_data!.info, fontsize: 16.0,fontWeight: FontWeight.bold),
+                          reusableText(text: cubit.profile_model!.user_profile_data!.gender, fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
+                          const SizedBox(height: 5.0),
+                          const Divider(
+                            color: Colors.black26,
+                            thickness: 2,
+                          ),
+                          const SizedBox(height: 5.0),
+
+                          reusableText(text: 'Phone', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColorLight),
+                          const SizedBox(height: 5.0),
+                          reusableText(text: '0${cubit.profile_model!.user_profile_data!.phone}', fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
+                          const SizedBox(height: 5.0),
+                          const Divider(
+                            color: Colors.black26,
+                            thickness: 2,
+                          ),
+                          const SizedBox(height: 5.0),
+
+                          reusableText(text: 'Info', fontsize: 20,fontWeight : FontWeight.bold , fontColor: myAppColorLight),
+                          const SizedBox(height: 5.0),
+                          reusableText(text: cubit.profile_model!.user_profile_data!.info, fontsize: 16.0,fontWeight: FontWeight.bold,fontColor: primaryTextColorLight),
                           const SizedBox(height: 5.0),
                           const Divider(
                             color: Colors.black26,

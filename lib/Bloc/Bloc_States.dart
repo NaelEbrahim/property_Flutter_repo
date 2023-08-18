@@ -52,6 +52,17 @@ class ErrorGetAllProperty extends Bloc_States {
   ErrorGetAllProperty(this.error);
 }
 
+//******************* SHOW USER FAVORITE STATES *****************//
+class LoadingShowUserFavorite extends Bloc_States {}
+
+class SuccessShowUserFavorite extends Bloc_States {}
+
+class ErrorShowUserFavorite extends Bloc_States {
+  String ? error ;
+
+  ErrorShowUserFavorite(this.error);
+}
+
 //******************* HOME SLIDER STATES *****************//
 class LoadingGetHomeSlider extends Bloc_States {}
 
@@ -127,6 +138,17 @@ class ErrorAddToFavorite extends Bloc_States {
   String ? error ;
 
   ErrorAddToFavorite(this.error);
+}
+
+//******************* DELETE FROM FAVORITE STATES *****************//
+class LoadingDeleteFromFavorite extends Bloc_States {}
+
+class SuccessDeleteFromFavorite extends Bloc_States {}
+
+class ErrorDeleteFromFavorite extends Bloc_States {
+  String ? error ;
+
+  ErrorDeleteFromFavorite(this.error);
 }
 
 //******************* GET USER PROFILE STATES *****************//

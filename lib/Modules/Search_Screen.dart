@@ -27,7 +27,7 @@ class Search_Screen extends StatelessWidget {
           searchScreenContext = context;
           var cubit = MyBloc.get(context);
           return Scaffold(
-            backgroundColor: ScaffoldColor,
+            backgroundColor: ScaffoldColorLight,
             appBar: Search_AppBar(),
             body: SingleChildScrollView(
               child: Center(
@@ -51,7 +51,7 @@ class Search_Screen extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                color: myAppColor,
+                                color: myAppColorLight,
                                 height: 62.0,
                                 child: IconButton(
                                   padding: EdgeInsets.zero,
@@ -72,7 +72,7 @@ class Search_Screen extends StatelessWidget {
                             child: reusableText(
                                 text:
                                     'You Can Search With : \n1 - Type : house - land - market\n2 - Owner Name : "rami hussin"\n3 - Contract : sell - rent',
-                                fontColor: Colors.black38,
+                                fontColor: secondryTextColorLight,
                                 fontWeight: FontWeight.w600,
                                 fontsize: 15.0),
                           ),
@@ -121,7 +121,8 @@ class Search_Screen extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+          color: containerBackgroundColor,
+          borderRadius: BorderRadius.circular(10.0)),
       width: MediaQuery.of(context).size.width,
       height: 140,
       child: Row(
@@ -145,14 +146,15 @@ class Search_Screen extends StatelessWidget {
                     text: (item.rent_or_sell == 'sell') ? '\$${item.price.toString()}':
                     '\$${item.monthlyRent.toString()}/Month',
                     fontsize: 20,
-                    fontColor: myAppColor,
-                    fontWeight: FontWeight.bold),
+                    fontColor: primaryTextColorLight,
+                    fontWeight: FontWeight.bold,
+                ),
                 Container(
                   width: 100,
                   height: 25,
-                  decoration: const BoxDecoration(
-                    color: myAppColor,
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: myAppColorLight,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(5),
                     ),
                   ),
@@ -176,29 +178,39 @@ class Search_Screen extends StatelessWidget {
                   text: item.address.toString(),
                   fontsize: 14,
                   fontWeight: FontWeight.w200,
-                  fontColor: Colors.grey,
+                  fontColor: secondryTextColorLight,
                 ),
                 Row(
                   children: [
-                    const Icon(Icons.bed),
+                    Icon(Icons.bed_outlined,color: primaryTextColorLight),
                     const SizedBox(
                       width: 5,
                     ),
                     reusableText(
-                        text: item.numberofRooms.toString(), fontsize: 13),
+                      text: item.numberofRooms.toString(),
+                      fontsize: 13,
+                      fontColor: primaryTextColorLight
+                    ),
                     const Spacer(),
-                    const Icon(Icons.bathtub_outlined),
+                    Icon(Icons.bathtub_outlined,color: primaryTextColorLight),
                     const SizedBox(
                       width: 5,
                     ),
                     reusableText(
-                        text: item.numberofBaths.toString(), fontsize: 13),
+                      text: item.numberofBaths.toString(),
+                      fontsize: 13,
+                      fontColor: primaryTextColorLight
+                    ),
                     const Spacer(),
-                    const Icon(Icons.area_chart_outlined),
+                    Icon(Icons.area_chart_outlined,color: primaryTextColorLight),
                     const SizedBox(
                       width: 5,
                     ),
-                    reusableText(text: item.area.toString(), fontsize: 13)
+                    reusableText(
+                      text: item.area.toString(),
+                      fontsize: 13,
+                      fontColor: primaryTextColorLight
+                    )
                   ],
                 ),
               ],

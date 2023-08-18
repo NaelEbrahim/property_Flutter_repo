@@ -23,7 +23,7 @@ class Chat_Screen extends StatelessWidget {
           var cubit = MyBloc.get(context);
           return Scaffold(
               appBar: AppBar(
-                backgroundColor: myAppColor,
+                backgroundColor: myAppColorLight,
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back_ios_new_outlined),
                   onPressed: () {
@@ -87,7 +87,7 @@ class Chat_Screen extends StatelessWidget {
                   if (item.unreadMessages != 0)
                     CircleAvatar(
                       radius: 13.0,
-                      backgroundColor: myAppColor,
+                      backgroundColor: myAppColorLight,
                       child: reusableText(
                           text: item.unreadMessages.toString(),
                           fontsize: 12,

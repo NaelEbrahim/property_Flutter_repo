@@ -24,8 +24,23 @@ class Filter_Result extends StatelessWidget {
         listener: (context, state) => () {},
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: ScaffoldColor,
-            appBar: Filter_AppBar(),
+            backgroundColor: ScaffoldColorLight,
+            appBar: AppBar(
+              backgroundColor: myAppColorLight,
+              leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+              ),
+              title: reusableText(
+                  text: 'Filter Result',
+                  fontsize: 19,
+                  fontColor: Colors.white,
+                  fontWeight: FontWeight.bold
+              ),
+              centerTitle: true,
+            ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Container(
@@ -92,14 +107,14 @@ class Filter_Result extends StatelessWidget {
                 reusableText(
                     text: '\$${item.price.toString()}',
                     fontsize: 20,
-                    fontColor: myAppColor,
+                    fontColor: myAppColorLight,
                     fontWeight: FontWeight.bold),
                 Container(
                   width: 100,
                   height: 25,
-                  decoration: const BoxDecoration(
-                    color: myAppColor,
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: myAppColorLight,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(5),
                     ),
                   ),
@@ -164,7 +179,8 @@ class Filter_Result extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+          color: containerBackgroundColor,
+          borderRadius: BorderRadius.circular(10.0)),
       width: MediaQuery.of(context).size.width,
       height: 140,
       child: Row(
@@ -188,14 +204,14 @@ class Filter_Result extends StatelessWidget {
                     text: (item.rent_or_sell == 'sell') ? '\$${item.price.toString()}':
                     '\$${item.monthlyRent.toString()}/Month',
                     fontsize: 20,
-                    fontColor: myAppColor,
+                    fontColor: primaryTextColorLight,
                     fontWeight: FontWeight.bold),
                 Container(
                   width: 100,
                   height: 25,
-                  decoration: const BoxDecoration(
-                    color: myAppColor,
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: myAppColorLight,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(5),
                     ),
                   ),
@@ -219,29 +235,39 @@ class Filter_Result extends StatelessWidget {
                   text: item.address.toString(),
                   fontsize: 14,
                   fontWeight: FontWeight.w200,
-                  fontColor: Colors.grey,
+                  fontColor: secondryTextColorLight,
                 ),
                 Row(
                   children: [
-                    const Icon(Icons.bed),
+                    Icon(Icons.bed_outlined,color: primaryTextColorLight,),
                     const SizedBox(
                       width: 5,
                     ),
                     reusableText(
-                        text: item.numberofRooms.toString(), fontsize: 13),
+                        text: item.numberofRooms.toString(),
+                        fontsize: 13,
+                        fontColor: primaryTextColorLight
+                    ),
                     const Spacer(),
-                    const Icon(Icons.bathtub_outlined),
+                    Icon(Icons.bathtub_outlined,color: primaryTextColorLight),
                     const SizedBox(
                       width: 5,
                     ),
                     reusableText(
-                        text: item.numberofBaths.toString(), fontsize: 13),
+                        text: item.numberofBaths.toString(),
+                        fontsize: 13,
+                        fontColor: primaryTextColorLight
+                    ),
                     const Spacer(),
-                    const Icon(Icons.area_chart_outlined),
+                    Icon(Icons.area_chart_outlined,color: primaryTextColorLight,),
                     const SizedBox(
                       width: 5,
                     ),
-                    reusableText(text: item.area.toString(), fontsize: 13)
+                    reusableText(
+                        text: item.area.toString(),
+                        fontsize: 13,
+                        fontColor: primaryTextColorLight
+                    )
                   ],
                 ),
               ],
